@@ -2,11 +2,11 @@
 
 import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
-import { ROLES, type Player, type Team } from '@/lib/types';
+import { ROLES, type Player, type Team, type Tournament } from '@/lib/types';
 
 export const dynamic = 'force-dynamic';
 
-type Tab = 'players' | 'teams';
+type Tab = 'players' | 'teams' | 'tournaments';
 
 const inputCls =
   'w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-wiki-blue';
@@ -134,29 +134,85 @@ function formToTeamPayload(f: TeamFormState) {
   };
 }
 
+interface TournamentFormState {
+  id: string;
+  slug: string;
+  name: string;
+  organizer: string;
+  frequency: string;
+  location: string;
+  description: string;
+  results: string;
+  updatedAt: string;
+}
+
+function emptyTournament(): TournamentFormState {
+  return {
+    id: '',
+    slug: '',
+    name: '',
+    organizer: '',
+    frequency: '',
+    location: '',
+    description: '',
+    results: '',
+    updatedAt: '',
+  };
+}
+
+function tournamentToForm(t: Tournament): TournamentFormState {
+  return {
+    ...t,
+    organizer: t.organizer ?? '',
+    frequency: t.frequency ?? '',
+    location: t.location ?? '',
+    results: t.results.join('\n'),
+  };
+}
+
+function formToTournamentPayload(f: TournamentFormState) {
+  return {
+    ...(f.id ? { id: f.id } : {}),
+    slug: f.slug.trim(),
+    name: f.name.trim(),
+    organizer: f.organizer.trim(),
+    frequency: f.frequency.trim(),
+    location: f.location.trim(),
+    description: f.description,
+    results: f.results,
+  };
+}
+
 export default function AdminDashboard() {
   const router = useRouter();
   const [tab, setTab] = useState<Tab>('players');
   const [players, setPlayers] = useState<Player[]>([]);
   const [teams, setTeams] = useState<Team[]>([]);
+  const [tournaments, setTournaments] = useState<Tournament[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [editingPlayer, setEditingPlayer] = useState<PlayerFormState | null>(null);
   const [editingTeam, setEditingTeam] = useState<TeamFormState | null>(null);
+  const [editingTournament, setEditingTournament] = useState<TournamentFormState | null>(null);
   const [saving, setSaving] = useState(false);
 
   const load = useCallback(async () => {
     setLoading(true);
     setError('');
     try {
-      const [pr, tr] = await Promise.all([fetch('/api/admin/players'), fetch('/api/admin/teams')]);
-      if (pr.status === 401 || tr.status === 401) {
+      const [pr, tr, tor] = await Promise.all([
+        fetch('/api/admin/players'),
+        fetch('/api/admin/teams'),
+        fetch('/api/admin/tournaments'),
+      ]);
+      if (pr.status === 401 || tr.status === 401 || tor.status === 401) {
         router.push('/admin');
         return;
       }
-      if (!pr.ok || !tr.ok) throw new Error('Không tải được dữ liệu');
+      if (!pr.ok || !tr.ok || !tor.ok) throw new Error('Không tải được dữ liệu');
       setPlayers(await pr.json());
       setTeams(await tr.json());
+      setTournaments(await tor.json());
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Lỗi không xác định');
     } finally {
@@ -270,6 +326,57 @@ export default function AdminDashboard() {
     await load();
   }
 
+  async function saveTournamentForm() {
+    if (!editingTournament) return;
+    if (!editingTournament.name.trim()) {
+      setError('Vui lòng nhập tên giải đấu');
+      return;
+    }
+    setSaving(true);
+    setError('');
+    try {
+      const payload = formToTournamentPayload(editingTournament);
+      const isNew = !editingTournament.id;
+      const res = await fetch(
+        isNew ? '/api/admin/tournaments' : `/api/admin/tournaments/${editingTournament.id}`,
+        {
+          method: isNew ? 'POST' : 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        }
+      );
+      if (res.status === 401) {
+        router.push('/admin');
+        return;
+      }
+      if (!res.ok) {
+        const d = await res.json().catch(() => ({}));
+        throw new Error(d.error || 'Lưu thất bại');
+      }
+      setEditingTournament(null);
+      await load();
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Lưu thất bại');
+    } finally {
+      setSaving(false);
+    }
+  }
+
+  async function deleteTournamentById(id: string, name: string) {
+    if (!confirm(`Xoá giải đấu "${name}"?`)) return;
+    const res = await fetch(`/api/admin/tournaments/${id}`, { method: 'DELETE' });
+    if (res.status === 401) {
+      router.push('/admin');
+      return;
+    }
+    if (!res.ok) {
+      const d = await res.json().catch(() => ({}));
+      setError(d.error || 'Xoá thất bại');
+      return;
+    }
+    await load();
+  }
+
   const teamNameOf = (slug: string | null) => teams.find((t) => t.slug === slug)?.name ?? '—';
 
   return (
@@ -290,6 +397,7 @@ export default function AdminDashboard() {
           [
             ['players', `Tuyển thủ (${players.length})`],
             ['teams', `Đội tuyển (${teams.length})`],
+            ['tournaments', `Giải đấu (${tournaments.length})`],
           ] as [Tab, string][]
         ).map(([key, label]) => (
           <button
@@ -344,7 +452,7 @@ export default function AdminDashboard() {
             </table>
           </div>
         </section>
-      ) : (
+      ) : tab === 'teams' ? (
         <section className="mt-4">
           <button
             onClick={() => setEditingTeam(emptyTeam())}
@@ -373,6 +481,44 @@ export default function AdminDashboard() {
                         Sửa
                       </button>
                       <button onClick={() => deleteTeamById(t.id, t.name)} className="text-red-600 hover:underline">
+                        Xoá
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+      ) : (
+        <section className="mt-4">
+          <button
+            onClick={() => setEditingTournament(emptyTournament())}
+            className="bg-wiki-blue hover:bg-wiki-darkblue text-white text-sm font-semibold px-4 py-2 rounded-lg"
+          >
+            + Thêm giải đấu
+          </button>
+          <div className="mt-3 bg-white border border-gray-200 rounded-lg overflow-x-auto">
+            <table className="w-full text-sm min-w-[640px]">
+              <thead>
+                <tr className="bg-gray-50 text-left text-xs text-gray-500 uppercase">
+                  <th className="px-4 py-2.5">Tên giải</th>
+                  <th className="px-4 py-2.5">Ban tổ chức</th>
+                  <th className="px-4 py-2.5">Tần suất</th>
+                  <th className="px-4 py-2.5 text-right">Thao tác</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-100">
+                {tournaments.map((t) => (
+                  <tr key={t.id} className="hover:bg-gray-50">
+                    <td className="px-4 py-2.5 font-semibold text-wiki-darkblue">{t.name}</td>
+                    <td className="px-4 py-2.5">{t.organizer || '—'}</td>
+                    <td className="px-4 py-2.5">{t.frequency || '—'}</td>
+                    <td className="px-4 py-2.5 text-right whitespace-nowrap">
+                      <button onClick={() => setEditingTournament(tournamentToForm(t))} className="text-wiki-blue hover:underline mr-3">
+                        Sửa
+                      </button>
+                      <button onClick={() => deleteTournamentById(t.id, t.name)} className="text-red-600 hover:underline">
                         Xoá
                       </button>
                     </td>
@@ -494,6 +640,54 @@ export default function AdminDashboard() {
               </button>
               <button
                 onClick={saveTeamForm}
+                disabled={saving}
+                className="px-5 py-2 text-sm bg-wiki-blue hover:bg-wiki-darkblue disabled:opacity-60 text-white font-semibold rounded-lg"
+              >
+                {saving ? 'Đang lưu...' : 'Lưu'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Form giải đấu */}
+      {editingTournament && (
+        <div className="fixed inset-0 bg-black/40 z-50 overflow-y-auto p-4">
+          <div className="bg-white rounded-xl max-w-2xl mx-auto my-8 p-6">
+            <h2 className="text-lg font-extrabold text-wiki-darkblue">
+              {editingTournament.id ? `Sửa giải đấu: ${editingTournament.name}` : 'Thêm giải đấu mới'}
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+              <Field label="Tên giải đấu *">
+                <input className={inputCls} value={editingTournament.name} onChange={(e) => setEditingTournament({ ...editingTournament, name: e.target.value })} />
+              </Field>
+              <Field label="Slug (bỏ trống để tự tạo)">
+                <input className={inputCls} value={editingTournament.slug} onChange={(e) => setEditingTournament({ ...editingTournament, slug: e.target.value })} placeholder="vd: dau-truong-danh-vong" />
+              </Field>
+              <Field label="Ban tổ chức">
+                <input className={inputCls} value={editingTournament.organizer} onChange={(e) => setEditingTournament({ ...editingTournament, organizer: e.target.value })} placeholder="vd: Garena Việt Nam" />
+              </Field>
+              <Field label="Tần suất">
+                <input className={inputCls} value={editingTournament.frequency} onChange={(e) => setEditingTournament({ ...editingTournament, frequency: e.target.value })} placeholder="vd: 2 mùa/năm" />
+              </Field>
+              <Field label="Khu vực / Địa điểm">
+                <input className={inputCls} value={editingTournament.location} onChange={(e) => setEditingTournament({ ...editingTournament, location: e.target.value })} placeholder="vd: Việt Nam" />
+              </Field>
+            </div>
+            <div className="mt-4 space-y-4">
+              <Field label="Giới thiệu">
+                <textarea className={inputCls} rows={4} value={editingTournament.description} onChange={(e) => setEditingTournament({ ...editingTournament, description: e.target.value })} />
+              </Field>
+              <Field label="Lịch sử vô địch (mỗi dòng một mục)">
+                <textarea className={inputCls} rows={5} value={editingTournament.results} onChange={(e) => setEditingTournament({ ...editingTournament, results: e.target.value })} placeholder={'2024 — Vô địch: Bacon Time\n2023 — Vô địch: Talon Esports'} />
+              </Field>
+            </div>
+            <div className="flex justify-end gap-3 mt-6">
+              <button onClick={() => setEditingTournament(null)} className="px-4 py-2 text-sm border border-gray-300 rounded-lg hover:bg-gray-50">
+                Huỷ
+              </button>
+              <button
+                onClick={saveTournamentForm}
                 disabled={saving}
                 className="px-5 py-2 text-sm bg-wiki-blue hover:bg-wiki-darkblue disabled:opacity-60 text-white font-semibold rounded-lg"
               >
