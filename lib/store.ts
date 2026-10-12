@@ -49,7 +49,9 @@ async function readJsonFile<T>(path: string, seed: T): Promise<T> {
     const { blobs } = await list({ prefix: PREFIX });
     const blob = blobs.find((b) => b.pathname === path);
     if (blob) {
-      const res = await fetch(blob.url, { cache: 'no-store' });
+      // Cache-bust: URL Blob không đổi khi ghi đè nên edge CDN có thể trả nội dung cũ.
+      const freshUrl = `${blob.url}${blob.url.includes('?') ? '&' : '?'}cb=${Date.now()}`;
+      const res = await fetch(freshUrl, { cache: 'no-store' });
       if (res.ok) return (await res.json()) as T;
       console.warn(`[lowkeypedia] fetch ${path} -> HTTP ${res.status}, sẽ seed lại file`);
     }
