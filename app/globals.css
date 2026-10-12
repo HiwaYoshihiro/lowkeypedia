@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply bg-gray-50 text-gray-900 antialiased;
+}
+
+.wiki-article h2 {
+  @apply text-xl font-bold text-wiki-darkblue border-b border-gray-200 pb-2 mt-8 mb-3;
+}
+
+.wiki-article ul.achievements {
+  @apply list-disc pl-6 space-y-1.5;
+}
