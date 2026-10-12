@@ -47,6 +47,7 @@ async function readJsonFile<T>(path: string, seed: T): Promise<T> {
     await put(path, JSON.stringify(seed), {
       access: 'public',
       addRandomSuffix: false,
+      allowOverwrite: true,
       contentType: 'application/json',
     });
     console.warn(`[lowkeypedia] đã seed ${path} lên Blob`);
@@ -64,6 +65,7 @@ async function writeJsonFile<T>(path: string, data: T): Promise<void> {
   await put(path, JSON.stringify(data), {
     access: 'public',
     addRandomSuffix: false,
+    allowOverwrite: true,
     contentType: 'application/json',
   });
   clearCache();
