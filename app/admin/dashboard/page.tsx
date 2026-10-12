@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
-import { ROLES, type Player, type Team, type Tournament } from '@/lib/types';
+import { ROLES, type Achievement, type Player, type Team, type TeamHistoryItem, type Tournament } from '@/lib/types';
 
 export const dynamic = 'force-dynamic';
 
@@ -21,6 +21,175 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
   );
 }
 
+/** Một dòng trong editor thành tích kiểu Liquipedia. */
+interface AchievementRow {
+  year: string;
+  placement: string;
+  tournament: string;
+  tournamentSlug: string;
+}
+
+/** Một dòng trong editor lịch sử đội tuyển. */
+interface TeamHistoryRow {
+  period: string;
+  team: string;
+  teamSlug: string;
+}
+
+function emptyAchievementRow(): AchievementRow {
+  return { year: '', placement: '', tournament: '', tournamentSlug: '' };
+}
+
+function emptyTeamHistoryRow(): TeamHistoryRow {
+  return { period: '', team: '', teamSlug: '' };
+}
+
+function achievementToRow(a: Achievement): AchievementRow {
+  return {
+    year: a.year ?? '',
+    placement: a.placement ?? '',
+    tournament: a.tournament ?? '',
+    tournamentSlug: a.tournamentSlug ?? '',
+  };
+}
+
+function teamHistoryToRow(h: TeamHistoryItem): TeamHistoryRow {
+  return { period: h.period ?? '', team: h.team ?? '', teamSlug: h.teamSlug ?? '' };
+}
+
+/** Editor bảng thành tích: mỗi dòng Năm | Thứ hạng | Giải đấu | Link giải đấu. */
+function AchievementEditor({
+  rows,
+  onChange,
+  tournaments,
+}: {
+  rows: AchievementRow[];
+  onChange: (rows: AchievementRow[]) => void;
+  tournaments: Tournament[];
+}) {
+  const setRow = (i: number, patch: Partial<AchievementRow>) =>
+    onChange(rows.map((r, j) => (j === i ? { ...r, ...patch } : r)));
+  return (
+    <div className="space-y-2">
+      {rows.map((r, i) => (
+        <div key={i} className="grid grid-cols-12 gap-2 items-center bg-gray-50 border border-gray-200 rounded-lg p-2">
+          <input
+            className={`${inputCls} col-span-2`}
+            placeholder="Năm"
+            value={r.year}
+            onChange={(e) => setRow(i, { year: e.target.value })}
+          />
+          <input
+            className={`${inputCls} col-span-3`}
+            placeholder="Thứ hạng (Vô địch...)"
+            value={r.placement}
+            onChange={(e) => setRow(i, { placement: e.target.value })}
+          />
+          <input
+            className={`${inputCls} col-span-4`}
+            placeholder="Giải đấu (AIC 2022...)"
+            value={r.tournament}
+            onChange={(e) => setRow(i, { tournament: e.target.value })}
+          />
+          <select
+            className={`${inputCls} col-span-2`}
+            value={r.tournamentSlug}
+            onChange={(e) => setRow(i, { tournamentSlug: e.target.value })}
+            title="Liên kết tới trang giải đấu"
+          >
+            <option value="">Không liên kết</option>
+            {tournaments.map((t) => (
+              <option key={t.id} value={t.slug}>
+                {t.name.length > 24 ? t.name.slice(0, 24) + '…' : t.name}
+              </option>
+            ))}
+          </select>
+          <button
+            type="button"
+            onClick={() => onChange(rows.filter((_, j) => j !== i))}
+            className="col-span-1 text-red-600 hover:text-red-800 text-lg font-bold"
+            title="Xoá dòng"
+          >
+            ×
+          </button>
+        </div>
+      ))}
+      <button
+        type="button"
+        onClick={() => onChange([...rows, emptyAchievementRow()])}
+        className="text-sm text-wiki-blue hover:underline font-semibold"
+      >
+        + Thêm dòng thành tích
+      </button>
+    </div>
+  );
+}
+
+/** Editor lịch sử đội tuyển: mỗi dòng Giai đoạn | Đội tuyển | Link đội. */
+function TeamHistoryEditor({
+  rows,
+  onChange,
+  teams,
+}: {
+  rows: TeamHistoryRow[];
+  onChange: (rows: TeamHistoryRow[]) => void;
+  teams: Team[];
+}) {
+  const setRow = (i: number, patch: Partial<TeamHistoryRow>) =>
+    onChange(rows.map((r, j) => (j === i ? { ...r, ...patch } : r)));
+  return (
+    <div className="space-y-2">
+      {rows.map((r, i) => (
+        <div key={i} className="grid grid-cols-12 gap-2 items-center bg-gray-50 border border-gray-200 rounded-lg p-2">
+          <input
+            className={`${inputCls} col-span-3`}
+            placeholder="Giai đoạn (2018–2022)"
+            value={r.period}
+            onChange={(e) => setRow(i, { period: e.target.value })}
+          />
+          <input
+            className={`${inputCls} col-span-5`}
+            placeholder="Đội tuyển"
+            value={r.team}
+            onChange={(e) => setRow(i, { team: e.target.value })}
+          />
+          <select
+            className={`${inputCls} col-span-3`}
+            value={r.teamSlug}
+            onChange={(e) => {
+              const name = teams.find((t) => t.slug === e.target.value)?.name ?? r.team;
+              setRow(i, { teamSlug: e.target.value, team: e.target.value ? name : r.team });
+            }}
+            title="Liên kết tới trang đội tuyển"
+          >
+            <option value="">Không liên kết</option>
+            {teams.map((t) => (
+              <option key={t.id} value={t.slug}>
+                {t.name}
+              </option>
+            ))}
+          </select>
+          <button
+            type="button"
+            onClick={() => onChange(rows.filter((_, j) => j !== i))}
+            className="col-span-1 text-red-600 hover:text-red-800 text-lg font-bold"
+            title="Xoá dòng"
+          >
+            ×
+          </button>
+        </div>
+      ))}
+      <button
+        type="button"
+        onClick={() => onChange([...rows, emptyTeamHistoryRow()])}
+        className="text-sm text-wiki-blue hover:underline font-semibold"
+      >
+        + Thêm giai đoạn
+      </button>
+    </div>
+  );
+}
+
 interface PlayerFormState {
   id: string;
   slug: string;
@@ -32,7 +201,8 @@ interface PlayerFormState {
   birthYear: string;
   biography: string;
   careerHistory: string;
-  achievements: string;
+  teamHistory: TeamHistoryRow[];
+  achievements: AchievementRow[];
   avatarUrl: string;
   updatedAt: string;
 }
@@ -49,7 +219,8 @@ function emptyPlayer(): PlayerFormState {
     birthYear: '',
     biography: '',
     careerHistory: '',
-    achievements: '',
+    teamHistory: [],
+    achievements: [],
     avatarUrl: '',
     updatedAt: '',
   };
@@ -61,9 +232,33 @@ function playerToForm(p: Player): PlayerFormState {
     realName: p.realName ?? '',
     teamSlug: p.teamSlug ?? '',
     birthYear: p.birthYear ? String(p.birthYear) : '',
-    achievements: p.achievements.join('\n'),
+    teamHistory: (p.teamHistory ?? []).map(teamHistoryToRow),
+    achievements: p.achievements.map(achievementToRow),
     avatarUrl: p.avatarUrl ?? '',
   };
+}
+
+/** Bỏ các dòng thành tích trống hoàn toàn trước khi gửi. */
+function rowsToAchievements(rows: AchievementRow[]): Achievement[] {
+  return rows
+    .map((r) => ({
+      year: r.year.trim(),
+      placement: r.placement.trim(),
+      tournament: r.tournament.trim(),
+      ...(r.tournamentSlug ? { tournamentSlug: r.tournamentSlug } : {}),
+    }))
+    .filter((a) => a.year || a.placement || a.tournament);
+}
+
+function rowsToTeamHistory(rows: TeamHistoryRow[]): TeamHistoryItem[] | undefined {
+  const out = rows
+    .map((r) => ({
+      period: r.period.trim(),
+      team: r.team.trim(),
+      ...(r.teamSlug ? { teamSlug: r.teamSlug } : {}),
+    }))
+    .filter((h) => h.period || h.team);
+  return out.length > 0 ? out : undefined;
 }
 
 function formToPlayerPayload(f: PlayerFormState) {
@@ -78,7 +273,8 @@ function formToPlayerPayload(f: PlayerFormState) {
     birthYear: f.birthYear.trim() ? Number(f.birthYear.trim()) : undefined,
     biography: f.biography,
     careerHistory: f.careerHistory,
-    achievements: f.achievements,
+    teamHistory: rowsToTeamHistory(f.teamHistory),
+    achievements: rowsToAchievements(f.achievements),
     avatarUrl: f.avatarUrl.trim(),
   };
 }
@@ -92,7 +288,7 @@ interface TeamFormState {
   region: string;
   founded: string;
   description: string;
-  achievements: string;
+  achievements: AchievementRow[];
   updatedAt: string;
 }
 
@@ -106,7 +302,7 @@ function emptyTeam(): TeamFormState {
     region: 'Việt Nam',
     founded: '',
     description: '',
-    achievements: '',
+    achievements: [],
     updatedAt: '',
   };
 }
@@ -116,7 +312,7 @@ function teamToForm(t: Team): TeamFormState {
     ...t,
     logoUrl: t.logoUrl ?? '',
     founded: t.founded ? String(t.founded) : '',
-    achievements: t.achievements.join('\n'),
+    achievements: t.achievements.map(achievementToRow),
   };
 }
 
@@ -130,7 +326,7 @@ function formToTeamPayload(f: TeamFormState) {
     region: f.region.trim() || 'Việt Nam',
     founded: f.founded.trim() ? Number(f.founded.trim()) : undefined,
     description: f.description,
-    achievements: f.achievements,
+    achievements: rowsToAchievements(f.achievements),
   };
 }
 
@@ -579,8 +775,19 @@ export default function AdminDashboard() {
               <Field label="Sự nghiệp">
                 <textarea className={inputCls} rows={4} value={editingPlayer.careerHistory} onChange={(e) => setEditingPlayer({ ...editingPlayer, careerHistory: e.target.value })} />
               </Field>
-              <Field label="Thành tích (mỗi dòng một thành tích)">
-                <textarea className={inputCls} rows={4} value={editingPlayer.achievements} onChange={(e) => setEditingPlayer({ ...editingPlayer, achievements: e.target.value })} placeholder={'Vô địch AWC 2019\nVô địch AIC 2019'} />
+              <Field label="Lịch sử đội tuyển">
+                <TeamHistoryEditor
+                  rows={editingPlayer.teamHistory}
+                  onChange={(teamHistory) => setEditingPlayer({ ...editingPlayer, teamHistory })}
+                  teams={teams}
+                />
+              </Field>
+              <Field label="Thành tích thi đấu">
+                <AchievementEditor
+                  rows={editingPlayer.achievements}
+                  onChange={(achievements) => setEditingPlayer({ ...editingPlayer, achievements })}
+                  tournaments={tournaments}
+                />
               </Field>
             </div>
             <div className="flex justify-end gap-3 mt-6">
@@ -630,8 +837,12 @@ export default function AdminDashboard() {
               <Field label="Mô tả">
                 <textarea className={inputCls} rows={4} value={editingTeam.description} onChange={(e) => setEditingTeam({ ...editingTeam, description: e.target.value })} />
               </Field>
-              <Field label="Thành tích (mỗi dòng một thành tích)">
-                <textarea className={inputCls} rows={4} value={editingTeam.achievements} onChange={(e) => setEditingTeam({ ...editingTeam, achievements: e.target.value })} placeholder={'Vô địch AWC 2019\nVô địch AIC 2019'} />
+              <Field label="Thành tích đội tuyển">
+                <AchievementEditor
+                  rows={editingTeam.achievements}
+                  onChange={(achievements) => setEditingTeam({ ...editingTeam, achievements })}
+                  tournaments={tournaments}
+                />
               </Field>
             </div>
             <div className="flex justify-end gap-3 mt-6">

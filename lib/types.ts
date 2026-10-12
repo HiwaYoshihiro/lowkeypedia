@@ -13,6 +13,21 @@ export const ROLES: Role[] = [
   'Trợ Thủ',
 ];
 
+/** Một dòng thành tích kiểu Liquipedia: Năm | Thứ hạng | Giải đấu (link). */
+export interface Achievement {
+  year: string;
+  placement: string;
+  tournament: string;
+  tournamentSlug?: string;
+}
+
+/** Một giai đoạn trong lịch sử đội tuyển của tuyển thủ. */
+export interface TeamHistoryItem {
+  period: string;
+  team: string;
+  teamSlug?: string;
+}
+
 export interface Player {
   id: string;
   slug: string;
@@ -24,7 +39,8 @@ export interface Player {
   birthYear?: number;
   biography: string;
   careerHistory: string;
-  achievements: string[];
+  teamHistory?: TeamHistoryItem[];
+  achievements: Achievement[];
   avatarUrl?: string;
   updatedAt: string;
 }
@@ -38,7 +54,7 @@ export interface Team {
   region: string;
   founded?: number;
   description: string;
-  achievements: string[];
+  achievements: Achievement[];
   updatedAt: string;
 }
 

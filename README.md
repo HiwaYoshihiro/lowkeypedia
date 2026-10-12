@@ -44,7 +44,12 @@ Mở http://localhost:3000
 
 - Truy cập `/admin`, đăng nhập bằng `ADMIN_PASSWORD`.
 - Dashboard có 3 tab **Tuyển thủ** / **Đội tuyển** / **Giải đấu**: thêm, sửa, xoá trực tiếp.
-  - Ô "Thành tích" / "Lịch sử vô địch": mỗi dòng một mục.
+  - **Thành tích** (tuyển thủ & đội tuyển): editor dạng bảng kiểu Liquipedia — mỗi dòng gồm
+    **Năm**, **Thứ hạng** (in đậm), **Giải đấu** và **Liên kết giải đấu** (chọn từ danh sách giải
+    đấu để tên giải trên web thành link tới trang giải tương ứng).
+  - **Lịch sử đội tuyển** (form tuyển thủ): mỗi dòng gồm **Giai đoạn**, **Đội tuyển** và
+    **Liên kết đội** — hiển thị dạng bảng có link trên trang tuyển thủ.
+  - Ô "Lịch sử vô địch" (giải đấu): mỗi dòng một mục.
   - Ô "Tiểu sử" / "Sự nghiệp" / "Mô tả" / "Giới thiệu": văn bản nhiều dòng.
 - Sau mỗi lần lưu, cache được xoá và các trang liên quan được revalidate ngay lập tức.
 
@@ -60,8 +65,9 @@ Mở http://localhost:3000
 ## Trang web
 
 - `/` — trang chủ: hero, tuyển thủ nổi bật, đội tuyển, giải đấu, cập nhật gần đây
-- `/tuyen-thu`, `/tuyen-thu/[slug]` — danh sách + hồ sơ tuyển thủ (infobox)
-- `/doi-tuyen`, `/doi-tuyen/[slug]` — danh sách + trang đội tuyển (infobox + đội hình)
+- `/tuyen-thu`, `/tuyen-thu/[slug]` — danh sách + hồ sơ tuyển thủ (infobox, lịch sử đội tuyển,
+  bảng thành tích kiểu Liquipedia có link tới trang giải đấu)
+- `/doi-tuyen`, `/doi-tuyen/[slug]` — danh sách + trang đội tuyển (infobox + đội hình + bảng thành tích)
 - `/giai-dau`, `/giai-dau/[slug]` — danh sách + trang giải đấu (infobox + lịch sử vô địch)
 - `/tim-kiem` — tìm kiếm không dấu cả 3 loại
 - `/admin`, `/admin/dashboard` — đăng nhập + quản trị CRUD

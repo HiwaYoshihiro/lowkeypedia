@@ -3,7 +3,16 @@ import playersSeed from '../data/seed/players.json';
 import teamsSeed from '../data/seed/teams.json';
 import tournamentsSeed from '../data/seed/tournaments.json';
 import { normalizeSearch, slugify } from './slug';
-import { ROLES, type Player, type Role, type SearchResult, type Team, type Tournament } from './types';
+import {
+  ROLES,
+  type Achievement,
+  type Player,
+  type Role,
+  type SearchResult,
+  type Team,
+  type TeamHistoryItem,
+  type Tournament,
+} from './types';
 
 const PLAYERS_PATH = 'lowkeypedia/data/players.json';
 const TEAMS_PATH = 'lowkeypedia/data/teams.json';
@@ -75,16 +84,18 @@ async function getPlayersRaw(): Promise<Player[]> {
   const hit = cache.players;
   if (hit && Date.now() - hit.at < TTL_MS) return hit.data;
   const data = await readJsonFile<Player[]>(PLAYERS_PATH, playersSeed as Player[]);
-  cache.players = { data, at: Date.now() };
-  return data;
+  const normalized = data.map(normalizePlayer);
+  cache.players = { data: normalized, at: Date.now() };
+  return normalized;
 }
 
 async function getTeamsRaw(): Promise<Team[]> {
   const hit = cache.teams;
   if (hit && Date.now() - hit.at < TTL_MS) return hit.data;
   const data = await readJsonFile<Team[]>(TEAMS_PATH, teamsSeed as Team[]);
-  cache.teams = { data, at: Date.now() };
-  return data;
+  const normalized = data.map(normalizeTeam);
+  cache.teams = { data: normalized, at: Date.now() };
+  return normalized;
 }
 
 async function getTournamentsRaw(): Promise<Tournament[]> {
@@ -188,6 +199,64 @@ function cleanList(v: unknown): string[] {
   return [];
 }
 
+/** Chuẩn hoá 1 achievement: string cũ → object, object → trim từng field. Bỏ dòng trống hoàn toàn. */
+function cleanAchievement(v: unknown): Achievement | null {
+  if (typeof v === 'string') {
+    const tournament = v.trim();
+    if (!tournament) return null;
+    return { year: '', placement: '', tournament };
+  }
+  if (v && typeof v === 'object') {
+    const o = v as Record<string, unknown>;
+    const year = String(o.year ?? '').trim();
+    const placement = String(o.placement ?? '').trim();
+    const tournament = String(o.tournament ?? '').trim();
+    const tournamentSlug = String(o.tournamentSlug ?? '').trim() || undefined;
+    if (!year && !placement && !tournament) return null;
+    return { year, placement, tournament, ...(tournamentSlug ? { tournamentSlug } : {}) };
+  }
+  return null;
+}
+
+function cleanAchievements(v: unknown): Achievement[] {
+  if (!Array.isArray(v)) return [];
+  const out: Achievement[] = [];
+  for (const item of v) {
+    const a = cleanAchievement(item);
+    if (a) out.push(a);
+  }
+  return out;
+}
+
+function cleanTeamHistory(v: unknown): TeamHistoryItem[] | undefined {
+  if (!Array.isArray(v)) return undefined;
+  const out: TeamHistoryItem[] = [];
+  for (const item of v) {
+    if (!item || typeof item !== 'object') continue;
+    const o = item as Record<string, unknown>;
+    const period = String(o.period ?? '').trim();
+    const team = String(o.team ?? '').trim();
+    const teamSlug = String(o.teamSlug ?? '').trim() || undefined;
+    if (!period && !team) continue;
+    out.push({ period, team, ...(teamSlug ? { teamSlug } : {}) });
+  }
+  return out.length > 0 ? out : undefined;
+}
+
+/** Chuẩn hoá dữ liệu tuyển thủ đọc từ Blob: achievements string[] cũ → Achievement[]. */
+function normalizePlayer(p: Player): Player {
+  return {
+    ...p,
+    achievements: cleanAchievements(p.achievements as unknown),
+    teamHistory: cleanTeamHistory(p.teamHistory),
+  };
+}
+
+/** Chuẩn hoá dữ liệu đội tuyển đọc từ Blob: achievements string[] cũ → Achievement[]. */
+function normalizeTeam(t: Team): Team {
+  return { ...t, achievements: cleanAchievements(t.achievements as unknown) };
+}
+
 export async function savePlayer(input: Partial<Player> & { ign: string }): Promise<Player> {
   if (!ROLES.includes(input.role as Role)) throw new Error('Vị trí (role) không hợp lệ');
   const players = await getPlayersRaw();
@@ -206,7 +275,8 @@ export async function savePlayer(input: Partial<Player> & { ign: string }): Prom
     birthYear: typeof input.birthYear === 'number' ? input.birthYear : undefined,
     biography: (input.biography || '').trim(),
     careerHistory: (input.careerHistory || '').trim(),
-    achievements: cleanList(input.achievements),
+    teamHistory: cleanTeamHistory(input.teamHistory),
+    achievements: cleanAchievements(input.achievements),
     avatarUrl: input.avatarUrl?.trim() || undefined,
     updatedAt: now,
   };
@@ -239,7 +309,7 @@ export async function saveTeam(input: Partial<Team> & { name: string }): Promise
     region: input.region?.trim() || 'Việt Nam',
     founded: typeof input.founded === 'number' ? input.founded : undefined,
     description: (input.description || '').trim(),
-    achievements: cleanList(input.achievements),
+    achievements: cleanAchievements(input.achievements),
     updatedAt: now,
   };
   const idx = teams.findIndex((t) => t.id === id);

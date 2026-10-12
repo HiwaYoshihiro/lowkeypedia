@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import { RoleBadge } from '@/components/PlayerCard';
+import AchievementTable from '@/components/AchievementTable';
 import { getPlayersByTeam, getTeamBySlug } from '@/lib/store';
 
 export const dynamic = 'force-dynamic';
@@ -78,15 +79,13 @@ export default async function TeamDetailPage({ params }: { params: { slug: strin
               <p style={{ color: '#72777d' }}>Chưa có dữ liệu đội hình.</p>
             )}
 
-            <h2 className="wiki-section-title">Thành tích</h2>
             {team.achievements.length > 0 ? (
-              <ul className="achievements">
-                {team.achievements.map((a, i) => (
-                  <li key={i}>{a}</li>
-                ))}
-              </ul>
+              <AchievementTable items={team.achievements} title="Thành tích đội tuyển" />
             ) : (
-              <p style={{ color: '#72777d' }}>Chưa có thông tin.</p>
+              <>
+                <h2 className="wiki-section-title">Thành tích đội tuyển</h2>
+                <p style={{ color: '#72777d' }}>Chưa có thông tin.</p>
+              </>
             )}
           </div>
         </div>

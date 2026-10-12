@@ -2,7 +2,8 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import { RoleBadge, TeamStatusBadge } from '@/components/PlayerCard';
-import { getPlayerBySlug, getTeamBySlug } from '@/lib/store';
+import AchievementTable from '@/components/AchievementTable';
+import { getPlayerBySlug, getTeamBySlug, getTeams } from '@/lib/store';
 
 export const dynamic = 'force-dynamic';
 
@@ -23,6 +24,10 @@ export default async function PlayerDetailPage({ params }: { params: { slug: str
   if (!player) notFound();
 
   const team = player.teamSlug ? await getTeamBySlug(player.teamSlug) : null;
+  const teams = await getTeams();
+  const teamNameOf = (slug?: string) => teams.find((t) => t.slug === slug)?.name ?? null;
+
+  const teamHistory = player.teamHistory ?? [];
 
   const rows: [string, React.ReactNode][] = [
     ['Tên thi đấu', <strong key="ign">{player.ign}</strong>],
@@ -63,15 +68,43 @@ export default async function PlayerDetailPage({ params }: { params: { slug: str
             <h2 className="wiki-section-title">Sự nghiệp</h2>
             <p style={{ whiteSpace: 'pre-line' }}>{player.careerHistory || 'Chưa có thông tin.'}</p>
 
-            <h2 className="wiki-section-title">Thành tích</h2>
+            {teamHistory.length > 0 && (
+              <>
+                <h2 className="wiki-section-title">Lịch sử đội tuyển</h2>
+                <table className="wiki-table">
+                  <thead>
+                    <tr>
+                      <th>Giai đoạn</th>
+                      <th>Đội tuyển</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {teamHistory.map((h, i) => (
+                      <tr key={i}>
+                        <td>{h.period || '—'}</td>
+                        <td>
+                          {h.teamSlug ? (
+                            <Link href={`/doi-tuyen/${h.teamSlug}`} className="wiki-link">
+                              <strong>{teamNameOf(h.teamSlug) ?? h.team}</strong>
+                            </Link>
+                          ) : (
+                            <strong>{h.team || '—'}</strong>
+                          )}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </>
+            )}
+
             {player.achievements.length > 0 ? (
-              <ul className="achievements">
-                {player.achievements.map((a, i) => (
-                  <li key={i}>{a}</li>
-                ))}
-              </ul>
+              <AchievementTable items={player.achievements} title="Thành tích thi đấu" />
             ) : (
-              <p style={{ color: '#72777d' }}>Chưa có thông tin.</p>
+              <>
+                <h2 className="wiki-section-title">Thành tích thi đấu</h2>
+                <p style={{ color: '#72777d' }}>Chưa có thông tin.</p>
+              </>
             )}
           </div>
         </div>
