@@ -43,8 +43,20 @@ export interface Team {
 }
 
 export interface SearchResult {
-  type: 'player' | 'team';
+  type: 'player' | 'team' | 'tournament';
   slug: string;
   title: string;
   subtitle: string;
+}
+
+export interface Tournament {
+  id: string;
+  slug: string;
+  name: string;
+  organizer: string;
+  frequency: string;
+  location: string;
+  description: string;
+  results: string[];
+  updatedAt: string;
 }

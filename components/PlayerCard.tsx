@@ -17,26 +17,28 @@ export function RoleBadge({ role }: { role: string }) {
   );
 }
 
+export function TeamStatusBadge({ teamName }: { teamName?: string }) {
+  if (teamName) {
+    return <span className="status-badge badge-active">{teamName}</span>;
+  }
+  return <span className="status-badge badge-inactive">Tự do</span>;
+}
+
 export default function PlayerCard({ player, teamName }: { player: Player; teamName?: string }) {
   return (
-    <Link
-      href={`/tuyen-thu/${player.slug}`}
-      className="block bg-white border border-gray-200 rounded-lg p-4 hover:shadow-md hover:border-wiki-blue transition-shadow"
-    >
-      <div className="flex items-center gap-3">
-        <div className="w-12 h-12 rounded-full bg-wiki-navy text-wiki-gold flex items-center justify-center font-extrabold text-lg shrink-0">
-          {player.ign.charAt(0).toUpperCase()}
-        </div>
-        <div className="min-w-0">
-          <h3 className="font-bold text-wiki-darkblue truncate">{player.ign}</h3>
-          <p className="text-xs text-gray-500 truncate">
-            {player.realName ?? teamName ?? player.nationality}
-          </p>
-        </div>
+    <Link href={`/tuyen-thu/${player.slug}`} className="catalogue-card">
+      <div className="catalogue-card-img-wrap">
+        <span className="catalogue-initial">{player.ign.charAt(0).toUpperCase()}</span>
       </div>
-      <div className="mt-3 flex items-center justify-between gap-2">
-        <RoleBadge role={player.role} />
-        {teamName && <span className="text-xs text-gray-500 truncate">{teamName}</span>}
+      <div className="catalogue-card-info">
+        <div className="catalogue-card-title-row">
+          <h4>{player.ign}</h4>
+          <TeamStatusBadge teamName={teamName} />
+        </div>
+        <small>{player.realName ?? player.nationality}</small>
+        <div className="catalogue-card-meta">
+          <RoleBadge role={player.role} />
+        </div>
       </div>
     </Link>
   );

@@ -29,22 +29,19 @@ export default async function PlayersPage({
 
   return (
     <div>
-      <h1 className="text-2xl md:text-3xl font-extrabold text-wiki-darkblue">Tuyển thủ</h1>
-      <p className="text-gray-600 mt-1 text-sm">Danh sách tuyển thủ Liên Quân Mobile Việt Nam ({filtered.length})</p>
+      <h1 className="wiki-title">Tuyển thủ</h1>
+      <p style={{ fontSize: '13px', color: '#72777d', marginTop: '6px' }}>
+        Danh sách tuyển thủ Liên Quân Mobile Việt Nam ({filtered.length})
+      </p>
 
-      <form method="GET" className="mt-4 bg-white border border-gray-200 rounded-lg p-4 flex flex-col md:flex-row gap-3">
+      <form method="GET" className="wiki-filterbar">
         <input
           type="search"
           name="q"
           defaultValue={q}
           placeholder="Tìm theo tên thi đấu..."
-          className="flex-1 border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-wiki-blue"
         />
-        <select
-          name="team"
-          defaultValue={teamFilter}
-          className="border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white"
-        >
+        <select name="team" defaultValue={teamFilter}>
           <option value="">Tất cả đội</option>
           {teams.map((t) => (
             <option key={t.id} value={t.slug}>
@@ -53,11 +50,7 @@ export default async function PlayersPage({
           ))}
           <option value="__none">Tự do / đã giải nghệ</option>
         </select>
-        <select
-          name="role"
-          defaultValue={roleFilter}
-          className="border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white"
-        >
+        <select name="role" defaultValue={roleFilter}>
           <option value="">Mọi vị trí</option>
           {ROLES.map((r) => (
             <option key={r} value={r}>
@@ -65,20 +58,22 @@ export default async function PlayersPage({
             </option>
           ))}
         </select>
-        <button type="submit" className="bg-wiki-blue hover:bg-wiki-darkblue text-white text-sm font-semibold px-5 py-2 rounded-lg">
+        <button type="submit" className="wiki-btn">
           Lọc
         </button>
       </form>
 
       {filtered.length === 0 ? (
-        <p className="mt-8 text-center text-gray-500">Không tìm thấy tuyển thủ nào phù hợp.</p>
+        <p style={{ marginTop: '24px', textAlign: 'center', color: '#72777d' }}>
+          Không tìm thấy tuyển thủ nào phù hợp.
+        </p>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
+        <div className="catalogue-grid">
           {filtered.map((p) => (
             <PlayerCard
               key={p.id}
               player={p}
-              teamName={p.teamSlug ? teamBySlug.get(p.teamSlug) ?? 'Tự do' : 'Tự do'}
+              teamName={p.teamSlug ? teamBySlug.get(p.teamSlug) : undefined}
             />
           ))}
         </div>

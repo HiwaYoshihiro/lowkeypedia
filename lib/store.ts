@@ -1,21 +1,24 @@
 import { list, put } from '@vercel/blob';
 import playersSeed from '../data/seed/players.json';
 import teamsSeed from '../data/seed/teams.json';
+import tournamentsSeed from '../data/seed/tournaments.json';
 import { normalizeSearch, slugify } from './slug';
-import { ROLES, type Player, type Role, type SearchResult, type Team } from './types';
+import { ROLES, type Player, type Role, type SearchResult, type Team, type Tournament } from './types';
 
 const PLAYERS_PATH = 'lowkeypedia/data/players.json';
 const TEAMS_PATH = 'lowkeypedia/data/teams.json';
+const TOURNAMENTS_PATH = 'lowkeypedia/data/tournaments.json';
 const PREFIX = 'lowkeypedia/data/';
 const TTL_MS = 30_000;
 
 type CacheEntry<T> = { data: T; at: number };
-const cache: { players?: CacheEntry<Player[]>; teams?: CacheEntry<Team[]> } = {};
+const cache: { players?: CacheEntry<Player[]>; teams?: CacheEntry<Team[]>; tournaments?: CacheEntry<Tournament[]> } = {};
 
 /** Xoá cache in-memory sau mỗi lần ghi. */
 export function clearCache(): void {
   delete cache.players;
   delete cache.teams;
+  delete cache.tournaments;
 }
 
 function hasToken(): boolean {
@@ -82,6 +85,14 @@ async function getTeamsRaw(): Promise<Team[]> {
   return data;
 }
 
+async function getTournamentsRaw(): Promise<Tournament[]> {
+  const hit = cache.tournaments;
+  if (hit && Date.now() - hit.at < TTL_MS) return hit.data;
+  const data = await readJsonFile<Tournament[]>(TOURNAMENTS_PATH, tournamentsSeed as Tournament[]);
+  cache.tournaments = { data, at: Date.now() };
+  return data;
+}
+
 // ---------- Đọc ----------
 
 export async function getPlayers(): Promise<Player[]> {
@@ -106,10 +117,23 @@ export async function getPlayersByTeam(teamSlug: string): Promise<Player[]> {
   return (await getPlayersRaw()).filter((p) => p.teamSlug === teamSlug);
 }
 
+export async function getTournaments(): Promise<Tournament[]> {
+  const tournaments = await getTournamentsRaw();
+  return [...tournaments].sort((a, b) => a.name.localeCompare(b.name, 'vi'));
+}
+
+export async function getTournamentBySlug(slug: string): Promise<Tournament | null> {
+  return (await getTournamentsRaw()).find((t) => t.slug === slug) ?? null;
+}
+
 export async function searchAll(q: string): Promise<SearchResult[]> {
   const nq = normalizeSearch(q.trim());
   if (!nq) return [];
-  const [players, teams] = await Promise.all([getPlayersRaw(), getTeamsRaw()]);
+  const [players, teams, tournaments] = await Promise.all([
+    getPlayersRaw(),
+    getTeamsRaw(),
+    getTournamentsRaw(),
+  ]);
   const results: SearchResult[] = [];
   for (const p of players) {
     const hay = normalizeSearch([p.ign, p.realName ?? '', p.role].join(' '));
@@ -130,6 +154,17 @@ export async function searchAll(q: string): Promise<SearchResult[]> {
         slug: t.slug,
         title: t.name,
         subtitle: `${t.tag} • ${t.region}`,
+      });
+    }
+  }
+  for (const t of tournaments) {
+    const hay = normalizeSearch([t.name, t.organizer, t.location].join(' '));
+    if (hay.includes(nq)) {
+      results.push({
+        type: 'tournament',
+        slug: t.slug,
+        title: t.name,
+        subtitle: `Giải đấu • ${t.organizer}`,
       });
     }
   }
@@ -216,5 +251,36 @@ export async function deleteTeam(id: string): Promise<boolean> {
   const next = teams.filter((t) => t.id !== id);
   if (next.length === teams.length) return false;
   await writeJsonFile(TEAMS_PATH, next);
+  return true;
+}
+
+export async function saveTournament(input: Partial<Tournament> & { name: string }): Promise<Tournament> {
+  const tournaments = await getTournamentsRaw();
+  const now = new Date().toISOString();
+  const id = input.id?.trim() || `tournament-${Date.now()}`;
+  const taken = new Set(tournaments.filter((t) => t.id !== id).map((t) => t.slug));
+  const slug = uniqueSlug((input.slug || '').trim() || slugify(input.name), taken);
+  const tournament: Tournament = {
+    id,
+    slug,
+    name: input.name.trim(),
+    organizer: (input.organizer || '').trim(),
+    frequency: (input.frequency || '').trim(),
+    location: (input.location || '').trim(),
+    description: (input.description || '').trim(),
+    results: cleanList(input.results),
+    updatedAt: now,
+  };
+  const idx = tournaments.findIndex((t) => t.id === id);
+  const next = idx >= 0 ? tournaments.map((t, j) => (j === idx ? tournament : t)) : [...tournaments, tournament];
+  await writeJsonFile(TOURNAMENTS_PATH, next);
+  return tournament;
+}
+
+export async function deleteTournament(id: string): Promise<boolean> {
+  const tournaments = await getTournamentsRaw();
+  const next = tournaments.filter((t) => t.id !== id);
+  if (next.length === tournaments.length) return false;
+  await writeJsonFile(TOURNAMENTS_PATH, next);
   return true;
 }
