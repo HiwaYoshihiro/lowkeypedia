@@ -65,6 +65,16 @@
   --neutral-bg: #eaecf0;
   --neutral-border: #c8ccd1;
 
+  /* Banner trang chủ — tách thành token để dark mode không chói */
+  --hero-bg: linear-gradient(135deg, #0f1b3d 0%, #1e3a8a 100%);
+  --hero-ink: #ffffff;
+  --hero-ink-soft: rgba(255, 255, 255, 0.92);
+  --hero-chip-bg: rgba(255, 255, 255, 0.14);
+  --hero-chip-bg-hover: rgba(255, 255, 255, 0.24);
+  --hero-chip-border: rgba(255, 255, 255, 0.45);
+  --hero-sheen-gold: rgba(212, 160, 23, 0.5);
+  --hero-sheen-white: rgba(255, 255, 255, 0.18);
+
   /* Hình khối & đổ bóng */
   --radius-sm: 2px;
   --radius: 4px;
@@ -120,6 +130,16 @@
   --neutral: #b0b6bd;
   --neutral-bg: #262c33;
   --neutral-border: #414750;
+
+  /* Banner tối hơn để không chói trên nền #0f1216, vẫn giữ tông navy + gold */
+  --hero-bg: linear-gradient(135deg, #0a1129 0%, #14275c 100%);
+  --hero-ink: #eef2f8;
+  --hero-ink-soft: rgba(238, 242, 248, 0.82);
+  --hero-chip-bg: rgba(255, 255, 255, 0.08);
+  --hero-chip-bg-hover: rgba(255, 255, 255, 0.15);
+  --hero-chip-border: rgba(255, 255, 255, 0.26);
+  --hero-sheen-gold: rgba(212, 160, 23, 0.22);
+  --hero-sheen-white: rgba(255, 255, 255, 0.06);
 
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
   --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.5);

@@ -37,7 +37,7 @@
 .btn-primary {
   background: var(--accent);
   border-color: var(--accent);
-  color: #fff;
+  color: var(--text-inverse);
 }
 
 .btn-primary:hover:not(:disabled) {
@@ -48,7 +48,7 @@
 .btn-danger {
   background: var(--danger);
   border-color: var(--danger);
-  color: #fff;
+  color: var(--text-inverse);
 }
 
 .btn-danger:hover:not(:disabled) {
@@ -58,7 +58,7 @@
 .btn-success {
   background: var(--success);
   border-color: var(--success);
-  color: #fff;
+  color: var(--text-inverse);
 }
 
 .btn-success:hover:not(:disabled) {
@@ -509,7 +509,7 @@ select.input {
   place-items: center;
   font-size: 12px;
   font-weight: 700;
-  color: #fff;
+  color: var(--text-inverse);
   background: var(--accent);
 }
 

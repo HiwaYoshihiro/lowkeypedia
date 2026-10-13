@@ -353,8 +353,8 @@
 .hero {
   position: relative;
   overflow: hidden;
-  background: linear-gradient(135deg, #0f1b3d 0%, #1e3a8a 100%);
-  color: #fff;
+  background: var(--hero-bg);
+  color: var(--hero-ink);
   border-radius: var(--radius-lg);
   padding: 32px 34px;
   box-shadow: var(--shadow-md);
@@ -365,8 +365,8 @@
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(560px 240px at 92% 118%, rgba(212, 160, 23, 0.5), transparent 68%),
-    radial-gradient(460px 200px at 6% -20%, rgba(255, 255, 255, 0.18), transparent 70%);
+    radial-gradient(560px 240px at 92% 118%, var(--hero-sheen-gold), transparent 68%),
+    radial-gradient(460px 200px at 6% -20%, var(--hero-sheen-white), transparent 70%);
   pointer-events: none;
 }
 
@@ -378,7 +378,7 @@
 
 .hero-title {
   font-size: clamp(28px, 4.4vw, 40px);
-  color: #fff;
+  color: var(--hero-ink);
   /* Không siết chữ: tiếng Việt nhiều dấu, letter-spacing âm làm dấu bị dính. */
   letter-spacing: normal;
 }
@@ -387,7 +387,7 @@
   margin: 10px 0 0;
   font-size: 15px;
   line-height: 1.75;
-  color: rgba(255, 255, 255, 0.92);
+  color: var(--hero-ink-soft);
 }
 
 .hero-actions {
@@ -398,14 +398,14 @@
 }
 
 .hero-actions .btn {
-  background: rgba(255, 255, 255, 0.14);
-  border-color: rgba(255, 255, 255, 0.45);
-  color: #fff;
+  background: var(--hero-chip-bg);
+  border-color: var(--hero-chip-border);
+  color: var(--hero-ink);
   backdrop-filter: blur(4px);
 }
 
 .hero-actions .btn:hover {
-  background: rgba(255, 255, 255, 0.24);
+  background: var(--hero-chip-bg-hover);
 }
 
 @media (max-width: 620px) {
