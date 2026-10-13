@@ -7,6 +7,7 @@ import { ArticleShell, ArticleLayout } from '@/components/ArticleShell';
 import { Infobox } from '@/components/Infobox';
 import { Breadcrumb } from '@/components/Breadcrumb';
 import { WikiTable } from '@/components/WikiTable';
+import RichText from '@/components/RichText';
 import { PLAYER_ACCENT } from '@/components/PlayerCard';
 import { getPlayerBySlug, getTeamBySlug, getTeams } from '@/lib/store';
 
@@ -97,10 +98,10 @@ export default async function PlayerDetailPage({ params }: { params: { slug: str
         }
       >
         <h2 className="wiki-h2">Tiểu sử</h2>
-        <p className="text-pre wiki-paragraph">{player.biography || 'Chưa có thông tin.'}</p>
+        <RichText className="text-pre wiki-paragraph" text={player.biography || 'Chưa có thông tin.'} />
 
         <h2 className="wiki-h2">Sự nghiệp</h2>
-        <p className="text-pre wiki-paragraph">{player.careerHistory || 'Chưa có thông tin.'}</p>
+        <RichText className="text-pre wiki-paragraph" text={player.careerHistory || 'Chưa có thông tin.'} />
 
         {teamHistory.length > 0 ? (
           <>

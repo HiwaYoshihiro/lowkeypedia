@@ -4,6 +4,7 @@ import { ArticleShell, ArticleLayout } from '@/components/ArticleShell';
 import { Infobox } from '@/components/Infobox';
 import { Breadcrumb } from '@/components/Breadcrumb';
 import { WikiTable } from '@/components/WikiTable';
+import RichText from '@/components/RichText';
 import { TOURNAMENT_ACCENT } from '@/components/TournamentCard';
 import { getTournamentBySlug } from '@/lib/store';
 
@@ -66,7 +67,7 @@ export default async function TournamentDetailPage({ params }: { params: { slug:
         }
       >
         <h2 className="wiki-h2">Giới thiệu</h2>
-        <p className="text-pre wiki-paragraph">{tournament.description || 'Chưa có thông tin.'}</p>
+        <RichText className="text-pre wiki-paragraph" text={tournament.description || 'Chưa có thông tin.'} />
 
         <h2 className="wiki-h2">Lịch sử vô địch</h2>
         <WikiTable

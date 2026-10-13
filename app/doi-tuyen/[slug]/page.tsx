@@ -7,6 +7,7 @@ import { ArticleShell, ArticleLayout } from '@/components/ArticleShell';
 import { Infobox } from '@/components/Infobox';
 import { Breadcrumb } from '@/components/Breadcrumb';
 import { WikiTable } from '@/components/WikiTable';
+import RichText from '@/components/RichText';
 import { TEAM_ACCENT } from '@/components/TeamCard';
 import { getPlayersByTeam, getTeamBySlug } from '@/lib/store';
 
@@ -81,7 +82,7 @@ export default async function TeamDetailPage({ params }: { params: { slug: strin
         }
       >
         <h2 className="wiki-h2">Giới thiệu</h2>
-        <p className="text-pre wiki-paragraph">{team.description || 'Chưa có thông tin.'}</p>
+        <RichText className="text-pre wiki-paragraph" text={team.description || 'Chưa có thông tin.'} />
 
         <h2 className="wiki-h2">Đội hình hiện tại</h2>
         {roster.length > 0 ? (

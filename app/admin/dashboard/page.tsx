@@ -12,11 +12,12 @@ const inputCls =
   'w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-wiki-blue';
 const labelCls = 'block text-xs font-semibold text-gray-600 mb-1';
 
-function Field({ label, children }: { label: string; children: React.ReactNode }) {
+function Field({ label, children, hint }: { label: string; children: React.ReactNode; hint?: string }) {
   return (
     <div>
       <label className={labelCls}>{label}</label>
       {children}
+      {hint && <p className="mt-1 text-xs text-slate-500">Mẹo: dùng **chữ** để <strong>in đậm</strong>.</p>}
     </div>
   );
 }
@@ -769,10 +770,10 @@ export default function AdminDashboard() {
               </Field>
             </div>
             <div className="mt-4 space-y-4">
-              <Field label="Tiểu sử">
+              <Field label="Tiểu sử" hint="bold">
                 <textarea className={inputCls} rows={4} value={editingPlayer.biography} onChange={(e) => setEditingPlayer({ ...editingPlayer, biography: e.target.value })} />
               </Field>
-              <Field label="Sự nghiệp">
+              <Field label="Sự nghiệp" hint="bold">
                 <textarea className={inputCls} rows={4} value={editingPlayer.careerHistory} onChange={(e) => setEditingPlayer({ ...editingPlayer, careerHistory: e.target.value })} />
               </Field>
               <Field label="Lịch sử đội tuyển">
@@ -834,7 +835,7 @@ export default function AdminDashboard() {
               </Field>
             </div>
             <div className="mt-4 space-y-4">
-              <Field label="Mô tả">
+              <Field label="Mô tả" hint="bold">
                 <textarea className={inputCls} rows={4} value={editingTeam.description} onChange={(e) => setEditingTeam({ ...editingTeam, description: e.target.value })} />
               </Field>
               <Field label="Thành tích đội tuyển">
@@ -886,7 +887,7 @@ export default function AdminDashboard() {
               </Field>
             </div>
             <div className="mt-4 space-y-4">
-              <Field label="Giới thiệu">
+              <Field label="Giới thiệu" hint="bold">
                 <textarea className={inputCls} rows={4} value={editingTournament.description} onChange={(e) => setEditingTournament({ ...editingTournament, description: e.target.value })} />
               </Field>
               <Field label="Lịch sử vô địch (mỗi dòng một mục)">
