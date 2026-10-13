@@ -1,5 +1,6 @@
 import Link from 'next/link';
-import SearchBar from '@/components/SearchBar';
+import { KindBadge } from '@/components/Badges';
+import { ArticleShell } from '@/components/ArticleShell';
 import { searchAll } from '@/lib/store';
 
 export const dynamic = 'force-dynamic';
@@ -10,11 +11,11 @@ const KIND_HREF: Record<string, (slug: string) => string> = {
   tournament: (s) => `/giai-dau/${s}`,
 };
 
-const KIND_LABEL: Record<string, string> = {
-  player: 'Tuyển thủ',
-  team: 'Đội tuyển',
-  tournament: 'Giải đấu',
-};
+const GROUPS: [string, 'player' | 'team' | 'tournament'][] = [
+  ['Tuyển thủ', 'player'],
+  ['Đội tuyển', 'team'],
+  ['Giải đấu', 'tournament'],
+];
 
 export default async function SearchPage({
   searchParams,
@@ -23,59 +24,88 @@ export default async function SearchPage({
 }) {
   const q = (searchParams.q ?? '').trim();
   const results = q ? await searchAll(q) : [];
-  const players = results.filter((r) => r.type === 'player');
-  const teams = results.filter((r) => r.type === 'team');
-  const tournaments = results.filter((r) => r.type === 'tournament');
 
   return (
-    <div>
-      <h1 className="wiki-title">Tìm kiếm</h1>
-      <div style={{ marginTop: '12px', maxWidth: '560px' }}>
-        <SearchBar defaultValue={q} placeholder="Tìm tuyển thủ, đội tuyển, giải đấu..." />
-      </div>
+    <ArticleShell
+      title="🔍 Tìm kiếm"
+      subtitle="Tìm tuyển thủ, đội tuyển hoặc giải đấu — không phân biệt dấu"
+    >
+      <form method="GET" className="toolbar">
+        <div className="toolbar-grow">
+          <input
+            type="search"
+            name="q"
+            className="input toolbar-search"
+            defaultValue={q}
+            placeholder="VD: Lai Bâng, SGP, AIC, Saigon Phantom…"
+            aria-label="Từ khoá tìm kiếm"
+          />
+        </div>
+        <button type="submit" className="btn btn-primary">
+          Tìm kiếm
+        </button>
+        {q ? (
+          <Link href="/tim-kiem" className="btn btn-ghost">
+            Xoá
+          </Link>
+        ) : null}
+        {q ? <span className="result-count">{results.length} kết quả</span> : null}
+      </form>
 
       {!q ? (
-        <p style={{ marginTop: '24px', color: '#72777d', fontSize: '14px' }}>
-          Nhập từ khoá để tìm tuyển thủ, đội tuyển hoặc giải đấu (không phân biệt dấu).
-        </p>
+        <div className="empty-state" style={{ marginTop: 18 }}>
+          <div className="empty-state-icon" aria-hidden="true">
+            ⌨️
+          </div>
+          <div className="empty-state-title">Nhập từ khoá để tra cứu</div>
+          <p className="empty-state-text">
+            Ô tìm kiếm ở đầu trang (<span className="kbd">Ctrl</span>+<span className="kbd">K</span>)
+            hiện gợi ý ngay khi bạn gõ. Cách này tìm không dấu nên “lai bang” và “Lai Bâng” đều ra.
+          </p>
+        </div>
       ) : results.length === 0 ? (
-        <p style={{ marginTop: '24px', color: '#72777d' }}>
-          Không tìm thấy kết quả nào cho “<strong>{q}</strong>”.
-        </p>
+        <div className="empty-state" style={{ marginTop: 18 }}>
+          <div className="empty-state-icon" aria-hidden="true">
+            🔍
+          </div>
+          <div className="empty-state-title">Không tìm thấy kết quả nào</div>
+          <p className="empty-state-text">
+            Không có mục nào khớp với “<strong>{q}</strong>”. Thử từ khoá ngắn hơn hoặc kiểm tra
+            chính tả.
+          </p>
+        </div>
       ) : (
-        <div style={{ marginTop: '16px' }}>
-          <p style={{ fontSize: '14px', color: '#72777d', marginBottom: '8px' }}>
+        <>
+          <p className="card-subtitle" style={{ marginTop: 14 }}>
             Tìm thấy {results.length} kết quả cho “<strong>{q}</strong>”
           </p>
 
-          {[
-            ['Tuyển thủ', players],
-            ['Đội tuyển', teams],
-            ['Giải đấu', tournaments],
-          ].map(([label, list]) =>
-            (list as typeof results).length > 0 ? (
-              <section key={label as string} style={{ marginBottom: '20px' }}>
-                <h2 className="wiki-section-title">
-                  {label as string} ({(list as typeof results).length})
+          {GROUPS.map(([label, kind]) => {
+            const list = results.filter((r) => r.type === kind);
+            if (list.length === 0) return null;
+            return (
+              <section key={kind}>
+                <h2 className="wiki-h2">
+                  {label} ({list.length})
                 </h2>
-                <ul className="wiki-result-list">
-                  {(list as typeof results).map((r) => (
+                <ul className="result-list">
+                  {list.map((r) => (
                     <li key={`${r.type}-${r.slug}`}>
-                      <Link href={KIND_HREF[r.type](r.slug)}>
-                        <span className="wiki-result-title">{r.title}</span>{' '}
-                        <span className="status-badge badge-inactive" style={{ marginLeft: '6px' }}>
-                          {KIND_LABEL[r.type]}
-                        </span>
-                        <div className="wiki-result-sub">{r.subtitle}</div>
-                      </Link>
+                      <span className="result-title">
+                        <Link href={KIND_HREF[r.type](r.slug)} className="link-button is-strong">
+                          {r.title}
+                        </Link>
+                        <KindBadge kind={r.type} />
+                      </span>
+                      <span className="card-subtitle">{r.subtitle}</span>
                     </li>
                   ))}
                 </ul>
               </section>
-            ) : null
-          )}
-        </div>
+            );
+          })}
+        </>
       )}
-    </div>
+    </ArticleShell>
   );
 }

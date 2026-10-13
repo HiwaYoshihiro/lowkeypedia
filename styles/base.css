@@ -1,0 +1,445 @@
+/* =========================================================================
+   Nền tảng: reset nhẹ, kiểu chữ, khung layout (header / sidebar / footer)
+   ========================================================================= */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--page-bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  color: var(--text);
+  margin: 0;
+  line-height: 1.3;
+}
+
+p {
+  margin: 0 0 0.9em;
+}
+
+img {
+  max-width: 100%;
+}
+
+a {
+  color: var(--link);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+::selection {
+  background: var(--accent-soft);
+  color: var(--text);
+}
+
+/* Thanh cuộn mảnh cho khu vực cuộn nội bộ */
+.scroll-thin {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-soft) transparent;
+}
+
+.scroll-thin::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.scroll-thin::-webkit-scrollbar-thumb {
+  background: var(--border-soft);
+  border-radius: 4px;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* =========================== HEADER =========================== */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border-faint);
+  box-shadow: var(--shadow-sm);
+}
+
+.site-header::before {
+  content: '';
+  display: block;
+  height: 3px;
+  background: linear-gradient(90deg, var(--navy) 0%, var(--gold) 100%);
+}
+
+.site-header-inner {
+  max-width: var(--content-max);
+  margin: 0 auto;
+  height: var(--header-height);
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  flex-shrink: 0;
+}
+
+.logo-mark {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(145deg, #1e3a8a, var(--navy));
+  color: var(--gold);
+  font-family: var(--font-serif);
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: -1px;
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.22);
+}
+
+.logo-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.logo-title {
+  font-family: var(--font-serif);
+  font-size: 19px;
+  letter-spacing: 0.4px;
+  color: var(--text);
+}
+
+/* "PEDIA" trong logo tô vàng theo nhận diện Lowkeypedia. */
+.brand-gold {
+  color: var(--gold);
+}
+
+[data-theme='dark'] .brand-gold {
+  color: #f0c05a;
+}
+
+.logo-tagline {
+  font-size: 10.5px;
+  color: var(--text-faint);
+  letter-spacing: 0.2px;
+}
+
+.header-search {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  min-width: 0;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+/* Chỉ hiện trên màn hình nhỏ.
+   Cần selector đủ đặc thù để thắng `.icon-btn` trong ui.css (nạp sau file này). */
+.site-header-inner .menu-toggle {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .site-header-inner .menu-toggle {
+    display: inline-flex;
+  }
+
+  .logo-tagline {
+    display: none;
+  }
+}
+
+@media (max-width: 620px) {
+  .logo-text {
+    display: none;
+  }
+}
+
+/* =========================== BODY GRID =========================== */
+
+.site-body {
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding: 18px 16px 40px;
+  display: grid;
+  grid-template-columns: var(--sidebar-width) minmax(0, 1fr);
+  gap: 22px;
+  align-items: start;
+}
+
+.site-body > .site-main {
+  grid-column: 2;
+  min-width: 0;
+}
+
+@media (max-width: 900px) {
+  .site-body {
+    grid-template-columns: minmax(0, 1fr);
+    padding-top: 12px;
+  }
+
+  .site-body > .site-main {
+    grid-column: 1;
+  }
+}
+
+/* =========================== SIDEBAR =========================== */
+
+.site-sidebar {
+  position: sticky;
+  top: calc(var(--header-height) + 18px);
+  max-height: calc(100vh - var(--header-height) - 34px);
+  overflow-y: auto;
+  padding-right: 4px;
+  font-size: 13.5px;
+}
+
+@media (max-width: 900px) {
+  .site-sidebar {
+    position: fixed;
+    inset: 0 auto 0 0;
+    top: 0;
+    width: min(310px, 88vw);
+    max-height: none;
+    z-index: 60;
+    background: var(--surface);
+    border-right: 1px solid var(--border-soft);
+    box-shadow: var(--shadow-lg);
+    padding: 16px;
+    transform: translateX(-102%);
+    transition: transform var(--transition);
+  }
+
+  .site-sidebar.is-open {
+    transform: translateX(0);
+  }
+}
+
+.sidebar-scrim {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .sidebar-scrim {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 55;
+    background: rgba(0, 0, 0, 0.45);
+    border: none;
+    padding: 0;
+  }
+}
+
+.sidebar-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.sidebar-title {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin: 18px 0 6px;
+}
+
+.sidebar-title:first-child {
+  margin-top: 0;
+}
+
+/* Cùng lý do như .menu-toggle: phải thắng `.icon-btn`. */
+.sidebar-head .sidebar-close {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .sidebar-head .sidebar-close {
+    display: inline-flex;
+  }
+}
+
+.nav-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 9px;
+  border-radius: var(--radius);
+  border-left: 3px solid transparent;
+  color: var(--text-subtle);
+  cursor: pointer;
+  background: none;
+  border-top: 0;
+  border-right: 0;
+  border-bottom: 0;
+  font: inherit;
+  width: 100%;
+  text-align: left;
+  transition: background var(--transition), color var(--transition);
+}
+
+.nav-link:hover {
+  background: var(--surface-3);
+  color: var(--text);
+  text-decoration: none;
+}
+
+.nav-link.is-active {
+  background: var(--accent-soft);
+  border-left-color: var(--accent);
+  color: var(--text);
+  font-weight: 600;
+}
+
+.nav-link-label {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.nav-count {
+  font-size: 11px;
+  color: var(--text-faint);
+  background: var(--surface-3);
+  border-radius: 999px;
+  padding: 1px 7px;
+  font-variant-numeric: tabular-nums;
+}
+
+.nav-link.is-active .nav-count {
+  background: var(--surface);
+  color: var(--accent);
+}
+
+.sidebar-filter {
+  width: 100%;
+  margin: 4px 0 8px;
+}
+
+.entity-list {
+  max-height: 46vh;
+  overflow-y: auto;
+  padding-right: 2px;
+}
+
+.sidebar-hint {
+  font-size: 12px;
+  color: var(--text-faint);
+  padding: 6px 9px;
+}
+
+/* =========================== FOOTER =========================== */
+
+.site-footer {
+  border-top: 1px solid var(--border-faint);
+  background: var(--surface);
+  padding: 20px 16px 30px;
+  margin-top: 26px;
+}
+
+.site-footer-inner {
+  max-width: var(--content-max);
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 22px;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12.5px;
+  color: var(--text-faint);
+}
+
+.footer-note {
+  max-width: 620px;
+}
+
+/* Nút "lên đầu trang" */
+.to-top {
+  position: fixed;
+  right: 20px;
+  bottom: 22px;
+  z-index: 30;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid var(--border-soft);
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: var(--shadow-md);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  font-size: 17px;
+}
+
+.to-top:hover {
+  background: var(--surface-3);
+}

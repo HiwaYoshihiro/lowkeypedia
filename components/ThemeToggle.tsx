@@ -2,42 +2,42 @@
 
 import { useEffect, useState } from 'react';
 
+/**
+ * Đổi giao diện sáng/tối.
+ *
+ * Trước đây gắn class `dark-mode` lên <body> SAU lần render đầu nên trang bị nháy
+ * sáng rồi mới tối. Nay ghi `data-theme` lên <html>, và một script nhỏ trong
+ * `app/layout.tsx` đặt giá trị đó trước khi React chạy.
+ */
 export default function ThemeToggle() {
   const [dark, setDark] = useState(false);
 
   useEffect(() => {
-    setDark(document.body.classList.contains('dark-mode'));
+    setDark(document.documentElement.dataset.theme === 'dark');
   }, []);
 
   function toggle() {
     const next = !dark;
     setDark(next);
-    document.body.classList.toggle('dark-mode', next);
+    const root = document.documentElement;
+    root.dataset.theme = next ? 'dark' : 'light';
+    root.style.colorScheme = next ? 'dark' : 'light';
     try {
       localStorage.setItem('theme', next ? 'dark' : 'light');
     } catch {
-      /* bỏ qua */
+      /* localStorage có thể bị chặn */
     }
   }
 
   return (
     <button
+      type="button"
       onClick={toggle}
-      className="wiki-icon-btn"
-      aria-label={dark ? 'Chuyển sang chế độ sáng' : 'Chuyển sang chế độ tối'}
-      title={dark ? 'Chế độ sáng' : 'Chế độ tối'}
+      className="icon-btn"
+      aria-label={dark ? 'Chuyển sang giao diện sáng' : 'Chuyển sang giao diện tối'}
+      title={dark ? 'Giao diện sáng' : 'Giao diện tối'}
     >
-      {dark ? (
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-          <circle cx="12" cy="12" r="4" />
-          <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" />
-        </svg>
-      ) : (
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" />
-        </svg>
-      )}
-      <span>{dark ? 'Sáng' : 'Tối'}</span>
+      <span aria-hidden="true">{dark ? '☀️' : '🌙'}</span>
     </button>
   );
 }

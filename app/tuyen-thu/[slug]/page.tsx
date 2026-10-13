@@ -1,8 +1,13 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
-import { RoleBadge, TeamStatusBadge } from '@/components/PlayerCard';
+import { RoleBadge, TeamStatusBadge } from '@/components/Badges';
 import AchievementTable from '@/components/AchievementTable';
+import { ArticleShell, ArticleLayout } from '@/components/ArticleShell';
+import { Infobox } from '@/components/Infobox';
+import { Breadcrumb } from '@/components/Breadcrumb';
+import { WikiTable } from '@/components/WikiTable';
+import { PLAYER_ACCENT } from '@/components/PlayerCard';
 import { getPlayerBySlug, getTeamBySlug, getTeams } from '@/lib/store';
 
 export const dynamic = 'force-dynamic';
@@ -29,14 +34,27 @@ export default async function PlayerDetailPage({ params }: { params: { slug: str
 
   const teamHistory = player.teamHistory ?? [];
 
+  const historyRows = teamHistory.map((h, i) => ({
+    key: `h-${i}`,
+    cells: {
+      period: <strong>{h.period || '—'}</strong>,
+      team: h.teamSlug ? (
+        <Link href={`/doi-tuyen/${h.teamSlug}`} className="link-button">
+          {teamNameOf(h.teamSlug) ?? h.team}
+        </Link>
+      ) : (
+        <strong>{h.team || '—'}</strong>
+      ),
+    },
+  }));
+
   const rows: [string, React.ReactNode][] = [
-    ['Tên thi đấu', <strong key="ign">{player.ign}</strong>],
     ...(player.realName ? [['Tên thật', player.realName] as [string, React.ReactNode]] : []),
     ['Vị trí', <RoleBadge key="role" role={player.role} />],
     [
       'Đội hiện tại',
       team ? (
-        <Link key="team" href={`/doi-tuyen/${team.slug}`} className="wiki-link">
+        <Link key="team" href={`/doi-tuyen/${team.slug}`} className="link-button">
           {team.name}
         </Link>
       ) : (
@@ -48,82 +66,64 @@ export default async function PlayerDetailPage({ params }: { params: { slug: str
   ];
 
   return (
-    <article>
-      <nav className="wiki-breadcrumb">
-        <Link href="/" className="wiki-link">Trang chủ</Link>
-        {' / '}
-        <Link href="/tuyen-thu" className="wiki-link">Tuyển thủ</Link>
-        {' / '}
-        <span>{player.ign}</span>
-      </nav>
+    <ArticleShell
+      breadcrumb={
+        <Breadcrumb
+          items={[
+            { label: 'Trang chủ', href: '/' },
+            { label: 'Tuyển thủ', href: '/tuyen-thu' },
+            { label: player.ign },
+          ]}
+        />
+      }
+      title={
+        <>
+          {player.ign}
+          <TeamStatusBadge teamName={team?.name} />
+        </>
+      }
+      subtitle={[player.realName, player.role].filter(Boolean).join(' • ')}
+    >
+      <ArticleLayout
+        infobox={
+          <Infobox
+            title={player.ign}
+            subtitle={player.realName}
+            initial={player.ign}
+            imageUrl={player.avatarUrl}
+            accent={PLAYER_ACCENT}
+            rows={rows}
+          />
+        }
+      >
+        <h2 className="wiki-h2">Tiểu sử</h2>
+        <p className="text-pre wiki-paragraph">{player.biography || 'Chưa có thông tin.'}</p>
 
-      <main className="wiki-content">
-        <div className="main-column">
-          <h1 className="wiki-title">{player.ign}</h1>
+        <h2 className="wiki-h2">Sự nghiệp</h2>
+        <p className="text-pre wiki-paragraph">{player.careerHistory || 'Chưa có thông tin.'}</p>
 
-          <div className="wiki-article">
-            <h2 className="wiki-section-title">Tiểu sử</h2>
-            <p style={{ whiteSpace: 'pre-line' }}>{player.biography || 'Chưa có thông tin.'}</p>
+        {teamHistory.length > 0 ? (
+          <>
+            <h2 className="wiki-h2">Lịch sử đội tuyển</h2>
+            <WikiTable
+              columns={[
+                { key: 'period', label: 'Giai đoạn', width: '40%' },
+                { key: 'team', label: 'Đội tuyển' },
+              ]}
+              rows={historyRows}
+            />
+          </>
+        ) : null}
 
-            <h2 className="wiki-section-title">Sự nghiệp</h2>
-            <p style={{ whiteSpace: 'pre-line' }}>{player.careerHistory || 'Chưa có thông tin.'}</p>
-
-            {teamHistory.length > 0 && (
-              <>
-                <h2 className="wiki-section-title">Lịch sử đội tuyển</h2>
-                <table className="wiki-table">
-                  <thead>
-                    <tr>
-                      <th>Giai đoạn</th>
-                      <th>Đội tuyển</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {teamHistory.map((h, i) => (
-                      <tr key={i}>
-                        <td>{h.period || '—'}</td>
-                        <td>
-                          {h.teamSlug ? (
-                            <Link href={`/doi-tuyen/${h.teamSlug}`} className="wiki-link">
-                              <strong>{teamNameOf(h.teamSlug) ?? h.team}</strong>
-                            </Link>
-                          ) : (
-                            <strong>{h.team || '—'}</strong>
-                          )}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </>
-            )}
-
-            {player.achievements.length > 0 ? (
-              <AchievementTable items={player.achievements} title="Thành tích thi đấu" />
-            ) : (
-              <>
-                <h2 className="wiki-section-title">Thành tích thi đấu</h2>
-                <p style={{ color: '#72777d' }}>Chưa có thông tin.</p>
-              </>
-            )}
-          </div>
-        </div>
-
-        <aside className="infobox">
-          <div className="infobox-header">{player.ign}</div>
-          <div className="infobox-avatar">{player.ign.charAt(0).toUpperCase()}</div>
-          <table className="infobox-table">
-            <tbody>
-              {rows.map(([k, v]) => (
-                <tr key={k}>
-                  <th>{k}</th>
-                  <td>{v}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </aside>
-      </main>
-    </article>
+        {player.achievements.length > 0 ? (
+          <AchievementTable items={player.achievements} title="Thành tích thi đấu" />
+        ) : (
+          <>
+            <h2 className="wiki-h2">Thành tích thi đấu</h2>
+            <p className="card-subtitle">Chưa có thông tin.</p>
+          </>
+        )}
+      </ArticleLayout>
+    </ArticleShell>
   );
 }

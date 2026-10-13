@@ -1,45 +1,39 @@
 import Link from 'next/link';
 import type { Achievement } from '@/lib/types';
+import { WikiTable } from './WikiTable';
 
-interface Props {
-  items: Achievement[];
-  title: string;
-}
-
-/** Bảng thành tích kiểu Liquipedia: Năm | Thứ hạng | Giải đấu (link tới trang giải). */
-export default function AchievementTable({ items, title }: Props) {
+/**
+ * Bảng thành tích kiểu Liquipedia: Năm | Thứ hạng | Giải đấu (link tới trang giải).
+ */
+export default function AchievementTable({ items, title }: { items: Achievement[]; title: string }) {
   if (!items || items.length === 0) return null;
+
+  const rows = items.map((a, index) => ({
+    key: `a-${index}`,
+    cells: {
+      year: <span className="num">{a.year || '—'}</span>,
+      placement: <strong>{a.placement || '—'}</strong>,
+      tournament: a.tournamentSlug ? (
+        <Link href={`/giai-dau/${a.tournamentSlug}`} className="link-button">
+          {a.tournament || '—'}
+        </Link>
+      ) : (
+        a.tournament || '—'
+      ),
+    },
+  }));
+
   return (
     <>
-      <h2 className="wiki-section-title">{title}</h2>
-      <table className="wiki-table">
-        <thead>
-          <tr>
-            <th>Năm</th>
-            <th>Thứ hạng</th>
-            <th>Giải đấu</th>
-          </tr>
-        </thead>
-        <tbody>
-          {items.map((a, i) => (
-            <tr key={i}>
-              <td>{a.year || '—'}</td>
-              <td>
-                <strong>{a.placement || '—'}</strong>
-              </td>
-              <td>
-                {a.tournamentSlug ? (
-                  <Link href={`/giai-dau/${a.tournamentSlug}`} className="wiki-link">
-                    {a.tournament || '—'}
-                  </Link>
-                ) : (
-                  a.tournament || '—'
-                )}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <h2 className="wiki-h2">{title}</h2>
+      <WikiTable
+        columns={[
+          { key: 'year', label: 'Năm', width: '90px' },
+          { key: 'placement', label: 'Thứ hạng', width: '34%' },
+          { key: 'tournament', label: 'Giải đấu' },
+        ]}
+        rows={rows}
+      />
     </>
   );
 }

@@ -1,9 +1,11 @@
 import Link from 'next/link';
-import SearchBar from '@/components/SearchBar';
-import PlayerCard from '@/components/PlayerCard';
-import TeamCard from '@/components/TeamCard';
-import TournamentCard from '@/components/TournamentCard';
+import PlayerCard, { PLAYER_ACCENT } from '@/components/PlayerCard';
+import TeamCard, { TEAM_ACCENT } from '@/components/TeamCard';
+import TournamentCard, { TOURNAMENT_ACCENT } from '@/components/TournamentCard';
+import { KindBadge } from '@/components/Badges';
+import { SectionBlock } from '@/components/SectionBlock';
 import { getPlayers, getTeams, getTournaments } from '@/lib/store';
+import { SITE_NAME_HEAD, SITE_NAME_TAIL } from '@/lib/site';
 
 export const dynamic = 'force-dynamic';
 
@@ -24,6 +26,7 @@ export default async function HomePage() {
     (t): t is NonNullable<typeof t> => !!t
   );
   const teamBySlug = new Map(teams.map((t) => [t.slug, t.name]));
+
   const recent = [...players, ...teams, ...tournaments]
     .map((x) => ({
       updatedAt: x.updatedAt,
@@ -34,63 +37,76 @@ export default async function HomePage() {
             ? `/doi-tuyen/${x.slug}`
             : `/giai-dau/${x.slug}`,
       label: 'ign' in x ? x.ign : x.name,
-      kind: 'ign' in x ? 'Tuyển thủ' : 'tag' in x ? 'Đội tuyển' : 'Giải đấu',
+      kind: 'ign' in x ? 'player' : 'tag' in x ? 'team' : 'tournament',
     }))
     .sort((a, b) => b.updatedAt.localeCompare(a.updatedAt))
-    .slice(0, 5);
+    .slice(0, 6);
 
   return (
     <div>
-      {/* Hero */}
-      <div className="home-hero">
-        <h2>Chào mừng đến với Lowkeypedia</h2>
-        <p>
-          <strong>Lowkeypedia</strong> là bách khoa toàn thư mở về Liên Quân Mobile Việt Nam —
-          tra cứu tiểu sử tuyển thủ, đội tuyển, giải đấu, sự nghiệp và những danh hiệu huyền thoại
-          theo phong cách wiki.
-        </p>
-        <SearchBar large placeholder="Tìm tuyển thủ, đội tuyển, giải đấu... (VD: Lai Bâng, SGP, AIC)" />
-        <div className="home-stats">
-          <div>
-            <strong>{players.length}</strong> <span>tuyển thủ</span>
+      <section className="hero">
+        <div className="hero-inner">
+          <h1 className="hero-title">
+            Chào mừng đến với {SITE_NAME_HEAD}
+            <span className="brand-gold">{SITE_NAME_TAIL}</span>
+          </h1>
+          <p className="hero-lead">
+            Bách khoa toàn thư mở về Liên Quân Mobile Việt Nam — tra cứu tiểu sử tuyển thủ,
+            đội tuyển, giải đấu, sự nghiệp và những danh hiệu huyền thoại theo phong cách wiki.
+          </p>
+          <div className="hero-actions">
+            <Link href="/tuyen-thu" className="btn">
+              🎮 Xem tuyển thủ
+            </Link>
+            <Link href="/giai-dau" className="btn">
+              🏆 Xem giải đấu
+            </Link>
+            <Link href="/tim-kiem" className="btn">
+              🔍 Tìm kiếm
+            </Link>
           </div>
-          <div>
-            <strong>{teams.length}</strong> <span>đội tuyển</span>
-          </div>
-          <div>
-            <strong>{tournaments.length}</strong> <span>giải đấu</span>
-          </div>
-        </div>
-      </div>
-
-      {/* Tuyển thủ nổi bật */}
-      <section style={{ marginTop: '28px' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <h3 className="wiki-section-title" style={{ marginTop: 0, flex: 1 }}>
-            Tuyển thủ nổi bật
-          </h3>
-          <Link href="/tuyen-thu" className="wiki-link" style={{ fontSize: '13px', whiteSpace: 'nowrap', marginLeft: '12px' }}>
-            Xem tất cả →
-          </Link>
-        </div>
-        <div className="catalogue-grid">
-          {featuredPlayers.map((p) => (
-            <PlayerCard key={p.id} player={p} teamName={p.teamSlug ? teamBySlug.get(p.teamSlug) : undefined} />
-          ))}
         </div>
       </section>
 
-      {/* Đội tuyển */}
-      <section style={{ marginTop: '28px' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <h3 className="wiki-section-title" style={{ marginTop: 0, flex: 1 }}>
-            Đội tuyển
-          </h3>
-          <Link href="/doi-tuyen" className="wiki-link" style={{ fontSize: '13px', whiteSpace: 'nowrap', marginLeft: '12px' }}>
-            Xem tất cả →
+      <div className="stat-row">
+        {[
+          { href: '/tuyen-thu', value: players.length, label: 'Tuyển thủ', icon: '🎮', accent: PLAYER_ACCENT },
+          { href: '/doi-tuyen', value: teams.length, label: 'Đội tuyển', icon: '🛡️', accent: TEAM_ACCENT },
+          { href: '/giai-dau', value: tournaments.length, label: 'Giải đấu', icon: '🏆', accent: TOURNAMENT_ACCENT },
+        ].map((item) => (
+          <Link
+            key={item.href}
+            href={item.href}
+            className="stat-card"
+            style={{ '--stat-accent': item.accent } as React.CSSProperties}
+          >
+            <div className="stat-value">{item.value}</div>
+            <div className="stat-label">
+              {item.icon} {item.label}
+            </div>
           </Link>
+        ))}
+      </div>
+
+      <SectionBlock
+        title="🎮 Tuyển thủ nổi bật"
+        href="/tuyen-thu"
+        accent={PLAYER_ACCENT}
+        count={players.length}
+      >
+        <div className="card-grid">
+          {featuredPlayers.map((p) => (
+            <PlayerCard
+              key={p.id}
+              player={p}
+              teamName={p.teamSlug ? teamBySlug.get(p.teamSlug) : undefined}
+            />
+          ))}
         </div>
-        <div className="catalogue-grid">
+      </SectionBlock>
+
+      <SectionBlock title="🛡️ Đội tuyển" href="/doi-tuyen" accent={TEAM_ACCENT} count={teams.length}>
+        <div className="card-grid">
           {featuredTeams.map((t) => (
             <TeamCard
               key={t.id}
@@ -99,37 +115,32 @@ export default async function HomePage() {
             />
           ))}
         </div>
-      </section>
+      </SectionBlock>
 
-      {/* Giải đấu */}
-      <section style={{ marginTop: '28px' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <h3 className="wiki-section-title" style={{ marginTop: 0, flex: 1 }}>
-            Giải đấu
-          </h3>
-          <Link href="/giai-dau" className="wiki-link" style={{ fontSize: '13px', whiteSpace: 'nowrap', marginLeft: '12px' }}>
-            Xem tất cả →
-          </Link>
-        </div>
-        <div className="catalogue-grid">
+      <SectionBlock
+        title="🏆 Giải đấu"
+        href="/giai-dau"
+        accent={TOURNAMENT_ACCENT}
+        count={tournaments.length}
+      >
+        <div className="card-grid">
           {tournaments.map((t) => (
             <TournamentCard key={t.id} tournament={t} />
           ))}
         </div>
-      </section>
+      </SectionBlock>
 
-      {/* Cập nhật gần đây */}
-      <section style={{ marginTop: '28px' }}>
-        <h3 className="wiki-section-title" style={{ marginTop: 0 }}>
-          Cập nhật gần đây
-        </h3>
-        <ul className="wiki-result-list">
+      <section className="section-block" style={{ '--section-accent': '#8430ce' } as React.CSSProperties}>
+        <div className="section-block-head">
+          <h2 className="section-block-title">Cập nhật gần đây</h2>
+        </div>
+        <ul className="update-list">
           {recent.map((r) => (
             <li key={r.href}>
-              <Link href={r.href}>
-                <span className="wiki-result-title">{r.label}</span>{' '}
-                <span className="status-badge badge-inactive" style={{ marginLeft: '6px' }}>{r.kind}</span>
+              <Link href={r.href} className="link-button is-strong">
+                {r.label}
               </Link>
+              <KindBadge kind={r.kind} />
             </li>
           ))}
         </ul>

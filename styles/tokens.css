@@ -1,0 +1,133 @@
+/* =========================================================================
+   Design tokens — bảng màu & kiểu chữ
+   Lấy cảm hứng từ Wikipedia (Vector 2022) và Liquipedia, tinh chỉnh lại.
+   Đổi theme bằng `data-theme` trên <html>, không cần override từng selector.
+   ========================================================================= */
+
+:root {
+  color-scheme: light;
+
+  /* Kiểu chữ: tiêu đề dùng serif cho đúng "chất wiki", nội dung dùng sans */
+  /*
+   * Chữ có chân cho tiêu đề.
+   * KHÔNG đặt Georgia lên đầu: Georgia thiếu nhiều ký tự tiếng Việt (ế, ộ, ữ…)
+   * nên trình duyệt phải mượn font khác cho từng dấu, chữ bị hở khoảng.
+   * Cambria và Times New Roman của Windows phủ đủ tiếng Việt.
+   */
+  --font-serif: 'Cambria', 'Times New Roman', 'Linux Libertine', 'Noto Serif', Georgia, serif;
+  --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue',
+    Arial, 'Noto Sans', 'Apple Color Emoji', 'Segoe UI Emoji', sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+
+  /* Bề mặt */
+  --page-bg: #f8f9fa;
+  --surface: #ffffff;
+  --surface-2: #f8f9fa;
+  --surface-3: #eaecf0;
+  --surface-hover: #eaf3ff;
+
+  /* Đường viền */
+  --border: #a2a9b1;
+  --border-soft: #c8ccd1;
+  --border-faint: #eaecf0;
+
+  /* Chữ */
+  --text: #202122;
+  --text-subtle: #54595d;
+  --text-faint: #72777d;
+  --text-inverse: #ffffff;
+
+  /* Thương hiệu Lowkeypedia */
+  --navy: #0f1b3d;
+  --gold: #d4a017;
+  --gold-dark: #a97c0a;
+
+  /* Liên kết & nhấn */
+  --link: #3366cc;
+  --link-hover: #2a4b8d;
+  --link-visited: #6b4ba1;
+  --accent: #3366cc;
+  --accent-soft: #eaf3ff;
+  --accent-line: #a7d7f9;
+  --focus: #3366cc;
+
+  /* Trạng thái */
+  --success: #14866d;
+  --success-bg: #d5fdf4;
+  --success-border: #9fd9c8;
+  --danger: #b32424;
+  --danger-bg: #fee7e6;
+  --danger-border: #f3b0ad;
+  --warning: #8a5b00;
+  --warning-bg: #fef6e7;
+  --warning-border: #f0d8a8;
+  --neutral: #54595d;
+  --neutral-bg: #eaecf0;
+  --neutral-border: #c8ccd1;
+
+  /* Hình khối & đổ bóng */
+  --radius-sm: 2px;
+  --radius: 4px;
+  --radius-lg: 8px;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.16);
+
+  /* Kích thước layout */
+  --header-height: 58px;
+  --content-max: 1220px;
+  --sidebar-width: 232px;
+  --article-pad: 30px;
+
+  --transition: 140ms ease;
+}
+
+[data-theme='dark'] {
+  color-scheme: dark;
+
+  --page-bg: #0f1216;
+  --surface: #181c21;
+  --surface-2: #1f242a;
+  --surface-3: #262c33;
+  --surface-hover: #22303f;
+
+  --border: #43464b;
+  --border-soft: #33373d;
+  --border-faint: #2a2e34;
+
+  --text: #eaecf0;
+  --text-subtle: #b0b6bd;
+  --text-faint: #8b9199;
+  --text-inverse: #101418;
+
+  --link: #6fa8ff;
+  --link-hover: #9cc4ff;
+  --link-visited: #b69cff;
+  --accent: #6fa8ff;
+  --accent-soft: #1c2836;
+  --accent-line: #2e4a6b;
+  --focus: #6fa8ff;
+
+  --success: #7fd6b5;
+  --success-bg: #16342b;
+  --success-border: #2c6b57;
+  --danger: #ff9a92;
+  --danger-bg: #3a1d1c;
+  --danger-border: #7c3b37;
+  --warning: #f0c07a;
+  --warning-bg: #33280f;
+  --warning-border: #6d5626;
+  --neutral: #b0b6bd;
+  --neutral-bg: #262c33;
+  --neutral-border: #414750;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.6);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --transition: 0ms;
+  }
+}
