@@ -13,3 +13,88 @@
  * và `border-width:0` cho mọi phần tử, nên phần tử nào cần dấu đầu dòng hoặc chỉ
  * khai báo `border-color` mà không khai báo `border-width` sẽ mất viền.
  */
+
+/*
+ * Dark mode cho các trang /admin.
+ *
+ * /admin viết bằng utility màu cố định của Tailwind (bg-white, text-gray-500...)
+ * nên không tự theo theme; đây là chỗ duy nhất còn sót lại của lỗi "dark mode mà
+ * vẫn sáng". Thay vì rải `dark:` vào từng class trong 2 file TSX ~900 dòng, remap
+ * các utility đó sang token của design system. Selector có thêm [data-theme] nên
+ * độ ưu tiên cao hơn utility gốc, không phụ thuộc thứ tự nạp file.
+ *
+ * ponytail: chỉ remap những utility đang thực sự dùng trong /admin (xem
+ * `grep -rhoE '(bg|text|border|divide)-(white|gray-[0-9]+|...)' app/admin`).
+ * Thêm trang admin mới dùng utility khác thì bổ sung vào đây.
+ */
+[data-theme='dark'] .bg-white {
+  background-color: var(--surface);
+}
+
+[data-theme='dark'] .bg-gray-50 {
+  background-color: var(--surface-2);
+}
+
+[data-theme='dark'] .hover\:bg-gray-50:hover {
+  background-color: var(--surface-3);
+}
+
+[data-theme='dark'] .border-gray-200 {
+  border-color: var(--border-soft);
+}
+
+[data-theme='dark'] .border-gray-300 {
+  border-color: var(--border);
+}
+
+[data-theme='dark'] .divide-gray-100 > :not([hidden]) ~ :not([hidden]) {
+  border-color: var(--border-faint);
+}
+
+[data-theme='dark'] .text-gray-500,
+[data-theme='dark'] .text-slate-500 {
+  color: var(--text-faint);
+}
+
+[data-theme='dark'] .text-gray-600,
+[data-theme='dark'] .text-gray-700,
+[data-theme='dark'] .text-wiki-darkblue {
+  color: var(--text);
+}
+
+[data-theme='dark'] .hover\:text-gray-700:hover {
+  color: var(--text);
+}
+
+[data-theme='dark'] .text-wiki-blue {
+  color: var(--link);
+}
+
+[data-theme='dark'] .text-red-600 {
+  color: var(--danger);
+}
+
+[data-theme='dark'] .hover\:text-red-800:hover {
+  color: var(--danger);
+}
+
+[data-theme='dark'] .bg-red-50 {
+  background-color: var(--danger-bg);
+}
+
+[data-theme='dark'] .hover\:bg-red-50:hover {
+  background-color: var(--danger-bg);
+}
+
+[data-theme='dark'] .border-red-200,
+[data-theme='dark'] .border-red-300 {
+  border-color: var(--danger-border);
+}
+
+/* Input trong form admin dùng border-gray-300 nhưng chưa có nền riêng.
+ * `:where()` để độ ưu tiên bằng 0, không đè lên `.input` của giao diện công khai. */
+[data-theme='dark'] :where(input, textarea, select) {
+  background-color: var(--surface-2);
+  color: var(--text);
+}
+

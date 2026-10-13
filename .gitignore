@@ -12,3 +12,6 @@ out/
 # misc
 .DS_Store
 *.log
+
+# DSH tooling artifacts
+.dsh-vision-router/
