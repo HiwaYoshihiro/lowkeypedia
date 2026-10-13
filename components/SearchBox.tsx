@@ -152,7 +152,7 @@ export default function SearchBox({ placeholder }: { placeholder?: string }) {
           type="search"
           className="search-input"
           placeholder={placeholder ?? 'Tìm tuyển thủ, đội tuyển, giải đấu…'}
-          aria-label="Tìm kiếm trong Lowkeypedia"
+          aria-label="Tìm kiếm trong Lwkypedia"
           value={query}
           onChange={(event) => {
             setQuery(event.target.value);

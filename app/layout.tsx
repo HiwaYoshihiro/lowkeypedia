@@ -8,11 +8,11 @@ import '../styles/wiki.css';
 import '../styles/ui.css';
 
 export const metadata: Metadata = {
-  title: 'Lowkeypedia — Wiki Liên Quân Mobile Việt Nam',
+  title: 'Lwkypedia — Wiki Liên Quân Mobile Việt Nam',
   description:
     'Bách khoa toàn thư mở về Liên Quân Mobile Việt Nam: tiểu sử tuyển thủ, đội tuyển, giải đấu, sự nghiệp và thành tích.',
   openGraph: {
-    title: 'Lowkeypedia',
+    title: 'Lwkypedia',
     description: SITE_TAGLINE,
     type: 'website',
   },

@@ -20,7 +20,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const player = await getPlayerBySlug(params.slug);
   return {
-    title: player ? `${player.ign} — Lowkeypedia` : 'Không tìm thấy — Lowkeypedia',
+    title: player ? `${player.ign} — Lwkypedia` : 'Không tìm thấy — Lwkypedia',
     description: player?.biography.slice(0, 160),
   };
 }

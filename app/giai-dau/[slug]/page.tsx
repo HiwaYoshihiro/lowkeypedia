@@ -17,7 +17,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const tournament = await getTournamentBySlug(params.slug);
   return {
-    title: tournament ? `${tournament.name} — Lowkeypedia` : 'Không tìm thấy — Lowkeypedia',
+    title: tournament ? `${tournament.name} — Lwkypedia` : 'Không tìm thấy — Lwkypedia',
     description: tournament?.description.slice(0, 160),
   };
 }

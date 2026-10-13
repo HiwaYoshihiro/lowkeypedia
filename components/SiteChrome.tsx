@@ -53,7 +53,7 @@ export default function SiteChrome({ children }: { children: ReactNode }) {
             ☰
           </button>
 
-          <Link href="/" className="logo" aria-label="Lowkeypedia — về trang chủ">
+          <Link href="/" className="logo" aria-label="Lwkypedia — về trang chủ">
             <span className="logo-mark" aria-hidden="true">
               L
             </span>
@@ -118,7 +118,7 @@ export default function SiteChrome({ children }: { children: ReactNode }) {
             ))}
           </ul>
 
-          <div className="sidebar-title">Về Lowkeypedia</div>
+          <div className="sidebar-title">Về Lwkypedia</div>
           <p className="sidebar-hint" style={{ padding: '0 9px' }}>
             Bách khoa toàn thư mở về Liên Quân Mobile Việt Nam. Dữ liệu lấy từ Liquipedia
             và do cộng đồng bổ sung qua trang quản trị.

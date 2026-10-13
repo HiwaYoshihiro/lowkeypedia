@@ -39,7 +39,7 @@ export default function AdminLoginPage() {
     <div className="max-w-md mx-auto mt-10">
       <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
         <h1 className="text-xl font-extrabold text-wiki-darkblue text-center">Đăng nhập quản trị</h1>
-        <p className="text-sm text-gray-500 text-center mt-1">Khu vực dành cho quản trị viên Lowkeypedia</p>
+        <p className="text-sm text-gray-500 text-center mt-1">Khu vực dành cho quản trị viên Lwkypedia</p>
         <form onSubmit={onSubmit} className="mt-6 space-y-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Mật khẩu</label>

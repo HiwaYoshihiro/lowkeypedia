@@ -1,5 +1,5 @@
 /** Thông tin thương hiệu, đọc từ biến môi trường với giá trị mặc định. */
-export const SITE_NAME = process.env.NEXT_PUBLIC_SITE_NAME || 'LOWKEYPEDIA';
+export const SITE_NAME = process.env.NEXT_PUBLIC_SITE_NAME || 'LWKYPEDIA';
 /** Phần đuôi tô vàng trong logo (Lowkey + pedia). */
 export const SITE_NAME_TAIL = 'PEDIA';
 export const SITE_NAME_HEAD = SITE_NAME.replace(/PEDIA$/i, '');

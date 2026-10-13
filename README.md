@@ -1,7 +1,9 @@
-# Lowkeypedia
+# Lwkypedia
 
 Bách khoa toàn thư mở về **Liên Quân Mobile (Arena of Valor) Việt Nam** — phong cách Wikipedia/Liquipedia:
 tiểu sử tuyển thủ, đội tuyển, giải đấu, sự nghiệp, đội hình hiện tại và thành tích.
+
+> **Live:** https://lwkypedia.vercel.app
 
 Giao diện wiki cổ điển (khung `.wiki-container`, infobox, tabs, catalogue) kèm **chế độ tối/sáng**
 (chuyển trên header, lưu ở `localStorage` key `theme`, có script chống FOUC trong `app/layout.tsx`).
