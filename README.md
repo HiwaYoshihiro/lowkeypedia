@@ -204,8 +204,11 @@ Vào `/admin`, đăng nhập bằng `ADMIN_PASSWORD`. Dashboard có ba tab **Tuy
   khoảng trắng hay ký tự có dấu.
 - **Đổi hoặc xoá slug** của một đội/giải sẽ tự cập nhật mọi tham chiếu trong tuyển thủ
   (đội hiện tại, lịch sử đội tuyển, liên kết giải đấu) — không để lại liên kết chết.
-- **Ghi tuần tự** theo từng file, tránh hai lần lưu đồng thời ghi đè lẫn nhau.
-- **Lỗi mạng tạm thời** khi đọc Blob không còn ghi đè dữ liệu thật bằng seed.
+- **Ghi an toàn** — mỗi thao tác lưu luôn **đọc tươi** từ Blob (bỏ qua cache SWR) rồi mới sửa và ghi;
+  nhờ vậy chỉnh sửa liên tiếp không bị bản cache cũ của instance khác ghi đè, và các lần ghi
+  trong cùng instance vẫn xếp hàng tuần tự.
+- **Lỗi mạng tạm thời** khi đọc Blob không còn ghi đè dữ liệu thật bằng seed — luồng ghi từ chối
+  chạy nếu chỉ đọc được seed tạm.
 
 ## Ghi chú kỹ thuật
 
@@ -214,6 +217,7 @@ Vào `/admin`, đăng nhập bằng `ADMIN_PASSWORD`. Dashboard có ba tab **Tuy
   bản cũ vẫn được trả ngay, bản mới tải ở nền; các request đồng thời dùng chung một lượt
   tải và danh sách blob chỉ gọi **một lần** cho cả ba file. Ghi thì `clearCache()` +
   `revalidatePath`, kèm bộ đếm "thế hệ" để lượt đọc cũ không ghi đè cache sau khi lưu.
+  Riêng **luồng ghi** (đọc–sửa–ghi) luôn đọc tươi, không bao giờ dùng cache SWR.
 - **Chống cache cũ** — URL Blob không đổi khi ghi đè, nên khi đọc có thêm tham số
   cache-bust để CDN không trả bản cũ. Seed tạm (khi Blob lỗi) chỉ được giữ 5 giây và
   không bao giờ đè lên dữ liệu thật đang có trong cache.

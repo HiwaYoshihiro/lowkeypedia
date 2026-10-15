@@ -449,10 +449,50 @@ function normalizeSlugInput(input: string | undefined, fallbackSource: string): 
   return slugify(raw || fallbackSource);
 }
 
+/**
+ * Đọc thẳng từ Blob cho luồng GHI (đọc–sửa–ghi), bỏ qua cache SWR.
+ *
+ * Cache in-memory cố tình phục vụ bản cũ tối đa 30 giây (stale-while-revalidate).
+ * Với luồng đọc, đó là chủ ý; nhưng với luồng ghi, một bản cũ là đủ để PUT đè cả
+ * file và xoá mất mọi thay đổi mới hơn — chuyện từng xảy ra khi thêm nhiều đội
+ * liên tiếp: request rơi vào instance đang giữ cache cũ nên đọc thiếu đội vừa
+ * thêm rồi ghi đè lại. Vì vậy mọi thao tác ghi luôn đọc tươi, và từ chối chạy
+ * nếu chỉ đọc được seed tạm (Blob lỗi) — không bao giờ ghi đè dữ liệu thật bằng
+ * một bản không chắc chắn.
+ */
+async function readFreshForWrite<T>(
+  path: string,
+  seed: T[],
+  normalize: (items: T[]) => T[]
+): Promise<T[]> {
+  if (!hasToken()) {
+    throw new Error('BLOB_READ_WRITE_TOKEN chưa được cấu hình — không thể lưu dữ liệu');
+  }
+  const { data, trusted } = await readJsonFile<T[]>(path, seed);
+  if (!trusted) {
+    throw new Error('Không đọc được dữ liệu mới nhất từ Blob — tạm dừng ghi để tránh ghi đè');
+  }
+  return normalize(data);
+}
+
+function readPlayersForWrite(): Promise<Player[]> {
+  return readFreshForWrite<Player>(PLAYERS_PATH, playersSeed as Player[], (items) => items.map(normalizePlayer));
+}
+
+function readTeamsForWrite(): Promise<Team[]> {
+  return readFreshForWrite<Team>(TEAMS_PATH, teamsSeed as Team[], (items) => items.map(normalizeTeam));
+}
+
+function readTournamentsForWrite(): Promise<Tournament[]> {
+  return readFreshForWrite<Tournament>(TOURNAMENTS_PATH, tournamentsSeed as Tournament[], (items) =>
+    items.map(normalizeTournament)
+  );
+}
+
 export async function savePlayer(input: Partial<Player> & { ign: string }): Promise<Player> {
   if (!ROLES.includes(input.role as Role)) throw new ValidationError('Vị trí (role) không hợp lệ');
   return serialize(async () => {
-    const players = await getPlayersRaw();
+    const players = await readPlayersForWrite();
     const now = new Date().toISOString();
     const id = input.id?.trim() || `player-${Date.now()}`;
     const taken = new Set(players.filter((p) => p.id !== id).map((p) => p.slug));
@@ -482,7 +522,7 @@ export async function savePlayer(input: Partial<Player> & { ign: string }): Prom
 
 export async function deletePlayer(id: string): Promise<boolean> {
   return serialize(async () => {
-    const players = await getPlayersRaw();
+    const players = await readPlayersForWrite();
     const next = players.filter((p) => p.id !== id);
     if (next.length === players.length) return false;
     await writeJsonFile(PLAYERS_PATH, next);
@@ -495,7 +535,7 @@ export async function deletePlayer(id: string): Promise<boolean> {
  * `newSlug = null` nghĩa là đội đã bị xoá → gỡ liên kết, giữ nguyên tên đội dạng chữ.
  */
 async function rewritePlayerTeamRefs(oldSlug: string, newSlug: string | null): Promise<void> {
-  const players = await getPlayersRaw();
+  const players = await readPlayersForWrite();
   let changed = false;
   const next = players.map((p) => {
     let touched = false;
@@ -519,7 +559,7 @@ async function rewritePlayerTeamRefs(oldSlug: string, newSlug: string | null): P
 
 /** Ghi lại `achievements[].tournamentSlug` khi giải đấu đổi slug hoặc bị xoá. */
 async function rewriteTournamentRefs(oldSlug: string, newSlug: string | null): Promise<void> {
-  const [players, teams] = await Promise.all([getPlayersRaw(), getTeamsRaw()]);
+  const [players, teams] = await Promise.all([readPlayersForWrite(), readTeamsForWrite()]);
   const remap = (a: Achievement): Achievement => {
     if (a.tournamentSlug !== oldSlug) return a;
     if (newSlug) return { ...a, tournamentSlug: newSlug };
@@ -536,7 +576,7 @@ async function rewriteTournamentRefs(oldSlug: string, newSlug: string | null): P
 
 export async function saveTeam(input: Partial<Team> & { name: string }): Promise<Team> {
   return serialize(async () => {
-    const teams = await getTeamsRaw();
+    const teams = await readTeamsForWrite();
     const now = new Date().toISOString();
     const id = input.id?.trim() || `team-${Date.now()}`;
     const previous = teams.find((t) => t.id === id);
@@ -566,7 +606,7 @@ export async function saveTeam(input: Partial<Team> & { name: string }): Promise
 
 export async function deleteTeam(id: string): Promise<boolean> {
   return serialize(async () => {
-    const teams = await getTeamsRaw();
+    const teams = await readTeamsForWrite();
     const victim = teams.find((t) => t.id === id);
     const next = teams.filter((t) => t.id !== id);
     if (next.length === teams.length) return false;
@@ -578,7 +618,7 @@ export async function deleteTeam(id: string): Promise<boolean> {
 
 export async function saveTournament(input: Partial<Tournament> & { name: string }): Promise<Tournament> {
   return serialize(async () => {
-    const tournaments = await getTournamentsRaw();
+    const tournaments = await readTournamentsForWrite();
     const now = new Date().toISOString();
     const id = input.id?.trim() || `tournament-${Date.now()}`;
     const previous = tournaments.find((t) => t.id === id);
@@ -607,7 +647,7 @@ export async function saveTournament(input: Partial<Tournament> & { name: string
 
 export async function deleteTournament(id: string): Promise<boolean> {
   return serialize(async () => {
-    const tournaments = await getTournamentsRaw();
+    const tournaments = await readTournamentsForWrite();
     const victim = tournaments.find((t) => t.id === id);
     const next = tournaments.filter((t) => t.id !== id);
     if (next.length === tournaments.length) return false;
