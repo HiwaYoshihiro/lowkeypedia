@@ -5,9 +5,10 @@ import { Infobox } from '@/components/Infobox';
 import { Breadcrumb } from '@/components/Breadcrumb';
 import { WikiTable } from '@/components/WikiTable';
 import RichText from '@/components/RichText';
+import TeamMentions from '@/components/TeamMentions';
 import { JsonLd, breadcrumbJsonLd } from '@/components/JsonLd';
 import { TOURNAMENT_ACCENT } from '@/components/TournamentCard';
-import { getTournamentBySlug } from '@/lib/store';
+import { getTeams, getTournamentBySlug } from '@/lib/store';
 import { stripMarkdown } from '@/lib/params';
 import { SITE_URL } from '@/lib/site';
 
@@ -36,12 +37,13 @@ export async function generateMetadata({
 export default async function TournamentDetailPage({ params }: { params: { slug: string } }) {
   const tournament = await getTournamentBySlug(params.slug);
   if (!tournament) notFound();
+  const teams = await getTeams();
 
   const resultRows = tournament.results.map((result, index) => ({
     key: `r-${index}`,
     cells: {
       index: <span className="num">{index + 1}</span>,
-      result,
+      result: <TeamMentions text={result} teams={teams} />,
     },
   }));
 

@@ -890,6 +890,9 @@ export default function AdminDashboard() {
               </Field>
               <Field label="Lịch sử vô địch (mỗi dòng một mục)">
                 <textarea className={inputCls} rows={5} value={editingTournament.results} onChange={(e) => setEditingTournament({ ...editingTournament, results: e.target.value })} placeholder={'2024 — Vô địch: Bacon Time\n2023 — Vô địch: Talon Esports'} />
+                <p className="mt-1 text-xs text-slate-500">
+                  Tên đội trùng với đội tuyển có trong wiki sẽ tự động thành liên kết khi hiển thị — không cần cú pháp đặc biệt.
+                </p>
               </Field>
             </div>
             <div className="flex justify-end gap-3 mt-6">

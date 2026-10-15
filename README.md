@@ -48,7 +48,8 @@ có cache.
 - 🎮 **Tuyển thủ** — danh sách có lọc theo đội và vị trí; hồ sơ gồm tiểu sử, sự nghiệp,
   lịch sử đội tuyển và **bảng thành tích kiểu Liquipedia** (Năm · Thứ hạng · Giải đấu có liên kết).
 - 🛡️ **Đội tuyển** — đội hình hiện tại (link tới từng tuyển thủ) và thành tích đội.
-- 🏆 **Giải đấu** — ban tổ chức, tần suất, khu vực và lịch sử vô địch theo mùa.
+- 🏆 **Giải đấu** — ban tổ chức, tần suất, khu vực và lịch sử vô địch theo mùa;
+  tên đội trùng với đội tuyển trong wiki tự động thành liên kết.
 - 🔍 **Tìm kiếm** — không phân biệt dấu (`lai bang` khớp `Lai Bâng`), có gợi ý trực tiếp ở header.
 - 🌗 **Chế độ tối/sáng** — lưu ở `localStorage`, chống nháy (FOUC) bằng script chạy trước khi vẽ.
 - 📱 **Responsive** — sidebar điều hướng thu thành ngăn kéo trên mobile.
@@ -193,7 +194,8 @@ Vào `/admin`, đăng nhập bằng `ADMIN_PASSWORD`. Dashboard có ba tab **Tuy
 - **Thành tích** (tuyển thủ & đội tuyển) — bảng kiểu Liquipedia: **Năm** · **Thứ hạng** ·
   **Giải đấu** · **Liên kết giải đấu** (chọn từ danh sách để tên giải thành link).
 - **Lịch sử đội tuyển** (form tuyển thủ) — **Giai đoạn** · **Đội tuyển** · **Liên kết đội**.
-- **Lịch sử vô địch** (giải đấu) — mỗi dòng một mục.
+- **Lịch sử vô địch** (giải đấu) — mỗi dòng một mục; tên đội trùng với đội tuyển
+  trong wiki tự động thành liên kết, không cần cú pháp đặc biệt.
 - Ô văn bản dài (Tiểu sử / Sự nghiệp / Mô tả / Giới thiệu) hỗ trợ cú pháp `**in đậm**`.
 
 ### Quy tắc an toàn dữ liệu
