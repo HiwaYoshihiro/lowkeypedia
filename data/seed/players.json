@@ -2,6 +2,632 @@
   {
     "achievements": [
       {
+        "year": "2019",
+        "placement": "FMVP",
+        "tournament": "AWC 2019",
+        "tournamentSlug": "awc"
+      },
+      {
+        "year": "2019",
+        "placement": "Vô địch",
+        "tournament": "AWC 2019",
+        "tournamentSlug": "awc"
+      },
+      {
+        "year": "2019",
+        "placement": "Vô địch",
+        "tournament": "AIC 2019",
+        "tournamentSlug": "aic"
+      },
+      {
+        "year": "2019",
+        "placement": "FMVP",
+        "tournament": "ĐTDV Mùa Đông 2019",
+        "tournamentSlug": "dau-truong-danh-vong"
+      },
+      {
+        "year": "2021",
+        "placement": "FMVP",
+        "tournament": "ĐTDV Mùa Xuân 2021",
+        "tournamentSlug": "dau-truong-danh-vong"
+      },
+      {
+        "year": "2018",
+        "placement": "Á quân",
+        "tournament": "AIC 2018",
+        "tournamentSlug": "aic"
+      },
+      {
+        "year": "2018–2020",
+        "placement": "Vô địch (4 lần liên tiếp)",
+        "tournament": "ĐTDV",
+        "tournamentSlug": "dau-truong-danh-vong"
+      }
+    ],
+    "biography": "Trần \"ADC\" Đức Chiến được xem là một trong những \"thần rừng\" vĩ đại nhất của Liên Quân Mobile Việt Nam, người tiên phong cho lối chơi \"rừng kiểm soát\" với khả năng cướp mục tiêu lớn và tạo áp lực khắp bản đồ. Anh là FMVP của AWC 2019 với những màn trình diễn Nakroth, Kriknak và Quillen đỉnh cao, góp công lớn vào cú Grand Slam 2019 của Team Flash. Sau khi giải nghệ vào tháng 1/2023, anh theo đuổi công việc sáng tạo nội dung.",
+    "careerHistory": "Trụ cột của Team Flash giai đoạn 2018–2023, là một phần không thể thiếu của cú Grand Slam 2019. Tạm dừng thi đấu cuối năm 2020, trở lại ngắn hạn năm 2022 rồi chính thức giải nghệ vào tháng 1/2023.",
+    "id": "player-adc",
+    "ign": "ADC",
+    "nationality": "Việt Nam",
+    "realName": "Trần Đức Chiến",
+    "role": "Đi Rừng",
+    "slug": "adc",
+    "teamSlug": null,
+    "updatedAt": "2026-10-12T18:20:43.000Z",
+    "teamHistory": [
+      {
+        "period": "2018–2023",
+        "team": "Team Flash",
+        "teamSlug": "team-flash"
+      }
+    ]
+  },
+  {
+    "id": "player-betroc",
+    "slug": "betroc",
+    "ign": "BeTroc",
+    "role": "Xạ Thủ",
+    "teamSlug": "fpt-x-flash",
+    "nationality": "Việt Nam",
+    "biography": "**BeTroc** là xạ thủ của FPT x Flash. Từ một tài năng trẻ đầy triển vọng, anh từng bước trở thành mảnh ghép hoàn hảo của đội hình FPT x Flash trên hành trình kiến tạo kỷ nguyên mới, góp mặt trong đội hình xuất sắc nhất ĐTDV Mùa Xuân 2025 và Mùa Đông 2025. Anh chính thức đi vào lịch sử với danh hiệu FMVP ĐTDV Mùa Xuân 2026.",
+    "careerHistory": "Trưởng thành cùng FPT x Flash (tiền thân Team Flash); thành viên đội hình vô địch ĐTDV Mùa Đông 2025 và Mùa Xuân 2026.",
+    "teamHistory": [
+      {
+        "period": "2024–",
+        "team": "FPT x Flash",
+        "teamSlug": "fpt-x-flash"
+      }
+    ],
+    "achievements": [
+      {
+        "year": "2026",
+        "placement": "FMVP",
+        "tournament": "ĐTDV Mùa Xuân 2026",
+        "tournamentSlug": "dau-truong-danh-vong"
+      },
+      {
+        "year": "2026",
+        "placement": "Vô địch",
+        "tournament": "ĐTDV Mùa Xuân 2026",
+        "tournamentSlug": "dau-truong-danh-vong"
+      },
+      {
+        "year": "2025",
+        "placement": "Vô địch",
+        "tournament": "ĐTDV Mùa Đông 2025",
+        "tournamentSlug": "dau-truong-danh-vong"
+      },
+      {
+        "year": "2025",
+        "placement": "Đội hình xuất sắc nhất",
+        "tournament": "ĐTDV Mùa Đông 2025",
+        "tournamentSlug": "dau-truong-danh-vong"
+      },
+      {
+        "year": "2025",
+        "placement": "Đội hình xuất sắc nhất",
+        "tournament": "ĐTDV Mùa Xuân 2025",
+        "tournamentSlug": "dau-truong-danh-vong"
+      }
+    ],
+    "updatedAt": "2026-10-15T17:25:16.216Z"
+  },
+  {
+    "achievements": [
+      {
+        "year": "2022",
+        "placement": "Vô địch",
+        "tournament": "AIC 2022",
+        "tournamentSlug": "aic"
+      },
+      {
+        "year": "2021",
+        "placement": "Á quân",
+        "tournament": "AIC 2021",
+        "tournamentSlug": "aic"
+      },
+      {
+        "year": "2021",
+        "placement": "Đường Tà Thần xuất sắc nhất Việt Nam",
+        "tournament": ""
+      },
+      {
+        "year": "2021",
+        "placement": "Chuỗi 22 ván thắng liên tiếp",
+        "tournament": "AIC 2021",
+        "tournamentSlug": "aic"
+      }
+    ],
+    "biography": "Nguyễn \"BirdLB\" Văn Hiếu là tuyển thủ đường Tà Thần của V Gaming, được vinh danh là người chơi đường Tà Thần xuất sắc nhất năm 2021. Anh cùng V Gaming lập nên chuỗi 22 ván thắng liên tiếp tại AIC 2021 và sau đó lên ngôi vô địch AIC 2022.",
+    "careerHistory": "Bứt phá ngoạn mục cùng V Gaming giai đoạn 2021–2022, từ tài năng trẻ trở thành ngôi sao hàng đầu thế giới ở đường Caesar.",
+    "id": "player-birdlb",
+    "ign": "BirdLB",
+    "nationality": "Việt Nam",
+    "realName": "Nguyễn Văn Hiếu",
+    "role": "Đường Tà Thần",
+    "slug": "birdlb",
+    "teamSlug": "v-gaming",
+    "updatedAt": "2026-10-12T18:20:43.000Z"
+  },
+  {
+    "achievements": [
+      {
+        "year": "2020",
+        "placement": "Vô địch",
+        "tournament": "ĐTDV Mùa Đông 2020",
+        "tournamentSlug": "dau-truong-danh-vong"
+      },
+      {
+        "year": "2021",
+        "placement": "Vô địch",
+        "tournament": "ĐTDV Mùa Đông 2021",
+        "tournamentSlug": "dau-truong-danh-vong"
+      },
+      {
+        "year": "2022",
+        "placement": "Vô địch",
+        "tournament": "ĐTDV Mùa Xuân 2022",
+        "tournamentSlug": "dau-truong-danh-vong"
+      },
+      {
+        "year": "2020",
+        "placement": "Á quân",
+        "tournament": "AIC 2020",
+        "tournamentSlug": "aic"
+      }
+    ],
+    "biography": "Trịnh \"BronzeV\" Đào Tiến là một trong những tuyển thủ đường Tà Thần xuất sắc nhất lịch sử Liên Quân Mobile Việt Nam. Anh gia nhập Saigon Phantom ngày 15/12/2019 và cùng đội chinh chiến qua 3 mùa giải với rất nhiều danh hiệu lớn nhỏ trong và ngoài nước, trước khi chính thức chia tay vào tháng 7/2022.",
+    "birthYear": 1997,
+    "careerHistory": "Trưởng thành từ thế hệ đầu của Liên Quân Mobile Việt Nam. Khoác áo Saigon Phantom giai đoạn 2019–2022, là nhân chứng cho chuỗi thành công rực rỡ của \"Những bóng ma Sài Thành\".",
+    "id": "player-bronzev",
+    "ign": "BronzeV",
+    "nationality": "Việt Nam",
+    "realName": "Trịnh Đào Tiến",
+    "role": "Đường Tà Thần",
+    "slug": "bronzev",
+    "teamSlug": null,
+    "updatedAt": "2026-10-12T18:20:43.000Z",
+    "teamHistory": [
+      {
+        "period": "2019–2022",
+        "team": "Saigon Phantom",
+        "teamSlug": "saigon-phantom"
+      }
+    ]
+  },
+  {
+    "achievements": [
+      {
+        "year": "",
+        "placement": "Vô địch",
+        "tournament": "ĐTDV",
+        "tournamentSlug": "dau-truong-danh-vong"
+      },
+      {
+        "year": "2020",
+        "placement": "Top 3",
+        "tournament": "AIC 2020",
+        "tournamentSlug": "aic"
+      }
+    ],
+    "biography": "Nguyễn \"Daim\" Thành Trung khởi nghiệp tại Box Gaming trước khi chuyển sang Team Flash vào năm 2022 trong thương vụ trao đổi với Ara. Anh nhanh chóng hòa nhập và trở thành mảnh ghép quan trọng trong \"bộ 3 nguyên tử\" XB – ProE – Daim của đội.",
+    "careerHistory": "Box Gaming → Team Flash (2022).",
+    "id": "player-daim",
+    "ign": "Daim",
+    "nationality": "Việt Nam",
+    "realName": "Nguyễn Thành Trung",
+    "role": "Xạ Thủ",
+    "slug": "daim",
+    "teamSlug": "team-flash",
+    "updatedAt": "2026-10-12T18:20:43.000Z",
+    "teamHistory": [
+      {
+        "period": "–2022",
+        "team": "Box Gaming",
+        "teamSlug": "box-gaming"
+      },
+      {
+        "period": "2022–",
+        "team": "Team Flash",
+        "teamSlug": "team-flash"
+      }
+    ]
+  },
+  {
+    "achievements": [
+      {
+        "year": "2019",
+        "placement": "Vô địch",
+        "tournament": "AWC 2019",
+        "tournamentSlug": "awc"
+      },
+      {
+        "year": "2019",
+        "placement": "Vô địch",
+        "tournament": "AIC 2019",
+        "tournamentSlug": "aic"
+      },
+      {
+        "year": "2019–2020",
+        "placement": "Vô địch",
+        "tournament": "ĐTDV Mùa Xuân 2019, Mùa Đông 2019, Mùa Xuân 2020",
+        "tournamentSlug": "dau-truong-danh-vong"
+      },
+      {
+        "year": "2020",
+        "placement": "Top 3",
+        "tournament": "AIC 2020",
+        "tournamentSlug": "aic"
+      }
+    ],
+    "biography": "Đỗ \"Elly\" Thành Đạt (sinh năm 2000), còn được gọi là \"Đạt Cận\", từng được đánh giá là xạ thủ hàng đầu của Liên Quân Việt Nam và thế giới. Với lối chơi tinh quái, quyết đoán đến mức \"hổ báo\", anh là chủ lực sát thương chính trong đội hình Team Flash vô địch cả AWC và AIC 2019. Đầu năm 2021, anh chia tay Liên Quân chuyên nghiệp để chuyển sang thi đấu LMHT: Tốc Chiến trong màu áo Team Flash.",
+    "birthYear": 2000,
+    "careerHistory": "Overclockers → Team Flash (2019–2021) → Team Flash LMHT: Tốc Chiến. Được người hâm mộ đặt biệt danh \"ông hoàng cà khịa\" nhờ những màn phỏng vấn hài hước.",
+    "id": "player-elly",
+    "ign": "Elly",
+    "nationality": "Việt Nam",
+    "realName": "Đỗ Thành Đạt",
+    "role": "Xạ Thủ",
+    "slug": "elly",
+    "teamSlug": null,
+    "updatedAt": "2026-10-12T18:20:43.000Z",
+    "teamHistory": [
+      {
+        "period": "2019–2021",
+        "team": "Team Flash",
+        "teamSlug": "team-flash"
+      }
+    ]
+  },
+  {
+    "achievements": [
+      {
+        "year": "2023",
+        "placement": "FMVP",
+        "tournament": "ĐTDV Mùa Đông 2023",
+        "tournamentSlug": "dau-truong-danh-vong"
+      },
+      {
+        "year": "2024",
+        "placement": "FMVP",
+        "tournament": "ĐTDV Mùa Xuân 2024",
+        "tournamentSlug": "dau-truong-danh-vong"
+      },
+      {
+        "year": "2023",
+        "placement": "Vô địch",
+        "tournament": "APL 2023",
+        "tournamentSlug": "apl"
+      },
+      {
+        "year": "",
+        "placement": "Vô địch",
+        "tournament": "ĐTDV",
+        "tournamentSlug": "dau-truong-danh-vong"
+      }
+    ],
+    "biography": "Lương \"Fish\" Hoàng Phúc là đường giữa chủ lực của Saigon Phantom, nổi tiếng với bể tướng pháp sư đa dạng, khả năng tạo đột biến trong giao tranh tổng và những pha xử lý lạnh lùng ở thời khắc quyết định. Anh hai lần liên tiếp đoạt danh hiệu FMVP Đấu Trường Danh Vọng (Mùa Đông 2023 và Mùa Xuân 2024), khẳng định vị thế trụ cột của SGP trong kỷ nguyên thống trị giải quốc nội.",
+    "birthYear": 2002,
+    "careerHistory": "Gắn bó cùng Saigon Phantom, góp công lớn vào chuỗi vô địch quốc nội và danh hiệu APL 2023 của đội.",
+    "id": "player-fish",
+    "ign": "Fish",
+    "nationality": "Việt Nam",
+    "realName": "Lương Hoàng Phúc",
+    "role": "Đường Giữa",
+    "slug": "fish",
+    "teamSlug": "saigon-phantom",
+    "updatedAt": "2026-10-12T18:20:43.000Z"
+  },
+  {
+    "achievements": [
+      {
+        "year": "2019",
+        "placement": "Vô địch",
+        "tournament": "AWC 2019",
+        "tournamentSlug": "awc"
+      },
+      {
+        "year": "2019",
+        "placement": "Vô địch",
+        "tournament": "AIC 2019",
+        "tournamentSlug": "aic"
+      },
+      {
+        "year": "2018–2020",
+        "placement": "Vô địch (4 lần liên tiếp)",
+        "tournament": "ĐTDV",
+        "tournamentSlug": "dau-truong-danh-vong"
+      },
+      {
+        "year": "2018",
+        "placement": "Huy chương Đồng",
+        "tournament": "Asian Games 2018"
+      }
+    ],
+    "biography": "Phạm \"Gấu\" Hồng Quân là đội trưởng huyền thoại, \"anh cả\" của Team Flash. Anh là thành viên duy nhất trụ lại từ đội hình ProArmy ban đầu, dẫn dắt đàn em chinh phục 4 chức vô địch ĐTDV liên tiếp và 2 chức vô địch thế giới. Tháng 8/2020 anh từng rút về ghế huấn luyện rồi comeback thi đấu để vực dậy đội tuyển.",
+    "careerHistory": "ProArmy → Team Flash (2018–2022). Có thời gian đảm nhận vai trò huấn luyện viên trước khi trở lại thi đấu ở đường Tà Thần.",
+    "id": "player-gau",
+    "ign": "Gấu",
+    "nationality": "Việt Nam",
+    "realName": "Phạm Hồng Quân",
+    "role": "Đường Tà Thần",
+    "slug": "gau",
+    "teamSlug": null,
+    "updatedAt": "2026-10-12T18:20:43.000Z",
+    "teamHistory": [
+      {
+        "period": "2018–2022",
+        "team": "Team Flash",
+        "teamSlug": "team-flash"
+      }
+    ]
+  },
+  {
+    "id": "player-gray",
+    "slug": "gray",
+    "ign": "Gray",
+    "role": "Đi Rừng",
+    "teamSlug": "rex-regum-qeon",
+    "nationality": "Việt Nam",
+    "biography": "**Gray** là người đi rừng kỳ cựu, cựu tuyển thủ FPT x Flash. Anh gia nhập Rex Regum Qeon năm 2026 cùng đợt tái thành lập đội hình Việt Nam tham dự ĐTDV Mùa Đông 2026.",
+    "careerHistory": "FPT x Flash → Rex Regum Qeon (2026).",
+    "achievements": [
+      {
+        "year": "2025",
+        "placement": "Vô địch",
+        "tournament": "ĐTDV Mùa Đông 2025",
+        "tournamentSlug": "dau-truong-danh-vong"
+      },
+      {
+        "year": "2025",
+        "placement": "Đội hình xuất sắc nhất",
+        "tournament": "ĐTDV Mùa Đông 2025",
+        "tournamentSlug": "dau-truong-danh-vong"
+      }
+    ],
+    "updatedAt": "2026-10-15T17:21:12.422Z"
+  },
+  {
+    "achievements": [
+      {
+        "year": "2022",
+        "placement": "Vô địch",
+        "tournament": "AIC 2022",
+        "tournamentSlug": "aic"
+      },
+      {
+        "year": "2021",
+        "placement": "Á quân",
+        "tournament": "AIC 2021",
+        "tournamentSlug": "aic"
+      }
+    ],
+    "biography": "Nguyễn \"Han\" Quốc Hân là trợ thủ của V Gaming, người luôn âm thầm tạo tiền đề cho các chủ lực tỏa sáng bằng khả năng đọc tình huống, bảo kê và mở giao tranh xuất sắc.",
+    "careerHistory": "Thành viên đội hình vô địch AIC 2022 của V Gaming.",
+    "id": "player-han",
+    "ign": "Han",
+    "nationality": "Việt Nam",
+    "realName": "Nguyễn Quốc Hân",
+    "role": "Trợ Thủ",
+    "slug": "han",
+    "teamSlug": "v-gaming",
+    "updatedAt": "2026-10-12T18:20:43.000Z"
+  },
+  {
+    "achievements": [
+      {
+        "year": "2022",
+        "placement": "Vô địch",
+        "tournament": "AIC 2022",
+        "tournamentSlug": "aic"
+      },
+      {
+        "year": "2021",
+        "placement": "Á quân",
+        "tournament": "AIC 2021",
+        "tournamentSlug": "aic"
+      }
+    ],
+    "biography": "Lâm \"HoàngTĐ\" Văn Hoàng là xạ thủ chủ lực của V Gaming với khả năng gây sát thương ổn định, giữ vị trí an toàn trong giao tranh và tỏa sáng ở những thời khắc quyết định.",
+    "careerHistory": "Thành viên đội hình vô địch AIC 2022 của V Gaming, sát cánh cùng đội từ giai đoạn \"về nhì vĩ đại\".",
+    "id": "player-hoangtd",
+    "ign": "HoàngTĐ",
+    "nationality": "Việt Nam",
+    "realName": "Lâm Văn Hoàng",
+    "role": "Xạ Thủ",
+    "slug": "hoangtd",
+    "teamSlug": "v-gaming",
+    "updatedAt": "2026-10-12T18:20:43.000Z"
+  },
+  {
+    "id": "player-huyhoang",
+    "slug": "huyhoang",
+    "ign": "HuyHoang",
+    "realName": "Nguyễn Huy Hoàng",
+    "role": "Đường Tà Thần",
+    "teamSlug": "fpt-x-flash",
+    "nationality": "Việt Nam",
+    "biography": "Nguyễn **\"HuyHoang\" Huy Hoàng** là đường Tà Thần của FPT x Flash — trụ cột đường trên với lối chơi chắc chắn và khả năng tạo đột biến trong những giao tranh quyết định. Anh góp mặt trong đội hình xuất sắc nhất hai mùa giải liên tiếp (Mùa Xuân 2025, Mùa Đông 2025) và là nhân tố quan trọng trong các chức vô địch ĐTDV của FPT x Flash.",
+    "careerHistory": "Trưởng thành cùng FPT x Flash (tiền thân Team Flash) từ năm 2024; thành viên đội hình vô địch ĐTDV Mùa Đông 2025 và Mùa Xuân 2026.",
+    "teamHistory": [
+      {
+        "period": "2024–",
+        "team": "FPT x Flash",
+        "teamSlug": "fpt-x-flash"
+      }
+    ],
+    "achievements": [
+      {
+        "year": "2026",
+        "placement": "Vô địch",
+        "tournament": "ĐTDV Mùa Xuân 2026",
+        "tournamentSlug": "dau-truong-danh-vong"
+      },
+      {
+        "year": "2025",
+        "placement": "Vô địch",
+        "tournament": "ĐTDV Mùa Đông 2025",
+        "tournamentSlug": "dau-truong-danh-vong"
+      },
+      {
+        "year": "2025",
+        "placement": "Đội hình xuất sắc nhất",
+        "tournament": "ĐTDV Mùa Đông 2025",
+        "tournamentSlug": "dau-truong-danh-vong"
+      },
+      {
+        "year": "2025",
+        "placement": "Đội hình xuất sắc nhất",
+        "tournament": "ĐTDV Mùa Xuân 2025",
+        "tournamentSlug": "dau-truong-danh-vong"
+      }
+    ],
+    "updatedAt": "2026-10-15T17:23:14.928Z"
+  },
+  {
+    "achievements": [
+      {
+        "year": "2023",
+        "placement": "Vô địch",
+        "tournament": "APL 2023",
+        "tournamentSlug": "apl"
+      },
+      {
+        "year": "",
+        "placement": "Vô địch",
+        "tournament": "ĐTDV",
+        "tournamentSlug": "dau-truong-danh-vong"
+      }
+    ],
+    "biography": "Nguyễn \"Jiro\" Quốc Hận (sinh năm 2001) khởi nghiệp tại FAP Esports, nơi anh được đánh giá là ngôi sao trẻ hàng đầu ở đường Caesar nhờ bể tướng đấu sĩ đa dạng và lối di chuyển tinh quái. Sau khi chuyển sang Saigon Phantom, anh trở thành trụ cột đường Tà Thần của đội và cùng SGP vô địch APL 2023.",
+    "birthYear": 2001,
+    "careerHistory": "FAP Esports → Saigon Phantom. Từng được đồn đoán gia nhập Team Flash đầu năm 2022 trước khi chọn khoác áo \"Những bóng ma Sài Thành\".",
+    "id": "player-jiro",
+    "ign": "Jiro",
+    "nationality": "Việt Nam",
+    "realName": "Nguyễn Quốc Hận",
+    "role": "Đường Tà Thần",
+    "slug": "jiro",
+    "teamSlug": "saigon-phantom",
+    "updatedAt": "2026-10-12T18:20:43.000Z",
+    "teamHistory": [
+      {
+        "period": "",
+        "team": "FAP Esports",
+        "teamSlug": "fap-esports"
+      },
+      {
+        "period": "",
+        "team": "Saigon Phantom",
+        "teamSlug": "saigon-phantom"
+      }
+    ]
+  },
+  {
+    "achievements": [
+      {
+        "year": "2025",
+        "placement": "FMVP",
+        "tournament": "ĐTDV Mùa Xuân 2025",
+        "tournamentSlug": "dau-truong-danh-vong"
+      },
+      {
+        "year": "2023",
+        "placement": "Vô địch",
+        "tournament": "APL 2023",
+        "tournamentSlug": "apl"
+      },
+      {
+        "year": "",
+        "placement": "Vô địch",
+        "tournament": "ĐTDV",
+        "tournamentSlug": "dau-truong-danh-vong"
+      }
+    ],
+    "biography": "Đinh \"Khoa\" Tấn Khoa (sinh năm 2003) là trợ thủ trẻ của Saigon Phantom, nổi bật với khả năng bảo kê chủ lực, mở giao tranh chuẩn xác và đọc tình huống vượt trội so với tuổi đời. Anh đoạt danh hiệu FMVP Đấu Trường Danh Vọng Mùa Xuân 2025 và là thành viên của đội hình SGP vô địch APL 2023.",
+    "birthYear": 2003,
+    "careerHistory": "Trưởng thành từ tuyến trẻ và nhanh chóng trở thành trụ cột không thể thay thế của Saigon Phantom.",
+    "id": "player-khoa",
+    "ign": "Khoa",
+    "nationality": "Việt Nam",
+    "realName": "Đinh Tấn Khoa",
+    "role": "Trợ Thủ",
+    "slug": "khoa",
+    "teamSlug": "saigon-phantom",
+    "updatedAt": "2026-10-12T18:20:43.000Z"
+  },
+  {
+    "id": "player-kimsensei",
+    "slug": "kimsensei",
+    "ign": "Kimsensei",
+    "role": "Đường Giữa",
+    "teamSlug": "bacon-time",
+    "nationality": "Thái Lan",
+    "biography": "**Kimsensei** là đường giữa của Bacon Time. Tại AIC 2024 tổ chức ở TP.HCM, anh giữ phong độ ổn định suốt giải ở vị trí đường giữa, góp công lớn giúp đội lên ngôi vô địch và đoạt danh hiệu FMVP — tuyển thủ thứ ba của Bacon Time nhận MVP chung kết quốc tế, sau MarkKY (APL 2022) và Erez (AIC 2023).",
+    "careerHistory": "Trụ cột đường giữa của Bacon Time, một trong những đội tuyển thành công nhất lịch sử Liên Quân Mobile Thái Lan.",
+    "achievements": [
+      {
+        "year": "2024",
+        "placement": "FMVP",
+        "tournament": "AIC 2024",
+        "tournamentSlug": "aic"
+      },
+      {
+        "year": "2024",
+        "placement": "Vô địch",
+        "tournament": "AIC 2024",
+        "tournamentSlug": "aic"
+      },
+      {
+        "year": "2024",
+        "placement": "Đội hình xuất sắc nhất",
+        "tournament": "AIC 2024",
+        "tournamentSlug": "aic"
+      }
+    ],
+    "updatedAt": "2026-10-15T17:21:07.761Z"
+  },
+  {
+    "id": "player-kuga",
+    "slug": "kuga",
+    "ign": "Kuga",
+    "role": "Đường Tà Thần",
+    "teamSlug": "saigon-phantom",
+    "nationality": "Việt Nam",
+    "biography": "**Kuga** là đường Tà Thần của Saigon Phantom. Gia nhập đội tuyển ở ĐTDV Mùa Đông 2024, anh lập tức chứng minh mình là bản hợp đồng \"bom tấn\" khi cùng \"Những bóng ma Sài Thành\" bảo vệ thành công ngôi vương và đoạt danh hiệu FMVP ngay mùa giải đầu tiên khoác áo đội.",
+    "careerHistory": "Gia nhập Saigon Phantom từ ĐTDV Mùa Đông 2024; vô địch và đoạt FMVP ngay mùa đầu tiên.",
+    "teamHistory": [
+      {
+        "period": "2024–",
+        "team": "Saigon Phantom",
+        "teamSlug": "saigon-phantom"
+      }
+    ],
+    "achievements": [
+      {
+        "year": "2024",
+        "placement": "FMVP",
+        "tournament": "ĐTDV Mùa Đông 2024",
+        "tournamentSlug": "dau-truong-danh-vong"
+      },
+      {
+        "year": "2024",
+        "placement": "Vô địch",
+        "tournament": "ĐTDV Mùa Đông 2024",
+        "tournamentSlug": "dau-truong-danh-vong"
+      },
+      {
+        "year": "2024",
+        "placement": "Đội hình xuất sắc nhất",
+        "tournament": "ĐTDV Mùa Đông 2024",
+        "tournamentSlug": "dau-truong-danh-vong"
+      }
+    ],
+    "updatedAt": "2026-10-15T17:21:02.337Z"
+  },
+  {
+    "achievements": [
+      {
         "year": "2023",
         "placement": "Vô địch (MVP chung kết)",
         "tournament": "APL 2023",
@@ -64,268 +690,75 @@
     ]
   },
   {
+    "id": "player-maris",
+    "slug": "maris",
+    "ign": "Maris",
+    "realName": "Nguyễn Quốc Huy",
+    "role": "Đường Giữa",
+    "teamSlug": "rex-regum-qeon",
+    "nationality": "Việt Nam",
+    "biography": "Nguyễn \"Maris\" Quốc Huy là đường giữa huyền thoại của Liên Quân Việt Nam — chủ nhân danh hiệu tuyển thủ xuất sắc nhất trận chung kết AIC 2022, nơi V Gaming đánh bại ONE Team 4-1 để lên ngôi vô địch thế giới. Tháng 9/2026, anh gia nhập **Rex Regum Qeon** để dẫn dắt đội hình Việt Nam tại **ĐTDV Mùa Đông 2026**.",
+    "careerHistory": "Gắn bó cùng V Gaming từ những ngày đầu, cùng đội vượt qua cái bóng \"ông hoàng về nhì\" để chạm tới đỉnh cao thế giới và vô địch AIC 2022. Tháng 9/2026, anh chuyển sang Rex Regum Qeon tham dự ĐTDV Mùa Đông 2026.",
     "achievements": [
-      {
-        "year": "2020",
-        "placement": "Vô địch",
-        "tournament": "ĐTDV Mùa Đông 2020",
-        "tournamentSlug": "dau-truong-danh-vong"
-      },
-      {
-        "year": "2021",
-        "placement": "Vô địch",
-        "tournament": "ĐTDV Mùa Đông 2021",
-        "tournamentSlug": "dau-truong-danh-vong"
-      },
       {
         "year": "2022",
-        "placement": "Vô địch",
-        "tournament": "ĐTDV Mùa Xuân 2022",
-        "tournamentSlug": "dau-truong-danh-vong"
-      },
-      {
-        "year": "2020",
-        "placement": "Á quân",
-        "tournament": "AIC 2020",
+        "placement": "Vô địch (FMVP chung kết)",
+        "tournament": "AIC 2022",
         "tournamentSlug": "aic"
-      }
-    ],
-    "biography": "Trịnh \"BronzeV\" Đào Tiến là một trong những tuyển thủ đường Tà Thần xuất sắc nhất lịch sử Liên Quân Mobile Việt Nam. Anh gia nhập Saigon Phantom ngày 15/12/2019 và cùng đội chinh chiến qua 3 mùa giải với rất nhiều danh hiệu lớn nhỏ trong và ngoài nước, trước khi chính thức chia tay vào tháng 7/2022.",
-    "birthYear": 1997,
-    "careerHistory": "Trưởng thành từ thế hệ đầu của Liên Quân Mobile Việt Nam. Khoác áo Saigon Phantom giai đoạn 2019–2022, là nhân chứng cho chuỗi thành công rực rỡ của \"Những bóng ma Sài Thành\".",
-    "id": "player-bronzev",
-    "ign": "BronzeV",
-    "nationality": "Việt Nam",
-    "realName": "Trịnh Đào Tiến",
-    "role": "Đường Tà Thần",
-    "slug": "bronzev",
-    "teamSlug": null,
-    "updatedAt": "2026-10-12T18:20:43.000Z",
-    "teamHistory": [
-      {
-        "period": "2019–2022",
-        "team": "Saigon Phantom",
-        "teamSlug": "saigon-phantom"
-      }
-    ]
-  },
-  {
-    "achievements": [
-      {
-        "year": "2023",
-        "placement": "FMVP",
-        "tournament": "ĐTDV Mùa Đông 2023",
-        "tournamentSlug": "dau-truong-danh-vong"
       },
-      {
-        "year": "2024",
-        "placement": "FMVP",
-        "tournament": "ĐTDV Mùa Xuân 2024",
-        "tournamentSlug": "dau-truong-danh-vong"
-      },
-      {
-        "year": "2023",
-        "placement": "Vô địch",
-        "tournament": "APL 2023",
-        "tournamentSlug": "apl"
-      },
-      {
-        "year": "",
-        "placement": "Vô địch",
-        "tournament": "ĐTDV",
-        "tournamentSlug": "dau-truong-danh-vong"
-      }
-    ],
-    "biography": "Lương \"Fish\" Hoàng Phúc là đường giữa chủ lực của Saigon Phantom, nổi tiếng với bể tướng pháp sư đa dạng, khả năng tạo đột biến trong giao tranh tổng và những pha xử lý lạnh lùng ở thời khắc quyết định. Anh hai lần liên tiếp đoạt danh hiệu FMVP Đấu Trường Danh Vọng (Mùa Đông 2023 và Mùa Xuân 2024), khẳng định vị thế trụ cột của SGP trong kỷ nguyên thống trị giải quốc nội.",
-    "birthYear": 2002,
-    "careerHistory": "Gắn bó cùng Saigon Phantom, góp công lớn vào chuỗi vô địch quốc nội và danh hiệu APL 2023 của đội.",
-    "id": "player-fish",
-    "ign": "Fish",
-    "nationality": "Việt Nam",
-    "realName": "Lương Hoàng Phúc",
-    "role": "Đường Giữa",
-    "slug": "fish",
-    "teamSlug": "saigon-phantom",
-    "updatedAt": "2026-10-12T18:20:43.000Z"
-  },
-  {
-    "achievements": [
       {
         "year": "2025",
         "placement": "FMVP",
-        "tournament": "ĐTDV Mùa Xuân 2025",
-        "tournamentSlug": "dau-truong-danh-vong"
-      },
-      {
-        "year": "2023",
-        "placement": "Vô địch",
-        "tournament": "APL 2023",
-        "tournamentSlug": "apl"
-      },
-      {
-        "year": "",
-        "placement": "Vô địch",
-        "tournament": "ĐTDV",
-        "tournamentSlug": "dau-truong-danh-vong"
-      }
-    ],
-    "biography": "Đinh \"Khoa\" Tấn Khoa (sinh năm 2003) là trợ thủ trẻ của Saigon Phantom, nổi bật với khả năng bảo kê chủ lực, mở giao tranh chuẩn xác và đọc tình huống vượt trội so với tuổi đời. Anh đoạt danh hiệu FMVP Đấu Trường Danh Vọng Mùa Xuân 2025 và là thành viên của đội hình SGP vô địch APL 2023.",
-    "birthYear": 2003,
-    "careerHistory": "Trưởng thành từ tuyến trẻ và nhanh chóng trở thành trụ cột không thể thay thế của Saigon Phantom.",
-    "id": "player-khoa",
-    "ign": "Khoa",
-    "nationality": "Việt Nam",
-    "realName": "Đinh Tấn Khoa",
-    "role": "Trợ Thủ",
-    "slug": "khoa",
-    "teamSlug": "saigon-phantom",
-    "updatedAt": "2026-10-12T18:20:43.000Z"
-  },
-  {
-    "achievements": [
-      {
-        "year": "2023",
-        "placement": "Vô địch",
-        "tournament": "APL 2023",
-        "tournamentSlug": "apl"
-      },
-      {
-        "year": "",
-        "placement": "Vô địch",
-        "tournament": "ĐTDV",
-        "tournamentSlug": "dau-truong-danh-vong"
-      }
-    ],
-    "biography": "Nguyễn \"Jiro\" Quốc Hận (sinh năm 2001) khởi nghiệp tại FAP Esports, nơi anh được đánh giá là ngôi sao trẻ hàng đầu ở đường Caesar nhờ bể tướng đấu sĩ đa dạng và lối di chuyển tinh quái. Sau khi chuyển sang Saigon Phantom, anh trở thành trụ cột đường Tà Thần của đội và cùng SGP vô địch APL 2023.",
-    "birthYear": 2001,
-    "careerHistory": "FAP Esports → Saigon Phantom. Từng được đồn đoán gia nhập Team Flash đầu năm 2022 trước khi chọn khoác áo \"Những bóng ma Sài Thành\".",
-    "id": "player-jiro",
-    "ign": "Jiro",
-    "nationality": "Việt Nam",
-    "realName": "Nguyễn Quốc Hận",
-    "role": "Đường Tà Thần",
-    "slug": "jiro",
-    "teamSlug": "saigon-phantom",
-    "updatedAt": "2026-10-12T18:20:43.000Z",
-    "teamHistory": [
-      {
-        "period": "",
-        "team": "FAP Esports",
-        "teamSlug": "fap-esports"
-      },
-      {
-        "period": "",
-        "team": "Saigon Phantom",
-        "teamSlug": "saigon-phantom"
-      }
-    ]
-  },
-  {
-    "achievements": [
-      {
-        "year": "2019",
-        "placement": "Vô địch",
-        "tournament": "AWC 2019",
-        "tournamentSlug": "awc"
-      },
-      {
-        "year": "2019",
-        "placement": "Vô địch",
-        "tournament": "AIC 2019",
-        "tournamentSlug": "aic"
-      },
-      {
-        "year": "2020",
-        "placement": "FMVP",
-        "tournament": "ĐTDV Mùa Xuân 2020",
-        "tournamentSlug": "dau-truong-danh-vong"
-      },
-      {
-        "year": "2018–2020",
-        "placement": "Vô địch (4 lần liên tiếp)",
-        "tournament": "ĐTDV",
-        "tournamentSlug": "dau-truong-danh-vong"
-      },
-      {
-        "year": "2018",
-        "placement": "Á quân",
-        "tournament": "AIC 2018",
-        "tournamentSlug": "aic"
-      }
-    ],
-    "biography": "Trần \"XB\" Xuân Bách là đường giữa huyền thoại của Team Flash, nhạc trưởng trong lối chơi kiểm soát trứ danh của đội ở thời kỳ đỉnh cao 2019–2020. Anh là thành viên của đội hình làm nên cú Grand Slam 2019 với hai chức vô địch thế giới AWC và AIC, đồng thời là FMVP Đấu Trường Danh Vọng Mùa Xuân 2020.",
-    "careerHistory": "Gắn bó lâu năm cùng Team Flash từ những ngày đầu đội đổi tên từ ProArmy, chứng kiến mọi thăng trầm của đội tuyển.",
-    "id": "player-xb",
-    "ign": "XB",
-    "nationality": "Việt Nam",
-    "realName": "Trần Xuân Bách",
-    "role": "Đường Giữa",
-    "slug": "xb",
-    "teamSlug": "team-flash",
-    "updatedAt": "2026-10-12T18:20:43.000Z"
-  },
-  {
-    "achievements": [
-      {
-        "year": "2019",
-        "placement": "FMVP",
-        "tournament": "AWC 2019",
-        "tournamentSlug": "awc"
-      },
-      {
-        "year": "2019",
-        "placement": "Vô địch",
-        "tournament": "AWC 2019",
-        "tournamentSlug": "awc"
-      },
-      {
-        "year": "2019",
-        "placement": "Vô địch",
-        "tournament": "AIC 2019",
-        "tournamentSlug": "aic"
-      },
-      {
-        "year": "2019",
-        "placement": "FMVP",
-        "tournament": "ĐTDV Mùa Đông 2019",
+        "tournament": "ĐTDV Mùa Đông 2025",
         "tournamentSlug": "dau-truong-danh-vong"
       },
       {
         "year": "2021",
-        "placement": "FMVP",
-        "tournament": "ĐTDV Mùa Xuân 2021",
-        "tournamentSlug": "dau-truong-danh-vong"
-      },
-      {
-        "year": "2018",
         "placement": "Á quân",
-        "tournament": "AIC 2018",
+        "tournament": "AIC 2021",
         "tournamentSlug": "aic"
       },
       {
-        "year": "2018–2020",
-        "placement": "Vô địch (4 lần liên tiếp)",
-        "tournament": "ĐTDV",
+        "year": "2021",
+        "placement": "Á quân",
+        "tournament": "ĐTDV Mùa Đông 2021",
         "tournamentSlug": "dau-truong-danh-vong"
       }
     ],
-    "biography": "Trần \"ADC\" Đức Chiến được xem là một trong những \"thần rừng\" vĩ đại nhất của Liên Quân Mobile Việt Nam, người tiên phong cho lối chơi \"rừng kiểm soát\" với khả năng cướp mục tiêu lớn và tạo áp lực khắp bản đồ. Anh là FMVP của AWC 2019 với những màn trình diễn Nakroth, Kriknak và Quillen đỉnh cao, góp công lớn vào cú Grand Slam 2019 của Team Flash. Sau khi giải nghệ vào tháng 1/2023, anh theo đuổi công việc sáng tạo nội dung.",
-    "careerHistory": "Trụ cột của Team Flash giai đoạn 2018–2023, là một phần không thể thiếu của cú Grand Slam 2019. Tạm dừng thi đấu cuối năm 2020, trở lại ngắn hạn năm 2022 rồi chính thức giải nghệ vào tháng 1/2023.",
-    "id": "player-adc",
-    "ign": "ADC",
+    "updatedAt": "2026-10-13T17:35:15.889Z"
+  },
+  {
+    "id": "player-1791883208724",
+    "slug": "monarch",
+    "ign": "Monarch",
+    "realName": "Trần Hoàng Đạo",
+    "role": "Đường Tà Thần",
+    "teamSlug": "the-last-stand-esports",
     "nationality": "Việt Nam",
-    "realName": "Trần Đức Chiến",
-    "role": "Đi Rừng",
-    "slug": "adc",
-    "teamSlug": null,
-    "updatedAt": "2026-10-12T18:20:43.000Z",
+    "birthYear": 2007,
+    "biography": "Trần \"**Monarch**\" Hoàng Đạo là một tuyển thủ thi đấu ở đường DSL dưới màu áo **The Last Stand Esports (TLS)**",
+    "careerHistory": "",
     "teamHistory": [
       {
-        "period": "2018–2023",
-        "team": "Team Flash",
-        "teamSlug": "team-flash"
+        "period": "2025 - 2026",
+        "team": "The Last Stand Esports",
+        "teamSlug": "the-last-stand-esports"
       }
-    ]
+    ],
+    "achievements": [
+      {
+        "year": "2026",
+        "placement": "Top 4",
+        "tournament": "HUTECH NEWBIES SAYHI"
+      },
+      {
+        "year": "2025",
+        "placement": "Top 5",
+        "tournament": "HUTECH Esports Championship"
+      }
+    ],
+    "avatarUrl": "https://i.postimg.cc/d3c3VshW/Picsart-26-09-27-07-11-27-039.png",
+    "updatedAt": "2026-10-13T09:21:29.792Z"
   },
   {
     "achievements": [
@@ -386,134 +819,6 @@
   {
     "achievements": [
       {
-        "year": "2019",
-        "placement": "Vô địch",
-        "tournament": "AWC 2019",
-        "tournamentSlug": "awc"
-      },
-      {
-        "year": "2019",
-        "placement": "Vô địch",
-        "tournament": "AIC 2019",
-        "tournamentSlug": "aic"
-      },
-      {
-        "year": "2019–2020",
-        "placement": "Vô địch",
-        "tournament": "ĐTDV Mùa Xuân 2019, Mùa Đông 2019, Mùa Xuân 2020",
-        "tournamentSlug": "dau-truong-danh-vong"
-      },
-      {
-        "year": "2020",
-        "placement": "Top 3",
-        "tournament": "AIC 2020",
-        "tournamentSlug": "aic"
-      }
-    ],
-    "biography": "Đỗ \"Elly\" Thành Đạt (sinh năm 2000), còn được gọi là \"Đạt Cận\", từng được đánh giá là xạ thủ hàng đầu của Liên Quân Việt Nam và thế giới. Với lối chơi tinh quái, quyết đoán đến mức \"hổ báo\", anh là chủ lực sát thương chính trong đội hình Team Flash vô địch cả AWC và AIC 2019. Đầu năm 2021, anh chia tay Liên Quân chuyên nghiệp để chuyển sang thi đấu LMHT: Tốc Chiến trong màu áo Team Flash.",
-    "birthYear": 2000,
-    "careerHistory": "Overclockers → Team Flash (2019–2021) → Team Flash LMHT: Tốc Chiến. Được người hâm mộ đặt biệt danh \"ông hoàng cà khịa\" nhờ những màn phỏng vấn hài hước.",
-    "id": "player-elly",
-    "ign": "Elly",
-    "nationality": "Việt Nam",
-    "realName": "Đỗ Thành Đạt",
-    "role": "Xạ Thủ",
-    "slug": "elly",
-    "teamSlug": null,
-    "updatedAt": "2026-10-12T18:20:43.000Z",
-    "teamHistory": [
-      {
-        "period": "2019–2021",
-        "team": "Team Flash",
-        "teamSlug": "team-flash"
-      }
-    ]
-  },
-  {
-    "achievements": [
-      {
-        "year": "2019",
-        "placement": "Vô địch",
-        "tournament": "AWC 2019",
-        "tournamentSlug": "awc"
-      },
-      {
-        "year": "2019",
-        "placement": "Vô địch",
-        "tournament": "AIC 2019",
-        "tournamentSlug": "aic"
-      },
-      {
-        "year": "2018–2020",
-        "placement": "Vô địch (4 lần liên tiếp)",
-        "tournament": "ĐTDV",
-        "tournamentSlug": "dau-truong-danh-vong"
-      },
-      {
-        "year": "2018",
-        "placement": "Huy chương Đồng",
-        "tournament": "Asian Games 2018"
-      }
-    ],
-    "biography": "Phạm \"Gấu\" Hồng Quân là đội trưởng huyền thoại, \"anh cả\" của Team Flash. Anh là thành viên duy nhất trụ lại từ đội hình ProArmy ban đầu, dẫn dắt đàn em chinh phục 4 chức vô địch ĐTDV liên tiếp và 2 chức vô địch thế giới. Tháng 8/2020 anh từng rút về ghế huấn luyện rồi comeback thi đấu để vực dậy đội tuyển.",
-    "careerHistory": "ProArmy → Team Flash (2018–2022). Có thời gian đảm nhận vai trò huấn luyện viên trước khi trở lại thi đấu ở đường Tà Thần.",
-    "id": "player-gau",
-    "ign": "Gấu",
-    "nationality": "Việt Nam",
-    "realName": "Phạm Hồng Quân",
-    "role": "Đường Tà Thần",
-    "slug": "gau",
-    "teamSlug": null,
-    "updatedAt": "2026-10-12T18:20:43.000Z",
-    "teamHistory": [
-      {
-        "period": "2018–2022",
-        "team": "Team Flash",
-        "teamSlug": "team-flash"
-      }
-    ]
-  },
-  {
-    "achievements": [
-      {
-        "year": "2022",
-        "placement": "Vô địch (FMVP chung kết)",
-        "tournament": "AIC 2022",
-        "tournamentSlug": "aic"
-      },
-      {
-        "year": "2025",
-        "placement": "FMVP",
-        "tournament": "ĐTDV Mùa Đông 2025",
-        "tournamentSlug": "dau-truong-danh-vong"
-      },
-      {
-        "year": "2021",
-        "placement": "Á quân",
-        "tournament": "AIC 2021",
-        "tournamentSlug": "aic"
-      },
-      {
-        "year": "2021",
-        "placement": "Á quân",
-        "tournament": "ĐTDV Mùa Đông 2021",
-        "tournamentSlug": "dau-truong-danh-vong"
-      }
-    ],
-    "biography": "Nguyễn \"Maris\" Quốc Huy là đường giữa của V Gaming và là chủ nhân danh hiệu tuyển thủ xuất sắc nhất trận chung kết AIC 2022, nơi V Gaming đánh bại ONE Team 4-1 để lên ngôi vô địch thế giới. Anh tiếp tục khẳng định đẳng cấp với danh hiệu FMVP Đấu Trường Danh Vọng Mùa Đông 2025.",
-    "careerHistory": "Gắn bó cùng V Gaming từ những ngày đầu, cùng đội vượt qua cái bóng \"ông hoàng về nhì\" để chạm tới đỉnh cao thế giới.",
-    "id": "player-maris",
-    "ign": "Maris",
-    "nationality": "Việt Nam",
-    "realName": "Nguyễn Quốc Huy",
-    "role": "Đường Giữa",
-    "slug": "maris",
-    "teamSlug": "v-gaming",
-    "updatedAt": "2026-10-12T18:20:43.000Z"
-  },
-  {
-    "achievements": [
-      {
         "year": "2022",
         "placement": "Vô địch",
         "tournament": "AIC 2022",
@@ -544,130 +849,224 @@
     "updatedAt": "2026-10-12T18:20:43.000Z"
   },
   {
-    "achievements": [
+    "id": "player-1791881224360",
+    "slug": "rito",
+    "ign": "Rito",
+    "realName": "Nguyễn Lê Vỹ Lâm",
+    "role": "Đi Rừng",
+    "teamSlug": "the-last-stand-esports",
+    "nationality": "Việt Nam",
+    "birthYear": 2007,
+    "biography": "Nguyễn \"**Rito**\" Lê Vỹ Lâm là một trong những người chơi đường tà thần/rừng bậc nhất của Liên Quân Mobile về lối chơi \"khô máu\" với khả năng timing mục tiêu và tạo áp lực lên các lane.",
+    "careerHistory": "Captain hiện tại của **The Last Stand Esports (TLS)**. Trước đây từng là tuyển thủ chuyên nghiệp bộ môn PUBG Mobile giành HCV PMCL dưới màu áo **RedDragon Esports (RDE)** và đội tuyển **PUBGM Việt Nam**.",
+    "teamHistory": [
       {
-        "year": "2022",
-        "placement": "Vô địch",
-        "tournament": "AIC 2022",
-        "tournamentSlug": "aic"
+        "period": "2024 - Hiện tại",
+        "team": "The Last Stand Esports"
       },
       {
-        "year": "2021",
-        "placement": "Á quân",
-        "tournament": "AIC 2021",
-        "tournamentSlug": "aic"
+        "period": "2024",
+        "team": "Shining Moment"
       },
       {
-        "year": "2021",
-        "placement": "Đường Tà Thần xuất sắc nhất Việt Nam",
-        "tournament": ""
+        "period": "2021",
+        "team": "VIE - Việt Nam"
       },
       {
-        "year": "2021",
-        "placement": "Chuỗi 22 ván thắng liên tiếp",
-        "tournament": "AIC 2021",
-        "tournamentSlug": "aic"
+        "period": "2020 - 2022",
+        "team": "RedDragon Esports"
       }
     ],
-    "biography": "Nguyễn \"BirdLB\" Văn Hiếu là tuyển thủ đường Tà Thần của V Gaming, được vinh danh là người chơi đường Tà Thần xuất sắc nhất năm 2021. Anh cùng V Gaming lập nên chuỗi 22 ván thắng liên tiếp tại AIC 2021 và sau đó lên ngôi vô địch AIC 2022.",
-    "careerHistory": "Bứt phá ngoạn mục cùng V Gaming giai đoạn 2021–2022, từ tài năng trẻ trở thành ngôi sao hàng đầu thế giới ở đường Caesar.",
-    "id": "player-birdlb",
-    "ign": "BirdLB",
+    "achievements": [
+      {
+        "year": "2026",
+        "placement": "Top 4",
+        "tournament": "HUTECH NEWBIES SAYHI"
+      },
+      {
+        "year": "2025",
+        "placement": "Top 5",
+        "tournament": "HUTECH Esport Championship"
+      },
+      {
+        "year": "2025",
+        "placement": "Top 3",
+        "tournament": "NIC Winter Qualifiers"
+      },
+      {
+        "year": "2025",
+        "placement": "Á Quân",
+        "tournament": "ROE - NT"
+      },
+      {
+        "year": "2021",
+        "placement": "Vô Địch",
+        "tournament": "PMCL  - PUBGM"
+      },
+      {
+        "year": "2021",
+        "placement": "Vô Địch",
+        "tournament": "PUBGM Regional Qualifiers"
+      }
+    ],
+    "avatarUrl": "https://i.postimg.cc/fbqxH9JH/Rito.png",
+    "updatedAt": "2026-10-13T09:23:03.156Z"
+  },
+  {
+    "id": "player-shizuka",
+    "slug": "shizuka",
+    "ign": "Shizuka",
+    "role": "Đường Giữa",
+    "teamSlug": "saigon-phantom",
     "nationality": "Việt Nam",
-    "realName": "Nguyễn Văn Hiếu",
-    "role": "Đường Tà Thần",
-    "slug": "birdlb",
-    "teamSlug": "v-gaming",
-    "updatedAt": "2026-10-12T18:20:43.000Z"
+    "biography": "**Shizuka** là tuyển thủ nữ đường giữa của Saigon Phantom và là đội trưởng (lead) của đội nữ SGP. Cô ghi dấu ấn đậm nét trên hành trình vô địch Nữ Vương Đại Chiến 2026 với chiến thắng 3-0 trước One Star Esports, xuất sắc đoạt danh hiệu FMVP đầu tiên của giải khi giành MVP trong cả ba ván chung kết.",
+    "careerHistory": "Đội trưởng đội nữ Saigon Phantom; nhà vô địch và FMVP đầu tiên của Nữ Vương Đại Chiến 2026.",
+    "teamHistory": [
+      {
+        "period": "2026–",
+        "team": "Saigon Phantom",
+        "teamSlug": "saigon-phantom"
+      }
+    ],
+    "achievements": [
+      {
+        "year": "2026",
+        "placement": "FMVP",
+        "tournament": "Nữ Vương Đại Chiến 2026",
+        "tournamentSlug": "nu-vuong-dai-chien"
+      },
+      {
+        "year": "2026",
+        "placement": "Vô địch",
+        "tournament": "Nữ Vương Đại Chiến 2026",
+        "tournamentSlug": "nu-vuong-dai-chien"
+      }
+    ],
+    "updatedAt": "2026-10-15T17:24:20.131Z"
   },
   {
     "achievements": [
       {
-        "year": "2022",
+        "year": "2019",
         "placement": "Vô địch",
-        "tournament": "AIC 2022",
+        "tournament": "AWC 2019",
+        "tournamentSlug": "awc"
+      },
+      {
+        "year": "2019",
+        "placement": "Vô địch",
+        "tournament": "AIC 2019",
         "tournamentSlug": "aic"
       },
       {
-        "year": "2021",
-        "placement": "Á quân",
-        "tournament": "AIC 2021",
-        "tournamentSlug": "aic"
-      }
-    ],
-    "biography": "Lâm \"HoàngTĐ\" Văn Hoàng là xạ thủ chủ lực của V Gaming với khả năng gây sát thương ổn định, giữ vị trí an toàn trong giao tranh và tỏa sáng ở những thời khắc quyết định.",
-    "careerHistory": "Thành viên đội hình vô địch AIC 2022 của V Gaming, sát cánh cùng đội từ giai đoạn \"về nhì vĩ đại\".",
-    "id": "player-hoangtd",
-    "ign": "HoàngTĐ",
-    "nationality": "Việt Nam",
-    "realName": "Lâm Văn Hoàng",
-    "role": "Xạ Thủ",
-    "slug": "hoangtd",
-    "teamSlug": "v-gaming",
-    "updatedAt": "2026-10-12T18:20:43.000Z"
-  },
-  {
-    "achievements": [
-      {
-        "year": "2022",
-        "placement": "Vô địch",
-        "tournament": "AIC 2022",
-        "tournamentSlug": "aic"
+        "year": "2020",
+        "placement": "FMVP",
+        "tournament": "ĐTDV Mùa Xuân 2020",
+        "tournamentSlug": "dau-truong-danh-vong"
       },
       {
-        "year": "2021",
-        "placement": "Á quân",
-        "tournament": "AIC 2021",
-        "tournamentSlug": "aic"
-      }
-    ],
-    "biography": "Nguyễn \"Han\" Quốc Hân là trợ thủ của V Gaming, người luôn âm thầm tạo tiền đề cho các chủ lực tỏa sáng bằng khả năng đọc tình huống, bảo kê và mở giao tranh xuất sắc.",
-    "careerHistory": "Thành viên đội hình vô địch AIC 2022 của V Gaming.",
-    "id": "player-han",
-    "ign": "Han",
-    "nationality": "Việt Nam",
-    "realName": "Nguyễn Quốc Hân",
-    "role": "Trợ Thủ",
-    "slug": "han",
-    "teamSlug": "v-gaming",
-    "updatedAt": "2026-10-12T18:20:43.000Z"
-  },
-  {
-    "achievements": [
-      {
-        "year": "",
-        "placement": "Vô địch",
+        "year": "2018–2020",
+        "placement": "Vô địch (4 lần liên tiếp)",
         "tournament": "ĐTDV",
         "tournamentSlug": "dau-truong-danh-vong"
       },
       {
-        "year": "2020",
-        "placement": "Top 3",
-        "tournament": "AIC 2020",
+        "year": "2018",
+        "placement": "Á quân",
+        "tournament": "AIC 2018",
         "tournamentSlug": "aic"
       }
     ],
-    "biography": "Nguyễn \"Daim\" Thành Trung khởi nghiệp tại Box Gaming trước khi chuyển sang Team Flash vào năm 2022 trong thương vụ trao đổi với Ara. Anh nhanh chóng hòa nhập và trở thành mảnh ghép quan trọng trong \"bộ 3 nguyên tử\" XB – ProE – Daim của đội.",
-    "careerHistory": "Box Gaming → Team Flash (2022).",
-    "id": "player-daim",
-    "ign": "Daim",
+    "biography": "Trần \"XB\" Xuân Bách là đường giữa huyền thoại của Team Flash, nhạc trưởng trong lối chơi kiểm soát trứ danh của đội ở thời kỳ đỉnh cao 2019–2020. Anh là thành viên của đội hình làm nên cú Grand Slam 2019 với hai chức vô địch thế giới AWC và AIC, đồng thời là FMVP Đấu Trường Danh Vọng Mùa Xuân 2020.",
+    "careerHistory": "Gắn bó lâu năm cùng Team Flash từ những ngày đầu đội đổi tên từ ProArmy, chứng kiến mọi thăng trầm của đội tuyển.",
+    "id": "player-xb",
+    "ign": "XB",
     "nationality": "Việt Nam",
-    "realName": "Nguyễn Thành Trung",
-    "role": "Xạ Thủ",
-    "slug": "daim",
+    "realName": "Trần Xuân Bách",
+    "role": "Đường Giữa",
+    "slug": "xb",
     "teamSlug": "team-flash",
-    "updatedAt": "2026-10-12T18:20:43.000Z",
+    "updatedAt": "2026-10-12T18:20:43.000Z"
+  },
+  {
+    "id": "player-yanyan",
+    "slug": "yanyan",
+    "ign": "Yanyan",
+    "role": "Đi Rừng",
+    "teamSlug": "banmei-gaming",
+    "nationality": "Đài Loan",
+    "biography": "**Yanyan** là người đi rừng của BanMei Gaming. Nổi lên từ AoV Campus Series 2023, anh sớm khẳng định tài năng bằng danh hiệu FMVP GCS Mùa Xuân 2024, trước khi trở thành FMVP APL 2024 khi chỉ mới 17 tuổi — giải đấu mà BanMei Gaming lên ngôi vô địch và anh cũng có tên trong đội hình xuất sắc nhất.",
+    "careerHistory": "Phát hiện từ AoV Campus Series (ACS) 2023; gắn bó cùng BanMei Gaming trên hành trình vô địch APL 2024.",
     "teamHistory": [
       {
-        "period": "–2022",
-        "team": "Box Gaming",
-        "teamSlug": "box-gaming"
+        "period": "2024–",
+        "team": "BanMei Gaming",
+        "teamSlug": "banmei-gaming"
+      }
+    ],
+    "achievements": [
+      {
+        "year": "2024",
+        "placement": "FMVP",
+        "tournament": "APL 2024",
+        "tournamentSlug": "apl"
       },
       {
-        "period": "2022–",
-        "team": "Team Flash",
-        "teamSlug": "team-flash"
+        "year": "2024",
+        "placement": "Vô địch",
+        "tournament": "APL 2024",
+        "tournamentSlug": "apl"
+      },
+      {
+        "year": "2024",
+        "placement": "Đội hình xuất sắc nhất",
+        "tournament": "APL 2024",
+        "tournamentSlug": "apl"
+      },
+      {
+        "year": "2024",
+        "placement": "FMVP",
+        "tournament": "GCS Mùa Xuân 2024",
+        "tournamentSlug": "gcs"
+      },
+      {
+        "year": "2023",
+        "placement": "FMVP",
+        "tournament": "AoV Campus Series 2023"
       }
-    ]
+    ],
+    "updatedAt": "2026-10-15T17:23:26.689Z"
+  },
+  {
+    "id": "player-yutan",
+    "slug": "yutan",
+    "ign": "Yutan",
+    "role": "Trợ Thủ",
+    "teamSlug": "fpt-x-flash",
+    "nationality": "Việt Nam",
+    "biography": "**Yutan** là trợ thủ của FPT x Flash — người âm thầm bảo kê cho các chủ lực và mở giao tranh xuất sắc trong đội hình vô địch ĐTDV Mùa Đông 2025, qua đó được vinh danh trong đội hình xuất sắc nhất mùa giải.",
+    "careerHistory": "Khoác áo FPT x Flash từ năm 2024; thành viên đội hình vô địch ĐTDV Mùa Đông 2025.",
+    "teamHistory": [
+      {
+        "period": "2024–",
+        "team": "FPT x Flash",
+        "teamSlug": "fpt-x-flash"
+      }
+    ],
+    "achievements": [
+      {
+        "year": "2025",
+        "placement": "Vô địch",
+        "tournament": "ĐTDV Mùa Đông 2025",
+        "tournamentSlug": "dau-truong-danh-vong"
+      },
+      {
+        "year": "2025",
+        "placement": "Đội hình xuất sắc nhất",
+        "tournament": "ĐTDV Mùa Đông 2025",
+        "tournamentSlug": "dau-truong-danh-vong"
+      }
+    ],
+    "updatedAt": "2026-10-15T17:25:38.390Z"
   }
 ]

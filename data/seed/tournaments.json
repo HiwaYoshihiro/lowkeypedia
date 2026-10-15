@@ -1,22 +1,16 @@
 [
   {
-    "description": "Đấu Trường Danh Vọng (ĐTDV, tên quốc tế Arena of Glory) là giải đấu Liên Quân Mobile quốc nội cấp cao nhất tại Việt Nam, do Garena Việt Nam tổ chức từ năm 2017 với thể thức 2 mùa mỗi năm (Mùa Xuân và Mùa Đông). Giải đấu là nơi tranh tài của các đội tuyển chuyên nghiệp hàng đầu, là bệ phóng của những ngôi sao lớn và là cửa ngõ để các đội Việt Nam giành vé tham dự các giải đấu quốc tế như AIC, APL và AWC. Saigon Phantom giữ kỷ lục 10 lần vô địch và 8 lần vô địch liên tiếp (Mùa Đông 2021 – Mùa Xuân 2025).",
-    "frequency": "2 mùa/năm (Mùa Xuân, Mùa Đông)",
-    "id": "tour-dtdv",
-    "location": "Việt Nam",
-    "name": "Đấu Trường Danh Vọng",
-    "organizer": "Garena Việt Nam",
+    "id": "tour-apl-queens",
+    "slug": "apl-queens-showdown",
+    "name": "APL Queens Showdown",
+    "organizer": "Garena / TiMi Studio",
+    "frequency": "Trong khuôn khổ APL (từ 2026)",
+    "location": "Châu Á",
+    "description": "APL Queens Showdown là nội dung thi đấu dành cho tuyển nữ nằm trong khuôn khổ APL, ra mắt lần đầu tại APL 2026 tổ chức ở Việt Nam. Giải quy tụ các đội tuyển nữ đến từ các khu vực lớn (AOG, RPL, GCS) — mở ra sân chơi quốc tế chính thức đầu tiên cho các tuyển thủ nữ Liên Quân Mobile.",
     "results": [
-      "Mùa Xuân 2025 — Vô địch: Saigon Phantom (FMVP: Khoa)",
-      "Mùa Đông 2024 — Vô địch: Saigon Phantom (FMVP: Kuga)",
-      "Mùa Xuân 2024 — Vô địch: Saigon Phantom (FMVP: Fish)",
-      "Mùa Đông 2023 — Vô địch: Saigon Phantom (FMVP: Fish)",
-      "Mùa Xuân 2023 — Vô địch: Saigon Phantom",
-      "Mùa Đông 2022 — Vô địch: Saigon Phantom (FMVP: Lai Bâng)",
-      "Mùa Đông 2021 — Vô địch: Saigon Phantom (FMVP: Lai Bâng)"
+      "2026 (Mùa đầu tiên) — Vô địch: eArena (FMVP: Miralyy), Á quân: One Star Esports (4-2)"
     ],
-    "slug": "dau-truong-danh-vong",
-    "updatedAt": "2026-10-12T18:05:00.000Z"
+    "updatedAt": "2026-10-15T17:23:49.560Z"
   },
   {
     "description": "AIC (Arena of Valor International Championship) là giải đấu Liên Quân Mobile quốc tế thường niên danh giá nhất trong năm, quy tụ các đội tuyển mạnh nhất từ các khu vực trên thế giới. Giải đấu được tổ chức từ năm 2017, thường diễn ra vào tháng 11–12 với tổng tiền thưởng hàng trăm nghìn USD. Trải qua 9 mùa giải, AIC ghi nhận 9 nhà vô địch khác nhau — chưa đội nào bảo vệ thành công ngôi vương.",
@@ -40,6 +34,24 @@
     "updatedAt": "2026-10-12T18:05:00.000Z"
   },
   {
+    "id": "tour-apl",
+    "slug": "apl",
+    "name": "Arena of Valor Premier League (APL)",
+    "organizer": "Garena / TiMi Studio",
+    "frequency": "1 lần/năm (giữa năm)",
+    "location": "Châu Á",
+    "description": "APL (Arena of Valor Premier League) là giải đấu Liên Quân Mobile quốc tế của Garena, ra đời năm 2020 trong bối cảnh đại dịch COVID-19 với hình thức thi đấu online. Từ năm 2022, giải trở thành sân chơi giữa năm cố định của các đội tuyển hàng đầu châu Á, thường diễn ra vào tháng 6–7; APL 2022 tại TP.HCM còn thay thế cho AWC 2022 bị hủy. Năm 2026, APL trở lại Việt Nam (TP.HCM và Đà Nẵng) nhân dịp kỷ niệm 10 năm Liên Quân Mobile, mở rộng quy mô với lần đầu tổ chức nội dung thi đấu dành cho tuyển nữ (APL Queens Showdown).",
+    "results": [
+      "2026 — Vô địch: Relove Deep Cross Gaming (FMVP: Xcen), Á quân: Bacon Time (4-2) — Đà Nẵng",
+      "2025 — Vô địch: Flash Wolves, Á quân: eArena — Bangkok",
+      "2024 — Vô địch: BanMei Gaming (FMVP: Yanyan), Á quân: Buriram United Esports — Bangkok",
+      "2023 — Vô địch: Saigon Phantom (Việt Nam), Á quân: Bacon Time (4-1) — Bangkok",
+      "2022 — Vô địch: Bacon Time, Á quân: Saigon Phantom — TP.HCM",
+      "2020 — Vô địch: Flash Wolves, Á quân: Buriram United Esports (4-3)"
+    ],
+    "updatedAt": "2026-10-15T17:24:00.322Z"
+  },
+  {
     "description": "AWC (Arena of Valor World Cup) là giải đấu Liên Quân Mobile mang tầm vóc World Cup, nơi các đội tuyển quốc gia xuất sắc nhất thế giới tranh tài để tìm ra nhà vô địch thế giới. Giải được tổ chức các năm 2018, 2019 và 2021; AWC 2020 bị hủy vì đại dịch COVID-19, còn AWC 2022 bị hủy và được thay thế bằng APL 2022. AWC 2019 được tổ chức tại Đà Nẵng, Việt Nam với chức vô địch thuộc về đội tuyển Việt Nam (nòng cốt Team Flash).",
     "frequency": "Không cố định",
     "id": "tour-awc",
@@ -55,20 +67,85 @@
     "updatedAt": "2026-10-12T18:05:00.000Z"
   },
   {
-    "description": "APL (Arena of Valor Premier League) là giải đấu Liên Quân Mobile quốc tế của Garena, ra đời năm 2020 trong bối cảnh đại dịch COVID-19 với hình thức thi đấu online. Từ năm 2022, giải trở thành sân chơi giữa năm cố định của các đội tuyển hàng đầu châu Á, thường diễn ra vào tháng 6–7; APL 2022 tại TP.HCM còn thay thế cho AWC 2022 bị hủy.",
-    "frequency": "1 lần/năm (giữa năm)",
-    "id": "tour-apl",
-    "location": "Châu Á",
-    "name": "Arena of Valor Premier League (APL)",
-    "organizer": "Garena / TiMi Studio",
+    "id": "tour-dtdv",
+    "slug": "dau-truong-danh-vong",
+    "name": "Đấu Trường Danh Vọng",
+    "organizer": "Garena Việt Nam",
+    "frequency": "2 mùa/năm (Mùa Xuân, Mùa Đông)",
+    "location": "Việt Nam",
+    "description": "Đấu Trường Danh Vọng (ĐTDV, tên quốc tế Arena of Glory) là giải đấu Liên Quân Mobile quốc nội cấp cao nhất tại Việt Nam, do Garena Việt Nam tổ chức từ năm 2017 với thể thức 2 mùa mỗi năm (Mùa Xuân và Mùa Đông). Giải đấu là nơi tranh tài của các đội tuyển chuyên nghiệp hàng đầu, là bệ phóng của những ngôi sao lớn và là cửa ngõ để các đội Việt Nam giành vé tham dự các giải đấu quốc tế như AIC, APL và AWC.",
     "results": [
-      "2025 — Vô địch: Flash Wolves, Á quân: eArena — Bangkok",
-      "2024 — Vô địch: BanMei Gaming (FMVP: Yanyan), Á quân: Buriram United Esports — Bangkok",
-      "2023 — Vô địch: Saigon Phantom (Việt Nam), Á quân: Bacon Time (4-1) — Bangkok",
-      "2022 — Vô địch: Bacon Time, Á quân: Saigon Phantom — TP.HCM",
-      "2020 — Vô địch: Flash Wolves, Á quân: Buriram United Esports (4-3)"
+      "Mùa Đông 2026 — Đang diễn ra: vòng bảng lượt về (01/10–18/10), 9 đội vòng tròn 2 lượt BO5. Saigon Phantom bất bại 13-0 tạm dẫn đầu, FPT Polytechnic 10-3 xếp nhì (tính đến 11/10). Play-off 23–25/10, Chung kết Quốc gia 07/11 tại 10Fest, SVĐ Mỹ Đình, Hà Nội.",
+      "Mùa Đông 2026 — Play-off (23–25/10): Top 6 đội, nhánh thắng/thua, toàn BO7; Top 1 được chọn đối thủ, Top 5–6 bắt đầu từ nhánh thua. Bounty Hunter: lượt đi 50 triệu/trận, lượt về 80 triệu/trận (chia theo tỷ số); vô địch 1 tỷ, á quân 500 triệu, hạng 3: 200 triệu, hạng 4: 150 triệu, hạng 5–6: 60 triệu/đội. Chung kết Quốc gia 07/11 tại 10Fest, SVĐ Mỹ Đình, Hà Nội.",
+      "Mùa Xuân 2026 — Vô địch: FPT x Flash (FMVP: BeTroc), Á quân: Saigon Phantom (4-2) — Quảng Ninh",
+      "Mùa Đông 2025 — Vô địch: FPT x Flash (FMVP: Maris), Á quân: Saigon Phantom (4-2) — khép lại kỷ nguyên thống trị của Saigon Phantom",
+      "Mùa Xuân 2025 — Vô địch: Saigon Phantom (FMVP: Khoa)",
+      "Mùa Đông 2024 — Vô địch: Saigon Phantom (FMVP: Kuga)",
+      "Mùa Xuân 2024 — Vô địch: Saigon Phantom (FMVP: Fish)",
+      "Mùa Đông 2023 — Vô địch: Saigon Phantom (FMVP: Fish)",
+      "Mùa Xuân 2023 — Vô địch: Saigon Phantom",
+      "Mùa Đông 2022 — Vô địch: Saigon Phantom (FMVP: Lai Bâng)",
+      "Mùa Xuân 2022 — Vô địch: Saigon Phantom",
+      "Mùa Đông 2021 — Vô địch: Saigon Phantom (FMVP: Lai Bâng)",
+      "Mùa Xuân 2021 — Vô địch: Team Flash",
+      "Mùa Đông 2020 — Vô địch: Saigon Phantom",
+      "Mùa Xuân 2020 — Vô địch: Team Flash (FMVP: XB)",
+      "Saigon Phantom giữ kỷ lục 10 lần vô địch và 8 lần vô địch liên tiếp (Mùa Đông 2021 – Mùa Xuân 2025)"
     ],
-    "slug": "apl",
-    "updatedAt": "2026-10-12T18:05:00.000Z"
+    "updatedAt": "2026-10-15T17:21:28.171Z"
+  },
+  {
+    "id": "tour-gcs",
+    "slug": "gcs",
+    "name": "Garena Challenger Series (GCS)",
+    "organizer": "Garena",
+    "frequency": "2 mùa/năm (Mùa Xuân, Mùa Đông)",
+    "location": "Đài Loan, Hồng Kông & Ma Cao",
+    "description": "Garena Challenger Series (GCS) là giải đấu Liên Quân Mobile quốc nội cấp cao nhất khu vực Đài Loan, Hồng Kông và Ma Cao, do Garena tổ chức từ năm 2017. GCS là \"cái nôi\" của nhiều nhà vô địch quốc tế như Still Moving Under Gunfire (AIC 2017), J Team (AIC 2018), MAD Team (AIC 2020) và BanMei Gaming (APL 2024), cùng những tên tuổi như ONE Team, WANIN Flash Wolves, Deep Cross Gaming, ANK Gaming, MOP Team...",
+    "results": [
+      "2026 (Mùa Xuân) — Vô địch: Deep Cross Gaming, Á quân: WANIN Flash Wolves (4-2) — Đài Bắc"
+    ],
+    "updatedAt": "2026-10-15T17:25:07.989Z"
+  },
+  {
+    "id": "tour-qog",
+    "slug": "nu-vuong-dai-chien",
+    "name": "Nữ Vương Đại Chiến (Queens of Glory)",
+    "organizer": "Garena Việt Nam",
+    "frequency": "1 lần/năm",
+    "location": "Việt Nam",
+    "description": "Nữ Vương Đại Chiến (Queens of Glory — QOG) là giải đấu Liên Quân Mobile dành cho các tuyển thủ nữ đầu tiên của Việt Nam, do Garena Việt Nam tổ chức từ năm 2026. Giải quy tụ các đội tuyển nữ đến từ những tổ chức esports hàng đầu như Saigon Phantom, One Star Esports... Vòng chung kết được tổ chức trong ngày hội Chung kết Quốc gia ĐTDV Mùa Xuân 2026 tại Quảng Ninh, ghi dấu mốc quan trọng cho thể thao điện tử nữ của Liên Quân Mobile Việt Nam.",
+    "results": [
+      "2026 (Mùa đầu tiên) — Vô địch: Saigon Phantom (FMVP: Shizuka), Á quân: One Star Esports (3-0) — Quảng Ninh"
+    ],
+    "updatedAt": "2026-10-15T17:21:20.127Z"
+  },
+  {
+    "id": "tour-rpl",
+    "slug": "rpl",
+    "name": "RoV Pro League (RPL)",
+    "organizer": "Garena Thái Lan",
+    "frequency": "2 mùa/năm (Mùa Hè, Mùa Đông)",
+    "location": "Thái Lan",
+    "description": "RoV Pro League (RPL) là giải đấu Liên Quân Mobile quốc nội cấp cao nhất tại Thái Lan, do Garena Thái Lan tổ chức từ năm 2018. RPL được xem là một trong những khu vực thi đấu mạnh nhất thế giới với dàn đội tuyển giàu thành tích quốc tế như Buriram United Esports, Bacon Time, eArena, Full Sense, Talon Esports hay Valencia CF eSports — những cái tên thường xuyên góp mặt và giành thành tích cao tại các kỳ AIC, APL.",
+    "results": [
+      "2025 — Vô địch: Full Sense, Á quân: Bacon Time (Chung kết Tổng)",
+      "2025 (Mùa Hè) — Vô địch: eArena (bảo vệ thành công ngôi vương)",
+      "2020 (Mùa Đông) — Vô địch: Talon Esports, Á quân: Buriram United Esports"
+    ],
+    "updatedAt": "2026-10-15T17:23:38.396Z"
+  },
+  {
+    "id": "tour-sea-games",
+    "slug": "sea-games",
+    "name": "SEA Games",
+    "organizer": "Hội đồng Thể thao Đông Nam Á",
+    "frequency": "2 năm/lần",
+    "location": "Đông Nam Á",
+    "description": "Liên Quân Mobile là một trong những nội dung thi đấu thể thao điện tử tại SEA Games — đại hội thể thao đa môn lớn nhất khu vực Đông Nam Á. Tại SEA Games 33 tổ chức ở Thái Lan cuối năm 2025, đội tuyển nam Việt Nam đã đánh bại chủ nhà Thái Lan 3-2 trong trận chung kết, mang về tấm Huy chương Vàng SEA Games đầu tiên cho Liên Quân Mobile Việt Nam.",
+    "results": [
+      "2025 (SEA Games 33, Thái Lan) — Huy chương Vàng: Việt Nam (thắng Thái Lan 3-2), Huy chương Đồng: Lào"
+    ],
+    "updatedAt": "2026-10-15T17:24:31.262Z"
   }
 ]
