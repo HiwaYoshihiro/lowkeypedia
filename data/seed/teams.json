@@ -131,19 +131,9 @@
         "placement": "Góp mặt",
         "tournament": "Đấu Trường Danh Vọng",
         "tournamentSlug": "dau-truong-danh-vong"
-      },
-      {
-        "year": "",
-        "placement": "",
-        "tournament": "Nổi tiếng với phong cách thi đấu cống hiến, giàu tính giải trí"
-      },
-      {
-        "year": "",
-        "placement": "",
-        "tournament": "Sản sinh ngôi sao đường Caesar Jiro"
       }
     ],
-    "description": "FAP Esports, được cộng đồng gọi vui là \"đội tuyển của những danh hài\", là đội tuyển Liên Quân Mobile trực thuộc tổ chức FAP TV. Đội góp mặt tại Đấu Trường Danh Vọng từ năm 2020, nổi tiếng với lối chơi máu lửa và những pha xử lý đầy cảm xúc.",
+    "description": "FAP Esports, được cộng đồng gọi vui là \"đội tuyển của những danh hài\", là đội tuyển Liên Quân Mobile trực thuộc tổ chức FAP TV. Đội góp mặt tại Đấu Trường Danh Vọng từ năm 2020, nổi tiếng với lối chơi máu lửa và những pha xử lý đầy cảm xúc. Đội nổi tiếng với phong cách thi đấu cống hiến, giàu tính giải trí, và là nơi sản sinh ngôi sao đường Caesar Jiro.",
     "founded": 2020,
     "id": "team-fap",
     "name": "FAP Esports",
@@ -205,14 +195,9 @@
         "year": "2022–2023",
         "placement": "",
         "tournament": "Từng là bến đỗ của cựu trợ thủ Team Flash ProE"
-      },
-      {
-        "year": "",
-        "placement": "",
-        "tournament": "Từng tạo nhiều bất ngờ trước các ứng cử viên vô địch"
       }
     ],
-    "description": "HEAVY là đội tuyển Liên Quân Mobile Việt Nam từng thi đấu tại Đấu Trường Danh Vọng. Đội gây ấn tượng với những màn trình diễn bùng nổ, đặc biệt là các trận đấu sòng phẳng trước những cái tên sừng sỏ của giải, và từng là bến đỗ của cựu trợ thủ Team Flash ProE trong giai đoạn 2022–2023.",
+    "description": "HEAVY là đội tuyển Liên Quân Mobile Việt Nam từng thi đấu tại Đấu Trường Danh Vọng. Đội gây ấn tượng với những màn trình diễn bùng nổ, đặc biệt là các trận đấu sòng phẳng trước những cái tên sừng sỏ của giải, và từng là bến đỗ của cựu trợ thủ Team Flash ProE trong giai đoạn 2022–2023. Đội từng tạo nhiều bất ngờ trước các ứng cử viên vô địch.",
     "id": "team-hev",
     "name": "HEAVY",
     "region": "Việt Nam",
@@ -227,14 +212,9 @@
         "placement": "Góp mặt",
         "tournament": "ĐTDV",
         "tournamentSlug": "dau-truong-danh-vong"
-      },
-      {
-        "year": "",
-        "placement": "",
-        "tournament": "Sản sinh nhiều tuyển thủ tên tuổi như Daim, Akashi"
       }
     ],
-    "description": "Box Gaming là tổ chức thể thao điện tử lâu đời của Việt Nam với đội tuyển Liên Quân Mobile từng nhiều mùa góp mặt tại Đấu Trường Danh Vọng. Đội từng đổi tên thành GG Live sau APL 2024 trước khi trở lại với cái tên Box Gaming quen thuộc.",
+    "description": "Box Gaming là tổ chức thể thao điện tử lâu đời của Việt Nam với đội tuyển Liên Quân Mobile từng nhiều mùa góp mặt tại Đấu Trường Danh Vọng. Đội từng đổi tên thành GG Live sau APL 2024 trước khi trở lại với cái tên Box Gaming quen thuộc. Đội sản sinh nhiều tuyển thủ tên tuổi như Daim, Akashi.",
     "id": "team-box",
     "name": "Box Gaming",
     "region": "Việt Nam",

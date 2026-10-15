@@ -1,15 +1,27 @@
+import type { Metadata } from 'next';
 import TournamentCard, { TOURNAMENT_ACCENT } from '@/components/TournamentCard';
 import { ArticleShell } from '@/components/ArticleShell';
 import { getTournaments } from '@/lib/store';
 
 export const dynamic = 'force-dynamic';
 
+export const metadata: Metadata = {
+  title: 'Giải đấu',
+  description:
+    'Các giải đấu Liên Quân Mobile quốc nội và quốc tế: Đấu Trường Danh Vọng, AIC, AWC, APL và lịch sử vô địch.',
+  alternates: { canonical: '/giai-dau' },
+};
+
 export default async function TournamentsPage() {
   const tournaments = await getTournaments();
 
   return (
     <ArticleShell
-      title="🏆 Giải đấu"
+      title={
+        <>
+          <span aria-hidden="true">🏆</span> Giải đấu
+        </>
+      }
       subtitle={`Các giải đấu Liên Quân Mobile quốc nội và quốc tế (${tournaments.length})`}
     >
       {tournaments.length === 0 ? (

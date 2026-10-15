@@ -8,8 +8,11 @@ import { Infobox } from '@/components/Infobox';
 import { Breadcrumb } from '@/components/Breadcrumb';
 import { WikiTable } from '@/components/WikiTable';
 import RichText from '@/components/RichText';
+import { JsonLd, breadcrumbJsonLd } from '@/components/JsonLd';
 import { PLAYER_ACCENT } from '@/components/PlayerCard';
 import { getPlayerBySlug, getTeamBySlug, getTeams } from '@/lib/store';
+import { stripMarkdown } from '@/lib/params';
+import { SITE_URL } from '@/lib/site';
 
 export const dynamic = 'force-dynamic';
 
@@ -19,9 +22,17 @@ export async function generateMetadata({
   params: { slug: string };
 }): Promise<Metadata> {
   const player = await getPlayerBySlug(params.slug);
+  if (!player) return { title: 'Không tìm thấy' };
   return {
-    title: player ? `${player.ign} — Lwkypedia` : 'Không tìm thấy — Lwkypedia',
-    description: player?.biography.slice(0, 160),
+    title: player.ign,
+    description: stripMarkdown(player.biography) || undefined,
+    alternates: { canonical: `/tuyen-thu/${player.slug}` },
+    openGraph: {
+      title: `${player.ign} — Lwkypedia`,
+      description: stripMarkdown(player.biography),
+      type: 'profile',
+      url: `/tuyen-thu/${player.slug}`,
+    },
   };
 }
 
@@ -29,8 +40,10 @@ export default async function PlayerDetailPage({ params }: { params: { slug: str
   const player = await getPlayerBySlug(params.slug);
   if (!player) notFound();
 
-  const team = player.teamSlug ? await getTeamBySlug(player.teamSlug) : null;
-  const teams = await getTeams();
+  const [team, teams] = await Promise.all([
+    player.teamSlug ? getTeamBySlug(player.teamSlug) : Promise.resolve(null),
+    getTeams(),
+  ]);
   const teamNameOf = (slug?: string) => teams.find((t) => t.slug === slug)?.name ?? null;
 
   const teamHistory = player.teamHistory ?? [];
@@ -66,6 +79,19 @@ export default async function PlayerDetailPage({ params }: { params: { slug: str
     ...(player.birthYear ? [['Năm sinh', String(player.birthYear)] as [string, React.ReactNode]] : []),
   ];
 
+  const base = SITE_URL.replace(/\/$/, '');
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: player.ign,
+    alternateName: player.realName,
+    jobTitle: player.role,
+    nationality: player.nationality,
+    description: stripMarkdown(player.biography, 300),
+    url: `${base}/tuyen-thu/${player.slug}`,
+    ...(team ? { affiliation: { '@type': 'SportsTeam', name: team.name } } : {}),
+  };
+
   return (
     <ArticleShell
       breadcrumb={
@@ -85,6 +111,14 @@ export default async function PlayerDetailPage({ params }: { params: { slug: str
       }
       subtitle={[player.realName, player.role].filter(Boolean).join(' • ')}
     >
+      <JsonLd data={jsonLd} />
+      <JsonLd
+        data={breadcrumbJsonLd(base, [
+          { name: 'Trang chủ', path: '/' },
+          { name: 'Tuyển thủ', path: '/tuyen-thu' },
+          { name: player.ign, path: `/tuyen-thu/${player.slug}` },
+        ])}
+      />
       <ArticleLayout
         infobox={
           <Infobox

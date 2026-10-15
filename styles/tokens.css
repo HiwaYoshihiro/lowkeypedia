@@ -34,33 +34,31 @@
   /* Chữ */
   --text: #202122;
   --text-subtle: #54595d;
-  --text-faint: #72777d;
+  /* Đủ tối để đạt tương phản ≥ 4.5:1 trên cả --surface lẫn --surface-2. */
+  --text-faint: #6b7075;
   --text-inverse: #ffffff;
 
   /* Thương hiệu Lowkeypedia */
   --navy: #0f1b3d;
   --gold: #d4a017;
-  --gold-dark: #a97c0a;
+  /* Vàng dùng cho CHỮ: tối hơn để đạt tương phản ≥ 4.5:1 trên nền sáng
+     (--gold gốc chỉ đạt ~2.4:1 nên không dùng làm màu chữ). */
+  --gold-ink: #8a6410;
 
   /* Liên kết & nhấn */
   --link: #3366cc;
   --link-hover: #2a4b8d;
-  --link-visited: #6b4ba1;
   --accent: #3366cc;
   --accent-soft: #eaf3ff;
-  --accent-line: #a7d7f9;
   --focus: #3366cc;
 
   /* Trạng thái */
-  --success: #14866d;
+  --success: #0f6b57;
   --success-bg: #d5fdf4;
   --success-border: #9fd9c8;
   --danger: #b32424;
   --danger-bg: #fee7e6;
   --danger-border: #f3b0ad;
-  --warning: #8a5b00;
-  --warning-bg: #fef6e7;
-  --warning-border: #f0d8a8;
   --neutral: #54595d;
   --neutral-bg: #eaecf0;
   --neutral-border: #c8ccd1;
@@ -107,15 +105,13 @@
 
   --text: #eaecf0;
   --text-subtle: #b0b6bd;
-  --text-faint: #8b9199;
+  --text-faint: #9aa1a9;
   --text-inverse: #101418;
 
   --link: #6fa8ff;
   --link-hover: #9cc4ff;
-  --link-visited: #b69cff;
   --accent: #6fa8ff;
   --accent-soft: #1c2836;
-  --accent-line: #2e4a6b;
   --focus: #6fa8ff;
 
   --success: #7fd6b5;
@@ -124,9 +120,6 @@
   --danger: #ff9a92;
   --danger-bg: #3a1d1c;
   --danger-border: #7c3b37;
-  --warning: #f0c07a;
-  --warning-bg: #33280f;
-  --warning-border: #6d5626;
   --neutral: #b0b6bd;
   --neutral-bg: #262c33;
   --neutral-border: #414750;
@@ -140,6 +133,9 @@
   --hero-chip-border: rgba(255, 255, 255, 0.26);
   --hero-sheen-gold: rgba(212, 160, 23, 0.22);
   --hero-sheen-white: rgba(255, 255, 255, 0.06);
+
+  /* Trên nền tối, vàng gốc đã đủ tương phản nên dùng luôn. */
+  --gold-ink: #f0c05a;
 
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
   --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.5);

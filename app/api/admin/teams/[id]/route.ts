@@ -1,14 +1,8 @@
 import { NextResponse } from 'next/server';
-import { revalidatePath } from 'next/cache';
 import { requireAdmin } from '@/lib/auth';
 import { deleteTeam, getTeams, saveTeam } from '@/lib/store';
-
-function revalidateTeamPages() {
-  revalidatePath('/', 'layout');
-  revalidatePath('/doi-tuyen');
-  revalidatePath('/tuyen-thu');
-  revalidatePath('/tim-kiem');
-}
+import { revalidateSite } from '@/lib/revalidate';
+import { failure } from '@/lib/http';
 
 export async function PUT(req: Request, { params }: { params: { id: string } }) {
   const denied = requireAdmin();
@@ -21,13 +15,10 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
       return NextResponse.json({ error: 'Thiếu tên đội (name)' }, { status: 400 });
     }
     const team = await saveTeam({ ...body, id: params.id });
-    revalidateTeamPages();
+    revalidateSite();
     return NextResponse.json(team);
   } catch (e) {
-    return NextResponse.json(
-      { error: e instanceof Error ? e.message : 'Lưu thất bại' },
-      { status: 500 }
-    );
+    return failure(e, 'Lưu thất bại');
   }
 }
 
@@ -37,12 +28,9 @@ export async function DELETE(_req: Request, { params }: { params: { id: string }
   try {
     const ok = await deleteTeam(params.id);
     if (!ok) return NextResponse.json({ error: 'Không tìm thấy đội tuyển' }, { status: 404 });
-    revalidateTeamPages();
+    revalidateSite();
     return NextResponse.json({ ok: true });
   } catch (e) {
-    return NextResponse.json(
-      { error: e instanceof Error ? e.message : 'Xoá thất bại' },
-      { status: 500 }
-    );
+    return failure(e, 'Xoá thất bại');
   }
 }

@@ -1,13 +1,8 @@
 import { NextResponse } from 'next/server';
-import { revalidatePath } from 'next/cache';
 import { requireAdmin } from '@/lib/auth';
 import { getPlayers, savePlayer } from '@/lib/store';
-
-function revalidatePlayerPages() {
-  revalidatePath('/', 'layout');
-  revalidatePath('/tuyen-thu');
-  revalidatePath('/tim-kiem');
-}
+import { revalidateSite } from '@/lib/revalidate';
+import { failure } from '@/lib/http';
 
 export async function GET() {
   const denied = requireAdmin();
@@ -24,12 +19,9 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'Thiếu tên thi đấu (ign)' }, { status: 400 });
     }
     const player = await savePlayer(body);
-    revalidatePlayerPages();
+    revalidateSite();
     return NextResponse.json(player, { status: 201 });
   } catch (e) {
-    return NextResponse.json(
-      { error: e instanceof Error ? e.message : 'Lưu thất bại' },
-      { status: 500 }
-    );
+    return failure(e, 'Lưu thất bại');
   }
 }

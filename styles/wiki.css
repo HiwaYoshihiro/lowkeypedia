@@ -28,19 +28,6 @@
   margin-bottom: 12px;
 }
 
-.breadcrumb button {
-  background: none;
-  border: none;
-  padding: 0;
-  font: inherit;
-  color: var(--link);
-  cursor: pointer;
-}
-
-.breadcrumb button:hover {
-  text-decoration: underline;
-}
-
 .breadcrumb-sep {
   color: var(--border-soft);
 }
@@ -79,18 +66,6 @@
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
-}
-
-/* Chọn nhanh bản ghi trong cùng mục (thay dải tab ngang dễ vỡ) */
-.quick-switch {
-  display: none;
-  margin-bottom: 14px;
-}
-
-@media (max-width: 900px) {
-  .quick-switch {
-    display: block;
-  }
 }
 
 /* =========================== BỐ CỤC BÀI =========================== */
@@ -342,12 +317,6 @@
   border-color: var(--neutral-border);
 }
 
-.badge-retired {
-  background: var(--danger-bg);
-  color: var(--danger);
-  border-color: var(--danger-border);
-}
-
 /* =========================== TRANG CHỦ =========================== */
 
 .hero {
@@ -597,129 +566,11 @@
   margin: 0 auto;
 }
 
-.skeleton {
-  background: linear-gradient(
-    90deg,
-    var(--surface-3) 25%,
-    var(--surface-2) 37%,
-    var(--surface-3) 63%
-  );
-  background-size: 400% 100%;
-  animation: skeleton-shimmer 1.4s ease-in-out infinite;
-  border-radius: var(--radius-sm);
-}
-
-@keyframes skeleton-shimmer {
-  0% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0 50%;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .skeleton {
-    animation: none;
-  }
-}
-
-/* =========================== THÔNG BÁO CHẾ ĐỘ DỮ LIỆU =========================== */
-
-.notice {
-  display: flex;
-  gap: 10px;
-  align-items: flex-start;
-  padding: 11px 14px;
-  border-radius: var(--radius);
-  border: 1px solid var(--warning-border);
-  background: var(--warning-bg);
-  color: var(--text);
-  font-size: 13px;
-  margin-bottom: 16px;
-}
-
-.notice-icon {
-  flex-shrink: 0;
-  font-size: 15px;
-  line-height: 1.4;
-}
-
-.notice-body {
-  flex: 1;
-  min-width: 0;
-}
-
-.notice-title {
-  font-weight: 650;
-  margin-bottom: 2px;
-}
-
-.notice-detail {
-  font-family: var(--font-mono);
-  font-size: 11.5px;
-  color: var(--text-subtle);
-  word-break: break-word;
-  margin-top: 4px;
-}
-
-.notice-more {
-  margin-top: 8px;
-}
-
-.notice-more > summary {
-  cursor: pointer;
-  font-size: 12.5px;
-  font-weight: 600;
-  color: var(--link);
-  width: fit-content;
-}
-
-.notice-more > summary:hover {
-  text-decoration: underline;
-}
-
-.notice-more[open] > summary {
-  margin-bottom: 2px;
-}
-
-.notice.is-error {
-  background: var(--danger-bg);
-  border-color: var(--danger-border);
-}
-
-.notice.is-info {
-  background: var(--accent-soft);
-  border-color: var(--accent-line);
-}
-
-/* =========================== DANH SÁCH ĐƠN GIẢN =========================== */
-
-.plain-list {
-  margin: 10px 0 0;
-  padding-left: 20px;
-  /* Tailwind preflight đặt ul{list-style:none}; khai báo lại để có dấu đầu dòng. */
-  list-style: disc;
-}
-
-.plain-list li {
-  margin-bottom: 4px;
-}
-
 .chip-row {
   display: flex;
   flex-wrap: wrap;
   gap: 7px;
   margin-top: 10px;
-}
-
-.chip {
-  font-size: 12.5px;
-  padding: 3px 10px;
-  border-radius: 999px;
-  background: var(--surface-3);
-  border: 1px solid var(--border-faint);
-  color: var(--text-subtle);
 }
 
 /* =========================== TRANG DANH MỤC =========================== */

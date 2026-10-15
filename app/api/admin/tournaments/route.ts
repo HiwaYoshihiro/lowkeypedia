@@ -1,13 +1,8 @@
 import { NextResponse } from 'next/server';
-import { revalidatePath } from 'next/cache';
 import { requireAdmin } from '@/lib/auth';
 import { getTournaments, saveTournament } from '@/lib/store';
-
-function revalidateTournamentPages() {
-  revalidatePath('/', 'layout');
-  revalidatePath('/giai-dau');
-  revalidatePath('/tim-kiem');
-}
+import { revalidateSite } from '@/lib/revalidate';
+import { failure } from '@/lib/http';
 
 export async function GET() {
   const denied = requireAdmin();
@@ -24,12 +19,9 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'Thiếu tên giải đấu (name)' }, { status: 400 });
     }
     const tournament = await saveTournament(body);
-    revalidateTournamentPages();
+    revalidateSite();
     return NextResponse.json(tournament, { status: 201 });
   } catch (e) {
-    return NextResponse.json(
-      { error: e instanceof Error ? e.message : 'Lưu thất bại' },
-      { status: 500 }
-    );
+    return failure(e, 'Lưu thất bại');
   }
 }

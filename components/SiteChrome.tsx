@@ -41,6 +41,10 @@ export default function SiteChrome({ children }: { children: ReactNode }) {
 
   return (
     <>
+      <a href="#noi-dung" className="skip-link">
+        Tới nội dung chính
+      </a>
+
       <header className="site-header">
         <div className="site-header-inner">
           <button
@@ -89,7 +93,10 @@ export default function SiteChrome({ children }: { children: ReactNode }) {
           />
         ) : null}
 
-        <nav className={`site-sidebar scroll-thin${navOpen ? ' is-open' : ''}`} aria-label="Điều hướng">
+        <nav
+          className={`site-sidebar scroll-thin${navOpen ? ' is-open' : ''}`}
+          aria-label="Điều hướng"
+        >
           <div className="sidebar-head">
             <span className="sidebar-title" style={{ margin: 0 }}>
               Điều hướng
@@ -110,6 +117,7 @@ export default function SiteChrome({ children }: { children: ReactNode }) {
                 <Link
                   href={item.href}
                   className={`nav-link${item.active(pathname) ? ' is-active' : ''}`}
+                  aria-current={item.active(pathname) ? 'page' : undefined}
                 >
                   <span aria-hidden="true">{item.icon}</span>
                   <span className="nav-link-label">{item.label}</span>
@@ -125,7 +133,9 @@ export default function SiteChrome({ children }: { children: ReactNode }) {
           </p>
         </nav>
 
-        <main className="site-main">{children}</main>
+        <main className="site-main" id="noi-dung" tabIndex={-1}>
+          {children}
+        </main>
       </div>
 
       <Footer />

@@ -3,26 +3,14 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import type { SearchResult } from '@/lib/types';
-
-const HREF: Record<SearchResult['type'], (slug: string) => string> = {
-  player: (s) => `/tuyen-thu/${s}`,
-  team: (s) => `/doi-tuyen/${s}`,
-  tournament: (s) => `/giai-dau/${s}`,
-};
-
-const GROUP_LABEL: Record<SearchResult['type'], string> = {
-  player: 'Tuyển thủ',
-  team: 'Đội tuyển',
-  tournament: 'Giải đấu',
-};
-
-const GROUP_ORDER: SearchResult['type'][] = ['player', 'team', 'tournament'];
+import { KIND_HREF, KIND_LABEL, KIND_ORDER } from '@/lib/entities';
 
 /**
  * Ô tìm kiếm có gợi ý trực tiếp.
  *
- * Trước đây chỉ là một <form> đẩy sang /tim-kiem. Nay gọi `/api/search` (đọc từ
- * Vercel Blob qua `searchAll`) và hiện gợi ý ngay, kèm điều hướng bàn phím.
+ * Gọi `/api/search` (đọc từ Vercel Blob qua `searchAll`) và hiện gợi ý ngay khi gõ,
+ * kèm điều hướng bàn phím. Được nối với danh sách gợi ý theo mẫu ARIA combobox để
+ * screen reader đọc được mục đang chọn.
  */
 export default function SearchBox({ placeholder }: { placeholder?: string }) {
   const router = useRouter();
@@ -33,6 +21,10 @@ export default function SearchBox({ placeholder }: { placeholder?: string }) {
   const [highlight, setHighlight] = useState(0);
   const boxRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  // Chỉ request mới nhất được phép cập nhật state (tránh response về muộn ghi đè).
+  const reqId = useRef(0);
+  const listId = 'search-listbox';
+  const optionId = (index: number) => `search-opt-${index}`;
 
   useEffect(() => {
     const q = query.trim();
@@ -42,6 +34,7 @@ export default function SearchBox({ placeholder }: { placeholder?: string }) {
       return undefined;
     }
 
+    const myId = ++reqId.current;
     setLoading(true);
     const controller = new AbortController();
     const timer = setTimeout(async () => {
@@ -50,11 +43,13 @@ export default function SearchBox({ placeholder }: { placeholder?: string }) {
           signal: controller.signal,
         });
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        setResults((await res.json()) as SearchResult[]);
+        const data = (await res.json()) as SearchResult[];
+        if (myId !== reqId.current) return; // đã có request mới hơn
+        setResults(data);
       } catch (error) {
-        if ((error as Error).name !== 'AbortError') setResults([]);
+        if (myId === reqId.current && (error as Error).name !== 'AbortError') setResults([]);
       } finally {
-        setLoading(false);
+        if (myId === reqId.current) setLoading(false);
       }
     }, 180);
 
@@ -64,15 +59,18 @@ export default function SearchBox({ placeholder }: { placeholder?: string }) {
     };
   }, [query]);
 
-  const groups = useMemo(() => {
-    return GROUP_ORDER.map((type) => ({
+  // Gom nhóm một lượt và đánh luôn chỉ số từng mục để tra cứu O(1) lúc render —
+  // trước đây mỗi mục phải `flat.indexOf(item)` nên thành O(n²).
+  const { groups, flat, indexOf } = useMemo(() => {
+    const groups = KIND_ORDER.map((type) => ({
       type,
-      label: GROUP_LABEL[type],
+      label: KIND_LABEL[type],
       items: results.filter((r) => r.type === type),
     })).filter((group) => group.items.length > 0);
+    const flat = groups.flatMap((group) => group.items);
+    const indexOf = new Map(flat.map((item, index) => [item, index]));
+    return { groups, flat, indexOf };
   }, [results]);
-
-  const flat = useMemo(() => groups.flatMap((group) => group.items), [groups]);
 
   useEffect(() => {
     setHighlight(0);
@@ -102,7 +100,7 @@ export default function SearchBox({ placeholder }: { placeholder?: string }) {
     (result: SearchResult) => {
       setOpen(false);
       setQuery('');
-      router.push(HREF[result.type](result.slug));
+      router.push(KIND_HREF[result.type](result.slug));
     },
     [router],
   );
@@ -153,6 +151,11 @@ export default function SearchBox({ placeholder }: { placeholder?: string }) {
           className="search-input"
           placeholder={placeholder ?? 'Tìm tuyển thủ, đội tuyển, giải đấu…'}
           aria-label="Tìm kiếm trong Lwkypedia"
+          role="combobox"
+          aria-expanded={showPanel && flat.length > 0}
+          aria-controls={listId}
+          aria-autocomplete="list"
+          aria-activedescendant={showPanel && flat[highlight] ? optionId(highlight) : undefined}
           value={query}
           onChange={(event) => {
             setQuery(event.target.value);
@@ -177,20 +180,28 @@ export default function SearchBox({ placeholder }: { placeholder?: string }) {
       </div>
 
       {showPanel ? (
-        <div className="search-results scroll-thin" role="listbox" aria-label="Kết quả tìm kiếm">
+        <div
+          className="search-results scroll-thin"
+          id={listId}
+          role="listbox"
+          aria-label="Kết quả tìm kiếm"
+        >
           {flat.length === 0 ? (
-            <div className="search-empty">
+            <div className="search-empty" role="status" aria-live="polite">
               {loading ? 'Đang tìm…' : <>Không tìm thấy kết quả cho “{query}”.</>}
             </div>
           ) : (
             groups.map((group) => (
-              <div key={group.type}>
-                <div className="search-group-title">{group.label}</div>
+              <div key={group.type} role="group" aria-label={group.label}>
+                <div className="search-group-title" aria-hidden="true">
+                  {group.label}
+                </div>
                 {group.items.map((item) => {
-                  const index = flat.indexOf(item);
+                  const index = indexOf.get(item) ?? 0;
                   return (
                     <button
                       key={`${item.type}-${item.slug}`}
+                      id={optionId(index)}
                       type="button"
                       role="option"
                       aria-selected={index === highlight}

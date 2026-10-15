@@ -8,8 +8,11 @@ import { Infobox } from '@/components/Infobox';
 import { Breadcrumb } from '@/components/Breadcrumb';
 import { WikiTable } from '@/components/WikiTable';
 import RichText from '@/components/RichText';
+import { JsonLd, breadcrumbJsonLd } from '@/components/JsonLd';
 import { TEAM_ACCENT } from '@/components/TeamCard';
 import { getPlayersByTeam, getTeamBySlug } from '@/lib/store';
+import { stripMarkdown } from '@/lib/params';
+import { SITE_URL } from '@/lib/site';
 
 export const dynamic = 'force-dynamic';
 
@@ -19,9 +22,17 @@ export async function generateMetadata({
   params: { slug: string };
 }): Promise<Metadata> {
   const team = await getTeamBySlug(params.slug);
+  if (!team) return { title: 'Không tìm thấy' };
   return {
-    title: team ? `${team.name} — Lwkypedia` : 'Không tìm thấy — Lwkypedia',
-    description: team?.description.slice(0, 160),
+    title: team.name,
+    description: stripMarkdown(team.description) || undefined,
+    alternates: { canonical: `/doi-tuyen/${team.slug}` },
+    openGraph: {
+      title: `${team.name} — Lwkypedia`,
+      description: stripMarkdown(team.description),
+      type: 'website',
+      url: `/doi-tuyen/${team.slug}`,
+    },
   };
 }
 
@@ -50,6 +61,19 @@ export default async function TeamDetailPage({ params }: { params: { slug: strin
     ['Đội hình', `${roster.length} tuyển thủ`],
   ];
 
+  const base = SITE_URL.replace(/\/$/, '');
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'SportsTeam',
+    name: team.name,
+    alternateName: team.tag,
+    sport: 'Esports',
+    description: stripMarkdown(team.description, 300),
+    url: `${base}/doi-tuyen/${team.slug}`,
+    ...(team.founded ? { foundingDate: String(team.founded) } : {}),
+    athlete: roster.map((p) => ({ '@type': 'Person', name: p.ign })),
+  };
+
   return (
     <ArticleShell
       breadcrumb={
@@ -69,6 +93,14 @@ export default async function TeamDetailPage({ params }: { params: { slug: strin
       }
       subtitle={[team.region, team.founded ? `Thành lập ${team.founded}` : ''].filter(Boolean).join(' • ')}
     >
+      <JsonLd data={jsonLd} />
+      <JsonLd
+        data={breadcrumbJsonLd(base, [
+          { name: 'Trang chủ', path: '/' },
+          { name: 'Đội tuyển', path: '/doi-tuyen' },
+          { name: team.name, path: `/doi-tuyen/${team.slug}` },
+        ])}
+      />
       <ArticleLayout
         infobox={
           <Infobox

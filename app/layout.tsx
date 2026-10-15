@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import SiteChrome from '@/components/SiteChrome';
-import { SITE_TAGLINE } from '@/lib/site';
+import { SITE_NAME, SITE_TAGLINE, SITE_URL } from '@/lib/site';
 import './globals.css';
 import '../styles/tokens.css';
 import '../styles/base.css';
@@ -8,14 +8,38 @@ import '../styles/wiki.css';
 import '../styles/ui.css';
 
 export const metadata: Metadata = {
-  title: 'Lwkypedia — Wiki Liên Quân Mobile Việt Nam',
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: 'Lwkypedia — Wiki Liên Quân Mobile Việt Nam',
+    template: '%s — Lwkypedia',
+  },
   description:
     'Bách khoa toàn thư mở về Liên Quân Mobile Việt Nam: tiểu sử tuyển thủ, đội tuyển, giải đấu, sự nghiệp và thành tích.',
+  applicationName: 'Lwkypedia',
+  keywords: [
+    'Liên Quân Mobile',
+    'Arena of Valor',
+    'esports Việt Nam',
+    'tuyển thủ',
+    'đội tuyển',
+    'giải đấu',
+    'Đấu Trường Danh Vọng',
+  ],
+  alternates: { canonical: '/' },
   openGraph: {
+    type: 'website',
+    siteName: SITE_NAME,
+    locale: 'vi_VN',
+    url: '/',
     title: 'Lwkypedia',
     description: SITE_TAGLINE,
-    type: 'website',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Lwkypedia',
+    description: SITE_TAGLINE,
+  },
+  robots: { index: true, follow: true },
 };
 
 export const viewport: Viewport = {

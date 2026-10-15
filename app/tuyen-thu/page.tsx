@@ -1,28 +1,40 @@
+import type { Metadata } from 'next';
 import PlayerCard, { PLAYER_ACCENT } from '@/components/PlayerCard';
 import { ArticleShell } from '@/components/ArticleShell';
 import { ROLES } from '@/lib/types';
-import { getPlayers, getTeams, searchAll } from '@/lib/store';
+import { getPlayers, getTeams } from '@/lib/store';
+import { firstParam } from '@/lib/params';
 import { normalizeSearch } from '@/lib/slug';
 
 export const dynamic = 'force-dynamic';
 
+export const metadata: Metadata = {
+  title: 'Tuyển thủ',
+  description:
+    'Danh sách tuyển thủ Liên Quân Mobile Việt Nam: tên thi đấu, tên thật, vị trí và đội tuyển hiện tại.',
+  alternates: { canonical: '/tuyen-thu' },
+};
+
 export default async function PlayersPage({
   searchParams,
 }: {
-  searchParams: { q?: string; team?: string; role?: string };
+  searchParams: { q?: string | string[]; team?: string | string[]; role?: string | string[] };
 }) {
   const [players, teams] = await Promise.all([getPlayers(), getTeams()]);
   const teamBySlug = new Map(teams.map((t) => [t.slug, t.name]));
 
-  const q = (searchParams.q ?? '').trim();
-  const teamFilter = searchParams.team ?? '';
-  const roleFilter = searchParams.role ?? '';
+  const q = firstParam(searchParams.q).trim();
+  const teamFilter = firstParam(searchParams.team);
+  const roleFilter = firstParam(searchParams.role);
 
   let filtered = players;
   if (q) {
-    const hits = new Set((await searchAll(q)).filter((r) => r.type === 'player').map((r) => r.slug));
+    // Khớp cả tên thi đấu, tên thật và vị trí — nhưng tính trực tiếp trên danh sách
+    // đã có, không gọi searchAll (vốn đọc lại cả 3 file).
     const nq = normalizeSearch(q);
-    filtered = filtered.filter((p) => hits.has(p.slug) || normalizeSearch(p.ign).includes(nq));
+    filtered = filtered.filter((p) =>
+      normalizeSearch([p.ign, p.realName ?? '', p.role].join(' ')).includes(nq)
+    );
   }
   if (teamFilter === '__none') filtered = filtered.filter((p) => !p.teamSlug);
   else if (teamFilter) filtered = filtered.filter((p) => p.teamSlug === teamFilter);
@@ -32,7 +44,11 @@ export default async function PlayersPage({
 
   return (
     <ArticleShell
-      title="🎮 Tuyển thủ"
+      title={
+        <>
+          <span aria-hidden="true">🎮</span> Tuyển thủ
+        </>
+      }
       subtitle={`Tuyển thủ Liên Quân Mobile Việt Nam trong cơ sở dữ liệu (${players.length})`}
     >
       <form method="GET" className="toolbar">

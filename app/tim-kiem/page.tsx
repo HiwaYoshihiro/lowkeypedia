@@ -1,14 +1,19 @@
 import Link from 'next/link';
+import type { Metadata } from 'next';
 import { KindBadge } from '@/components/Badges';
 import { ArticleShell } from '@/components/ArticleShell';
 import { searchAll } from '@/lib/store';
+import { firstParam } from '@/lib/params';
+import { KIND_HREF } from '@/lib/entities';
 
 export const dynamic = 'force-dynamic';
 
-const KIND_HREF: Record<string, (slug: string) => string> = {
-  player: (s) => `/tuyen-thu/${s}`,
-  team: (s) => `/doi-tuyen/${s}`,
-  tournament: (s) => `/giai-dau/${s}`,
+export const metadata: Metadata = {
+  title: 'Tìm kiếm',
+  description:
+    'Tìm tuyển thủ, đội tuyển hoặc giải đấu Liên Quân Mobile — không phân biệt dấu tiếng Việt.',
+  alternates: { canonical: '/tim-kiem' },
+  robots: { index: false, follow: true },
 };
 
 const GROUPS: [string, 'player' | 'team' | 'tournament'][] = [
@@ -20,14 +25,18 @@ const GROUPS: [string, 'player' | 'team' | 'tournament'][] = [
 export default async function SearchPage({
   searchParams,
 }: {
-  searchParams: { q?: string };
+  searchParams: { q?: string | string[] };
 }) {
-  const q = (searchParams.q ?? '').trim();
+  const q = firstParam(searchParams.q).trim();
   const results = q ? await searchAll(q) : [];
 
   return (
     <ArticleShell
-      title="🔍 Tìm kiếm"
+      title={
+        <>
+          <span aria-hidden="true">🔍</span> Tìm kiếm
+        </>
+      }
       subtitle="Tìm tuyển thủ, đội tuyển hoặc giải đấu — không phân biệt dấu"
     >
       <form method="GET" className="toolbar">

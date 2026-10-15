@@ -5,8 +5,11 @@ import { Infobox } from '@/components/Infobox';
 import { Breadcrumb } from '@/components/Breadcrumb';
 import { WikiTable } from '@/components/WikiTable';
 import RichText from '@/components/RichText';
+import { JsonLd, breadcrumbJsonLd } from '@/components/JsonLd';
 import { TOURNAMENT_ACCENT } from '@/components/TournamentCard';
 import { getTournamentBySlug } from '@/lib/store';
+import { stripMarkdown } from '@/lib/params';
+import { SITE_URL } from '@/lib/site';
 
 export const dynamic = 'force-dynamic';
 
@@ -16,9 +19,17 @@ export async function generateMetadata({
   params: { slug: string };
 }): Promise<Metadata> {
   const tournament = await getTournamentBySlug(params.slug);
+  if (!tournament) return { title: 'Không tìm thấy' };
   return {
-    title: tournament ? `${tournament.name} — Lwkypedia` : 'Không tìm thấy — Lwkypedia',
-    description: tournament?.description.slice(0, 160),
+    title: tournament.name,
+    description: stripMarkdown(tournament.description) || undefined,
+    alternates: { canonical: `/giai-dau/${tournament.slug}` },
+    openGraph: {
+      title: `${tournament.name} — Lwkypedia`,
+      description: stripMarkdown(tournament.description),
+      type: 'website',
+      url: `/giai-dau/${tournament.slug}`,
+    },
   };
 }
 
@@ -41,6 +52,18 @@ export default async function TournamentDetailPage({ params }: { params: { slug:
     ['Số mùa ghi nhận', String(tournament.results.length)],
   ];
 
+  const base = SITE_URL.replace(/\/$/, '');
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'SportsEvent',
+    name: tournament.name,
+    sport: 'Esports',
+    description: stripMarkdown(tournament.description, 300),
+    url: `${base}/giai-dau/${tournament.slug}`,
+    ...(tournament.organizer ? { organizer: { '@type': 'Organization', name: tournament.organizer } } : {}),
+    ...(tournament.location ? { location: { '@type': 'Place', name: tournament.location } } : {}),
+  };
+
   return (
     <ArticleShell
       breadcrumb={
@@ -55,6 +78,14 @@ export default async function TournamentDetailPage({ params }: { params: { slug:
       title={tournament.name}
       subtitle={[tournament.organizer, tournament.frequency].filter(Boolean).join(' • ')}
     >
+      <JsonLd data={jsonLd} />
+      <JsonLd
+        data={breadcrumbJsonLd(base, [
+          { name: 'Trang chủ', path: '/' },
+          { name: 'Giải đấu', path: '/giai-dau' },
+          { name: tournament.name, path: `/giai-dau/${tournament.slug}` },
+        ])}
+      />
       <ArticleLayout
         infobox={
           <Infobox

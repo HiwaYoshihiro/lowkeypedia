@@ -13,5 +13,8 @@ out/
 .DS_Store
 *.log
 
+# TypeScript build cache (tsc --noEmit với "incremental": true)
+*.tsbuildinfo
+
 # DSH tooling artifacts
 .dsh-vision-router/

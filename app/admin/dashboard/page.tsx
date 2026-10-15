@@ -4,8 +4,6 @@ import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
 import { ROLES, type Achievement, type Player, type Team, type TeamHistoryItem, type Tournament } from '@/lib/types';
 
-export const dynamic = 'force-dynamic';
-
 type Tab = 'players' | 'teams' | 'tournaments';
 
 const inputCls =
