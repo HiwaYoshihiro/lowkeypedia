@@ -5,10 +5,10 @@ import { Infobox } from '@/components/Infobox';
 import { Breadcrumb } from '@/components/Breadcrumb';
 import { WikiTable } from '@/components/WikiTable';
 import RichText from '@/components/RichText';
-import TeamMentions from '@/components/TeamMentions';
+import Mentions from '@/components/Mentions';
 import { JsonLd, breadcrumbJsonLd } from '@/components/JsonLd';
 import { TOURNAMENT_ACCENT } from '@/components/TournamentCard';
-import { getTeams, getTournamentBySlug } from '@/lib/store';
+import { getPlayers, getTeams, getTournamentBySlug } from '@/lib/store';
 import { stripMarkdown } from '@/lib/params';
 import { SITE_URL } from '@/lib/site';
 
@@ -38,12 +38,13 @@ export default async function TournamentDetailPage({ params }: { params: { slug:
   const tournament = await getTournamentBySlug(params.slug);
   if (!tournament) notFound();
   const teams = await getTeams();
+  const players = await getPlayers();
 
   const resultRows = tournament.results.map((result, index) => ({
     key: `r-${index}`,
     cells: {
       index: <span className="num">{index + 1}</span>,
-      result: <TeamMentions text={result} teams={teams} />,
+      result: <Mentions text={result} teams={teams} players={players} />,
     },
   }));
 
