@@ -95,6 +95,20 @@
     "updatedAt": "2026-10-15T17:21:28.171Z"
   },
   {
+    "id": "tour-ewc",
+    "slug": "ewc",
+    "name": "Esports World Cup (EWC)",
+    "organizer": "Esports Foundation (Ả Rập Xê Út)",
+    "frequency": "1 lần/năm (mùa hè)",
+    "location": "Riyadh, Ả Rập Xê Út (2024–2025) • Paris, Pháp (2026)",
+    "description": "Esports World Cup (EWC) là sự kiện thể thao điện tử quốc tế thường niên do Esports Foundation (Ả Rập Xê Út) tổ chức, quy tụ hàng chục bộ môn thi đấu với hàng nghìn tuyển thủ tranh tài và tổng giải thưởng hàng chục triệu USD. Liên Quân Mobile chính thức góp mặt lần đầu tại EWC 2026 thông qua sự kiện hợp tác đặc biệt với Honor of Kings (AOV x HOK) trong khuôn khổ Honor of Kings World Cup, diễn ra từ 30/7 đến 8/8/2026 tại Paris: 20 đội tuyển tranh tài qua 3 giai đoạn (Play-in, Vòng bảng, Play-off) với tổng thưởng 3 triệu USD, thi đấu trên bản cập nhật đặc biệt có sự xuất hiện của các vị tướng Liên Quân. Đại diện Việt Nam tại giải là FPT x Flash.",
+    "results": [
+      "2026 (KWC: AOV x HOK — mùa đầu tiên Liên Quân góp mặt) — Vô địch: Kuaishou Gaming (Trung Quốc, thắng AG.AL 4-3, MVP: JuHao) — Paris, Pháp",
+      "2026 (thành tích các đội Liên Quân) — Buriram United Esports hạng 9–12; Relove Deep Cross Gaming hạng 13–16; FPT x Flash (đại diện Việt Nam) dừng chân vòng Play-in"
+    ],
+    "updatedAt": "2026-10-15T17:46:40.195Z"
+  },
+  {
     "id": "tour-gcs",
     "slug": "gcs",
     "name": "Garena Challenger Series (GCS)",
@@ -142,10 +156,10 @@
     "organizer": "Hội đồng Thể thao Đông Nam Á",
     "frequency": "2 năm/lần",
     "location": "Đông Nam Á",
-    "description": "Liên Quân Mobile là một trong những nội dung thi đấu thể thao điện tử tại SEA Games — đại hội thể thao đa môn lớn nhất khu vực Đông Nam Á. Tại SEA Games 33 tổ chức ở Thái Lan cuối năm 2025, đội tuyển nam Việt Nam đã đánh bại chủ nhà Thái Lan 3-2 trong trận chung kết, mang về tấm Huy chương Vàng SEA Games đầu tiên cho Liên Quân Mobile Việt Nam.",
+    "description": "Liên Quân Mobile là một trong những nội dung thi đấu thể thao điện tử tại SEA Games — đại hội thể thao đa môn lớn nhất khu vực Đông Nam Á. Tại SEA Games 33 tổ chức ở Thái Lan cuối năm 2025, đội tuyển nam Việt Nam đã đánh bại chủ nhà Thái Lan 3-2 trong trận chung kết, mang về tấm Huy chương Vàng SEA Games đầu tiên cho Liên Quân Mobile Việt Nam. Cũng tại kỳ đại hội này, đội tuyển nữ Việt Nam — do One Star Esports đại diện — đã vô địch nội dung đồng đội nữ (lần đầu được tổ chức tại SEA Games) sau chiến thắng 4-0 trước Lào trong trận chung kết.",
     "results": [
-      "2025 (SEA Games 33, Thái Lan) — Huy chương Vàng: Việt Nam (thắng Thái Lan 3-2), Huy chương Đồng: Lào"
+      "2025 (SEA Games 33, Thái Lan) — Huy chương Vàng (đồng đội nam): Việt Nam (thắng Thái Lan 3-2); Huy chương Vàng (đồng đội nữ): Việt Nam (đại diện One Star Esports, thắng Lào 4-0); Huy chương Đồng: Lào"
     ],
-    "updatedAt": "2026-10-15T17:24:31.262Z"
+    "updatedAt": "2026-10-15T17:46:51.884Z"
   }
 ]

@@ -258,8 +258,14 @@
     "name": "FPT x Flash",
     "tag": "FPT",
     "region": "Việt Nam",
-    "description": "FPT x Flash là đội tuyển Liên Quân Mobile Việt Nam của tổ chức Team Flash — một trong những cái nôi của Liên Quân Mobile Việt Nam — thi đấu dưới tên gọi hiện tại từ năm 2024 sau khi hợp tác cùng FPT. Với bộ khung HuyHoang, Gray, Maris, BeTroc và Yutan, đội đã chấm dứt kỷ nguyên thống trị của Saigon Phantom bằng hai chức vô địch ĐTDV liên tiếp (Mùa Đông 2025 và Mùa Xuân 2026).",
+    "description": "FPT x Flash là đội tuyển Liên Quân Mobile Việt Nam của tổ chức Team Flash — một trong những cái nôi của Liên Quân Mobile Việt Nam — thi đấu dưới tên gọi hiện tại từ năm 2024 sau khi hợp tác cùng FPT. Với bộ khung HuyHoang, Gray, Maris, BeTroc và Yutan, đội đã chấm dứt kỷ nguyên thống trị của Saigon Phantom bằng hai chức vô địch ĐTDV liên tiếp (Mùa Đông 2025 và Mùa Xuân 2026). Tháng 7–8/2026, đội là đại diện Liên Quân Mobile Việt Nam tham dự Honor of Kings World Cup (KWC) trong khuôn khổ Esports World Cup 2026 tại Paris, Pháp.",
     "achievements": [
+      {
+        "year": "2026",
+        "placement": "Tham dự (vòng Play-in)",
+        "tournament": "Esports World Cup 2026",
+        "tournamentSlug": "ewc"
+      },
       {
         "year": "2026",
         "placement": "Vô địch",
@@ -273,7 +279,7 @@
         "tournamentSlug": "dau-truong-danh-vong"
       }
     ],
-    "updatedAt": "2026-10-15T17:23:03.427Z"
+    "updatedAt": "2026-10-15T17:46:45.920Z"
   },
   {
     "id": "team-full-sense",
@@ -416,6 +422,54 @@
       }
     ],
     "updatedAt": "2026-10-15T16:50:23.742Z"
+  },
+  {
+    "id": "team-one-star-esports",
+    "slug": "one-star-esports",
+    "name": "One Star Esports",
+    "tag": "1S",
+    "region": "Việt Nam",
+    "founded": 2024,
+    "description": "One Star Esports (1S) là đội tuyển Liên Quân Mobile Việt Nam có trụ sở tại TP.HCM, mang biệt danh \"Sao đỏ\", thi đấu tại Đấu Trường Danh Vọng. Đội ra mắt từ mùa Xuân 2024 sau khi V Gaming (VGM) đổi tên và giữ nguyên bộ khung đội hình cũ. One Star nổi tiếng là \"ông vua về nhì\" của ĐTDV khi lập kỷ lục 7 mùa liên tiếp về đích ở vị trí á quân (Mùa Đông 2021 – Mùa Đông 2024) — cả 7 trận chung kết đều thất bại trước Saigon Phantom; chuỗi đáng quên này chỉ chấm dứt ở Mùa Xuân 2025 (hạng tư). Bên cạnh đội nam, đội nữ của tổ chức đã đại diện Việt Nam giành Huy chương Vàng SEA Games 33, rồi liên tiếp về nhì ở hai giải nữ quốc tế đầu tiên năm 2026: Nữ Vương Đại Chiến (thua Saigon Phantom 0-3) và APL Queens Showdown (thua eArena 2-4).",
+    "achievements": [
+      {
+        "year": "2026",
+        "placement": "Á quân (nữ)",
+        "tournament": "APL Queens Showdown",
+        "tournamentSlug": "apl-queens-showdown"
+      },
+      {
+        "year": "2026",
+        "placement": "Á quân (nữ)",
+        "tournament": "Nữ Vương Đại Chiến 2026",
+        "tournamentSlug": "nu-vuong-dai-chien"
+      },
+      {
+        "year": "2025",
+        "placement": "Huy chương Vàng (nữ)",
+        "tournament": "SEA Games 33",
+        "tournamentSlug": "sea-games"
+      },
+      {
+        "year": "2024",
+        "placement": "Á quân",
+        "tournament": "ĐTDV Mùa Đông 2024",
+        "tournamentSlug": "dau-truong-danh-vong"
+      },
+      {
+        "year": "2024",
+        "placement": "Á quân",
+        "tournament": "ĐTDV Mùa Xuân 2024",
+        "tournamentSlug": "dau-truong-danh-vong"
+      },
+      {
+        "year": "2021–2024",
+        "placement": "Á quân 7 mùa liên tiếp (kỷ lục)",
+        "tournament": "ĐTDV",
+        "tournamentSlug": "dau-truong-danh-vong"
+      }
+    ],
+    "updatedAt": "2026-10-15T17:46:34.421Z"
   },
   {
     "id": "team-one-team",
