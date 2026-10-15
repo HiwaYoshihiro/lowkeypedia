@@ -221,5 +221,379 @@
     "slug": "box-gaming",
     "tag": "BOX",
     "updatedAt": "2026-10-12T18:20:43.000Z"
+  },
+  {
+    "id": "team-bacon-time",
+    "slug": "bacon-time",
+    "name": "Bacon Time",
+    "tag": "BAC",
+    "region": "Thái Lan",
+    "description": "Bacon Time là đội tuyển Liên Quân Mobile Thái Lan thi đấu tại RPL. Đội vô địch APL 2022 và lên ngôi tại AIC 2024 ở TP.HCM sau chiến thắng 4-0 trước BanMei Gaming, với danh hiệu FMVP thuộc về Kimsensei.",
+    "achievements": [
+      {
+        "year": "2024",
+        "placement": "Vô địch",
+        "tournament": "AIC 2024",
+        "tournamentSlug": "aic"
+      },
+      {
+        "year": "2024",
+        "placement": "Á quân",
+        "tournament": "APL 2024",
+        "tournamentSlug": "apl"
+      },
+      {
+        "year": "2023",
+        "placement": "Á quân",
+        "tournament": "APL 2023",
+        "tournamentSlug": "apl"
+      },
+      {
+        "year": "2022",
+        "placement": "Vô địch",
+        "tournament": "APL 2022",
+        "tournamentSlug": "apl"
+      }
+    ],
+    "updatedAt": "2026-10-15T16:45:53.523Z"
+  },
+  {
+    "id": "team-banmei-gaming",
+    "slug": "banmei-gaming",
+    "name": "BanMei Gaming",
+    "tag": "BMG",
+    "region": "Đài Loan",
+    "description": "BanMei Gaming là đội tuyển Liên Quân Mobile Đài Loan thi đấu tại GCS. Năm 2024, đội lên ngôi vô địch APL 2024 (FMVP: Yanyan) và giành ngôi á quân AIC 2024 sau thất bại 0-4 trước Bacon Time tại TP.HCM.",
+    "achievements": [
+      {
+        "year": "2024",
+        "placement": "Vô địch",
+        "tournament": "APL 2024",
+        "tournamentSlug": "apl"
+      },
+      {
+        "year": "2024",
+        "placement": "Á quân",
+        "tournament": "AIC 2024",
+        "tournamentSlug": "aic"
+      }
+    ],
+    "updatedAt": "2026-10-15T16:51:08.888Z"
+  },
+  {
+    "id": "team-boom",
+    "slug": "boom-esports",
+    "name": "BOOM Esports",
+    "tag": "BME",
+    "region": "Việt Nam",
+    "founded": 2016,
+    "description": "BOOM Esports (BME) là tổ chức esports Indonesia thành lập năm **2016**. Bộ môn Liên Quân Mobile được **thành lập năm 2026** với đội hình tuyển thủ Việt Nam, ra mắt tại **ĐTDV Mùa Đông 2026** — mùa giải kỷ niệm 10 năm Đấu Trường Danh Vọng.",
+    "achievements": [
+      {
+        "year": "2026",
+        "placement": "Đang thi đấu",
+        "tournament": "ĐTDV Mùa Đông 2026",
+        "tournamentSlug": "dau-truong-danh-vong"
+      }
+    ],
+    "updatedAt": "2026-10-13T17:20:49.034Z"
+  },
+  {
+    "id": "team-buriram-united-esports",
+    "slug": "buriram-united-esports",
+    "name": "Buriram United Esports",
+    "tag": "BRU",
+    "region": "Thái Lan",
+    "description": "Buriram United Esports là đội tuyển Liên Quân Mobile Thái Lan thuộc tổ chức của câu lạc bộ bóng đá Buriram United, thi đấu tại RPL. Đội vô địch AIC 2021 sau chiến thắng 4-3 trước V Gaming — chức vô địch thế giới đầu tiên của tổ chức — cùng ba lần giành ngôi á quân quốc tế.",
+    "achievements": [
+      {
+        "year": "2021",
+        "placement": "Vô địch",
+        "tournament": "AIC 2021",
+        "tournamentSlug": "aic"
+      },
+      {
+        "year": "2024",
+        "placement": "Á quân",
+        "tournament": "APL 2024",
+        "tournamentSlug": "apl"
+      },
+      {
+        "year": "2020",
+        "placement": "Á quân",
+        "tournament": "APL 2020",
+        "tournamentSlug": "apl"
+      },
+      {
+        "year": "2019",
+        "placement": "Á quân",
+        "tournament": "AIC 2019",
+        "tournamentSlug": "aic"
+      }
+    ],
+    "updatedAt": "2026-10-15T16:46:00.168Z"
+  },
+  {
+    "id": "team-earena",
+    "slug": "earena",
+    "name": "eArena",
+    "tag": "EA",
+    "region": "Thái Lan",
+    "description": "eArena là đội tuyển Liên Quân Mobile Thái Lan thi đấu tại RPL. Đội giành ngôi á quân APL 2025 sau thất bại trước Flash Wolves trong trận chung kết tại Bangkok.",
+    "achievements": [
+      {
+        "year": "2025",
+        "placement": "Á quân",
+        "tournament": "APL 2025",
+        "tournamentSlug": "apl"
+      }
+    ],
+    "updatedAt": "2026-10-15T16:47:19.672Z"
+  },
+  {
+    "id": "team-flash-wolves",
+    "slug": "flash-wolves",
+    "name": "Flash Wolves",
+    "tag": "FW",
+    "region": "Đài Loan",
+    "description": "Flash Wolves là tổ chức thể thao điện tử Đài Loan, nổi tiếng từ đấu trường LMHT và có đội Liên Quân Mobile thi đấu tại GCS. Đội hai lần vô địch APL (2020, 2025) và giành ngôi á quân AIC 2025 sau thất bại 1-4 trước Full Sense.",
+    "achievements": [
+      {
+        "year": "2025",
+        "placement": "Vô địch",
+        "tournament": "APL 2025",
+        "tournamentSlug": "apl"
+      },
+      {
+        "year": "2025",
+        "placement": "Á quân",
+        "tournament": "AIC 2025",
+        "tournamentSlug": "aic"
+      },
+      {
+        "year": "2020",
+        "placement": "Vô địch",
+        "tournament": "APL 2020",
+        "tournamentSlug": "apl"
+      }
+    ],
+    "updatedAt": "2026-10-15T16:45:00.958Z"
+  },
+  {
+    "id": "team-fpt-polytechnic",
+    "slug": "fpt-polytechnic",
+    "name": "FPT Polytechnic",
+    "tag": "FPL",
+    "region": "Việt Nam",
+    "description": "FPT Polytechnic là đội tuyển Liên Quân Mobile Việt Nam gắn với hệ thống Cao đẳng FPT Polytechnic. Đội vào Top 3 ĐTDV Mùa Xuân 2026, giành vị trí nhì bảng giữa mùa tại ĐTDV Mùa Đông 2026 (thành tích 10-3 tính đến 11/10) và tham dự vòng Swiss APL 2026.",
+    "achievements": [
+      {
+        "year": "2026",
+        "placement": "Top 3",
+        "tournament": "ĐTDV Mùa Xuân 2026",
+        "tournamentSlug": "dau-truong-danh-vong"
+      },
+      {
+        "year": "2026",
+        "placement": "Tham dự (vòng Swiss)",
+        "tournament": "APL 2026",
+        "tournamentSlug": "apl"
+      }
+    ],
+    "updatedAt": "2026-10-15T16:51:54.108Z"
+  },
+  {
+    "id": "team-full-sense",
+    "slug": "full-sense",
+    "name": "Full Sense",
+    "tag": "FS",
+    "region": "Thái Lan",
+    "description": "Full Sense là đội tuyển Liên Quân Mobile Thái Lan. Đội lên ngôi vô địch AIC 2025 tổ chức tại TP.HCM và Hà Nội với hành trình toàn thắng, đánh bại Flash Wolves 4-1 trong trận chung kết.",
+    "achievements": [
+      {
+        "year": "2025",
+        "placement": "Vô địch",
+        "tournament": "AIC 2025",
+        "tournamentSlug": "aic"
+      }
+    ],
+    "updatedAt": "2026-10-15T16:50:14.094Z"
+  },
+  {
+    "id": "team-gametv",
+    "slug": "gametv",
+    "name": "GameTV",
+    "tag": "GTV",
+    "region": "Việt Nam",
+    "description": "GameTV là đội tuyển Liên Quân Mobile Việt Nam, từng vào đến trận chung kết AIC 2017 tại Seoul và giành ngôi á quân sau thất bại 1-4 trước Still Moving Under Gunfire.",
+    "achievements": [
+      {
+        "year": "2017",
+        "placement": "Á quân",
+        "tournament": "AIC 2017",
+        "tournamentSlug": "aic"
+      }
+    ],
+    "updatedAt": "2026-10-15T16:45:34.186Z"
+  },
+  {
+    "id": "team-j-team",
+    "slug": "j-team",
+    "name": "J Team",
+    "tag": "JT",
+    "region": "Đài Loan",
+    "description": "J Team là đội tuyển Liên Quân Mobile Đài Loan thuộc GCS, vô địch AIC 2018 tổ chức tại Bangkok sau chiến thắng trước Team Flash trong trận chung kết.",
+    "achievements": [
+      {
+        "year": "2018",
+        "placement": "Vô địch",
+        "tournament": "AIC 2018",
+        "tournamentSlug": "aic"
+      }
+    ],
+    "updatedAt": "2026-10-15T16:47:44.626Z"
+  },
+  {
+    "id": "team-mad-team",
+    "slug": "mad-team",
+    "name": "MAD Team",
+    "tag": "MAD",
+    "region": "Đài Loan",
+    "description": "MAD Team là đội tuyển Liên Quân Mobile Đài Loan thi đấu tại GCS, vô địch AIC 2020 sau chiến thắng 4-2 trước Saigon Phantom và giành ngôi á quân AWC 2019.",
+    "achievements": [
+      {
+        "year": "2020",
+        "placement": "Vô địch",
+        "tournament": "AIC 2020",
+        "tournamentSlug": "aic"
+      },
+      {
+        "year": "2019",
+        "placement": "Á quân",
+        "tournament": "AWC 2019",
+        "tournamentSlug": "awc"
+      }
+    ],
+    "updatedAt": "2026-10-15T16:45:23.222Z"
+  },
+  {
+    "id": "team-mop-team",
+    "slug": "mop-team",
+    "name": "MOP Team",
+    "tag": "MOP",
+    "region": "Đài Loan",
+    "description": "MOP Team (Most Outstanding Players) là đội tuyển Liên Quân Mobile Đài Loan, vô địch GCS mùa Xuân 2021 và giành ngôi á quân AWC 2021 sau thất bại 3-4 trước dtac Talon Esports.",
+    "achievements": [
+      {
+        "year": "2021",
+        "placement": "Á quân",
+        "tournament": "AWC 2021",
+        "tournamentSlug": "awc"
+      }
+    ],
+    "updatedAt": "2026-10-15T16:50:23.742Z"
+  },
+  {
+    "id": "team-one-team",
+    "slug": "one-team",
+    "name": "ONE Team",
+    "tag": "ONE",
+    "region": "Đài Loan",
+    "description": "ONE Team (ONE Team Esports) là đội tuyển Liên Quân Mobile Đài Loan thi đấu tại GCS. Đội giành ngôi á quân AIC 2022 sau thất bại 1-4 trước V Gaming trong trận chung kết tại TP.HCM.",
+    "achievements": [
+      {
+        "year": "2022",
+        "placement": "Á quân",
+        "tournament": "AIC 2022",
+        "tournamentSlug": "aic"
+      }
+    ],
+    "updatedAt": "2026-10-15T16:48:07.550Z"
+  },
+  {
+    "id": "team-rrq",
+    "slug": "rex-regum-qeon",
+    "name": "Rex Regum Qeon",
+    "tag": "RRQ",
+    "region": "Việt Nam",
+    "founded": 2013,
+    "description": "Rex Regum Qeon (RRQ) — có nghĩa là **\"Vua của các vị vua\"** — là tổ chức esports hàng đầu Indonesia, thành lập năm **2013** tại Jakarta. Bộ môn Liên Quân Mobile của RRQ từng thi đấu giai đoạn 2017–2019, sau đó tạm ngưng và được **tái thành lập năm 2026** với đội hình toàn tuyển thủ Việt Nam để tham dự **ĐTDV Mùa Đông 2026** — mùa giải kỷ niệm 10 năm Đấu Trường Danh Vọng. Quản lý đội tuyển: **Deft** (theo truyền thông).",
+    "achievements": [
+      {
+        "year": "2026",
+        "placement": "Đang thi đấu",
+        "tournament": "ĐTDV Mùa Đông 2026",
+        "tournamentSlug": "dau-truong-danh-vong"
+      }
+    ],
+    "updatedAt": "2026-10-15T03:26:53.134Z"
+  },
+  {
+    "id": "team-still-moving-under-gunfire",
+    "slug": "still-moving-under-gunfire",
+    "name": "Still Moving Under Gunfire",
+    "tag": "SMG",
+    "region": "Đài Loan",
+    "description": "Still Moving Under Gunfire (SMG) là đội tuyển Liên Quân Mobile Đài Loan, nhà vô địch AIC đầu tiên năm 2017 tại Seoul sau chiến thắng 4-1 trước GameTV trong trận chung kết.",
+    "achievements": [
+      {
+        "year": "2017",
+        "placement": "Vô địch",
+        "tournament": "AIC 2017",
+        "tournamentSlug": "aic"
+      }
+    ],
+    "updatedAt": "2026-10-15T16:46:46.436Z"
+  },
+  {
+    "id": "team-talon-esports",
+    "slug": "talon-esports",
+    "name": "Talon Esports",
+    "tag": "TLN",
+    "region": "Thái Lan",
+    "description": "Talon Esports là tổ chức thể thao điện tử có trụ sở tại Hồng Kông, đội Liên Quân Mobile thi đấu tại Thái Lan (từng mang tên dtac Talon Esports). Đội vô địch AWC 2021 (4-3 trước MOP Team) và AIC 2023 (4-2 trước Valencia CF eSports).",
+    "achievements": [
+      {
+        "year": "2023",
+        "placement": "Vô địch",
+        "tournament": "AIC 2023",
+        "tournamentSlug": "aic"
+      },
+      {
+        "year": "2021",
+        "placement": "Vô địch",
+        "tournament": "AWC 2021",
+        "tournamentSlug": "awc"
+      }
+    ],
+    "updatedAt": "2026-10-15T16:48:25.512Z"
+  },
+  {
+    "id": "team-1791881598560",
+    "slug": "the-last-stand-esports",
+    "name": "The Last Stand Esports",
+    "tag": "TLS",
+    "region": "Việt Nam",
+    "founded": 2024,
+    "description": "",
+    "achievements": [],
+    "updatedAt": "2026-10-13T08:53:18.560Z"
+  },
+  {
+    "id": "team-valencia-cf-esports",
+    "slug": "valencia-cf-esports",
+    "name": "Valencia CF eSports",
+    "tag": "VCF",
+    "region": "Tây Ban Nha",
+    "description": "Valencia CF eSports là bộ phận thể thao điện tử của câu lạc bộ bóng đá Valencia CF (Tây Ban Nha), với đội Liên Quân Mobile thi đấu tại RPL Thái Lan. Đội vào đến chung kết AIC 2023 và giành ngôi á quân sau thất bại 2-4 trước Talon Esports.",
+    "achievements": [
+      {
+        "year": "2023",
+        "placement": "Á quân",
+        "tournament": "AIC 2023",
+        "tournamentSlug": "aic"
+      }
+    ],
+    "updatedAt": "2026-10-15T16:45:16.169Z"
   }
 ]
