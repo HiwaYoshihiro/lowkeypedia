@@ -22,3 +22,6 @@ out/
 # Playwright
 playwright-report/
 test-results/
+
+# Coverage (vitest --coverage)
+coverage/

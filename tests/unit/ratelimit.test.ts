@@ -68,6 +68,22 @@ describe('rate limit đăng nhập', () => {
     expect(rl.isRateLimited(key)).toBe(false);
   });
 
+  it('dọn bucket hết hạn khi có hơn 1000 IP', async () => {
+    const rl = await loadRatelimit('1');
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date('2026-01-01T00:00:00Z'));
+
+    for (let i = 0; i < 1001; i += 1) rl.noteFailure(`ip-${i}`);
+    expect(rl.isRateLimited('ip-0')).toBe(true);
+
+    // Sang cửa sổ mới, lần ghi kế tiếp vượt 1000 bucket → dọn các bucket đã hết hạn.
+    vi.setSystemTime(new Date('2026-01-01T00:11:00Z'));
+    rl.noteFailure('ip-moi');
+
+    expect(rl.isRateLimited('ip-0')).toBe(false);
+    expect(rl.isRateLimited('ip-moi')).toBe(true);
+  });
+
   it('đăng nhập thành công xoá bộ đếm của IP', async () => {
     const rl = await loadRatelimit('2');
     const key = 'success-ip';

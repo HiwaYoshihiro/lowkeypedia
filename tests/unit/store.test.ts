@@ -13,6 +13,7 @@ vi.mock('@vercel/blob', async () => {
 
 import {
   blob,
+  blobFor,
   installFakeFetch,
   listFromFiles,
   mockList,
@@ -22,6 +23,7 @@ import {
 } from './helpers/fake-blob';
 import {
   ValidationError,
+  clearCache,
   deletePlayer,
   deleteTeam,
   deleteTournament,
@@ -29,6 +31,7 @@ import {
   getPlayers,
   getPlayersByTeam,
   getTeamBySlug,
+  getTeams,
   getTournamentBySlug,
   getTournaments,
   savePlayer,
@@ -216,6 +219,130 @@ describe('lib/store', () => {
       expect((await getTournamentBySlug('aic'))?.name).toBe('AIC');
       expect(await getTournamentBySlug('khong-co')).toBeNull();
     });
+
+    it('danh sách đội và giải được sắp xếp theo tên tiếng Việt', async () => {
+      seedFile(PLAYERS, []);
+      seedFile(TEAMS, [
+        makeTeam({ id: 't1', slug: 'binh-dinh', name: 'Bình Định' }),
+        makeTeam({ id: 't2', slug: 'an-giang', name: 'An Giang' }),
+      ]);
+      seedFile(TOURNAMENTS, [
+        makeTournament({ id: 'g1', slug: 'z-cup', name: 'Z Cup' }),
+        makeTournament({ id: 'g2', slug: 'dau-truong', name: 'Đấu Trường' }),
+      ]);
+      listFromFiles();
+
+      expect((await getTeams()).map((t) => t.slug)).toEqual(['an-giang', 'binh-dinh']);
+      // "Đấu Trường" đứng trước "Z Cup" theo bảng chữ cái tiếng Việt.
+      expect((await getTournaments()).map((t) => t.slug)).toEqual(['dau-truong', 'z-cup']);
+    });
+
+    it('tìm kiếm khớp cả tag/khu vực của đội và ban tổ chức/địa điểm của giải', async () => {
+      seedFile(PLAYERS, []);
+      seedFile(TEAMS, [
+        makeTeam({ id: 't1', slug: 'sgp', name: 'Saigon Phantom', tag: 'SGP', region: 'TP.HCM' }),
+      ]);
+      seedFile(TOURNAMENTS, [
+        makeTournament({
+          id: 'g1',
+          slug: 'aic',
+          name: 'AIC',
+          organizer: 'Garena',
+          location: 'Đà Nẵng',
+        }),
+      ]);
+      listFromFiles();
+
+      expect((await searchAll('sgp'))[0]).toMatchObject({
+        type: 'team',
+        slug: 'sgp',
+        subtitle: 'SGP • TP.HCM',
+      });
+      expect((await searchAll('tp.hcm'))[0]).toMatchObject({ type: 'team', slug: 'sgp' });
+      expect((await searchAll('garena'))[0]).toMatchObject({
+        type: 'tournament',
+        slug: 'aic',
+        subtitle: 'Giải đấu • Garena',
+      });
+      expect((await searchAll('da nang'))[0]).toMatchObject({ type: 'tournament', slug: 'aic' });
+    });
+
+    it('Blob trả lỗi HTTP thì dùng seed cho lượt đọc đó', async () => {
+      const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+      seedFile(PLAYERS, [makePlayer({ ign: 'Không đọc được' })]);
+      listFromFiles();
+      // `list` vẫn báo có file nhưng nội dung đã biến mất → fetch nhận 404.
+      blob.files.delete(PLAYERS);
+
+      const players = await getPlayers();
+
+      expect(players).toHaveLength(playersSeed.length);
+      expect(warn).toHaveBeenCalledWith(
+        expect.stringContaining(`fetch ${PLAYERS} -> HTTP 404`)
+      );
+      warn.mockRestore();
+    });
+
+    it('hai lượt đọc nguội đồng thời chỉ gọi list một lần', async () => {
+      seedFile(PLAYERS, [makePlayer()]);
+      listFromFiles();
+
+      const [a, b] = await Promise.all([getPlayers(), getPlayers()]);
+
+      expect(a).toEqual(b);
+      expect(mockList).toHaveBeenCalledTimes(1);
+    });
+
+    it('lượt đọc đang bay không ghi cache nếu có lệnh ghi xen ngang', async () => {
+      seedFile(PLAYERS, [makePlayer({ ign: 'Bản Cũ' })]);
+      let release!: () => void;
+      mockList.mockImplementationOnce(
+        () =>
+          new Promise((resolve) => {
+            release = () => resolve({ blobs: [blobFor(PLAYERS)] });
+          })
+      );
+
+      const pending = getPlayers();
+      // Lệnh ghi xen ngang: clearCache tăng generation và xoá cache.
+      clearCache();
+      release();
+
+      expect((await pending)[0].ign).toBe('Bản Cũ');
+
+      // Kết quả cũ không được nằm lại trong cache → lượt đọc sau phải list lại.
+      listFromFiles();
+      const callsBefore = mockList.mock.calls.length;
+      expect((await getPlayers())[0].ign).toBe('Bản Cũ');
+      expect(mockList.mock.calls.length).toBeGreaterThan(callsBefore);
+    });
+
+    it('làm mới nền lỗi thì giữ bản cũ và tạm dừng thử lại 5 giây', async () => {
+      const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+      vi.useFakeTimers({ toFake: ['Date'] });
+      vi.setSystemTime(new Date('2026-01-01T00:00:00Z'));
+      seedFile(PLAYERS, [makePlayer({ ign: 'Bản Thật' })]);
+      listFromFiles();
+      expect((await getPlayers())[0].ign).toBe('Bản Thật');
+
+      // Blob trả JSON hỏng cấu trúc → bước chuẩn hoá ném lỗi trong lần làm mới nền.
+      blob.files.set(PLAYERS, '{}');
+      vi.setSystemTime(new Date('2026-01-01T00:00:31Z'));
+
+      expect((await getPlayers())[0].ign).toBe('Bản Thật');
+      await flushBackground();
+
+      expect(warn).toHaveBeenCalledWith(
+        '[lwkypedia] làm mới cache thất bại, giữ bản cũ:',
+        expect.any(TypeError)
+      );
+
+      // Trong 5 giây tạm dừng, không thử lại Blob.
+      const calls = mockList.mock.calls.length;
+      expect((await getPlayers())[0].ign).toBe('Bản Thật');
+      expect(mockList.mock.calls.length).toBe(calls);
+      warn.mockRestore();
+    });
   });
 
   describe('ghi dữ liệu', () => {
@@ -239,6 +366,36 @@ describe('lib/store', () => {
       expect(unnamed.slug).toBe('untitled');
     });
 
+    it('cập nhật tuyển thủ theo id, giữ nguyên vị trí trong file', async () => {
+      seedFile(PLAYERS, [
+        makePlayer({ id: 'p1', slug: 'cu', ign: 'Cũ' }),
+        makePlayer({ id: 'p2', slug: 'giu', ign: 'Giữ' }),
+      ]);
+      listFromFiles();
+
+      const updated = await savePlayer({
+        id: 'p1',
+        ign: 'Mới',
+        role: 'Xạ Thủ',
+        teamSlug: '   ',
+      });
+
+      expect(updated.slug).toBe('moi');
+      const file = readFile<Player[]>(PLAYERS);
+      expect(file.map((p) => p.id)).toEqual(['p1', 'p2']);
+      expect(file[0].ign).toBe('Mới');
+      expect(file[0].teamSlug).toBeNull();
+    });
+
+    it('xoá tuyển thủ đang tồn tại trả true và ghi file mới', async () => {
+      seedFile(PLAYERS, [makePlayer({ id: 'p1' })]);
+      listFromFiles();
+
+      expect(await deletePlayer('p1')).toBe(true);
+
+      expect(readFile<Player[]>(PLAYERS)).toEqual([]);
+    });
+
     it('từ chối role không hợp lệ', async () => {
       seedFile(PLAYERS, []);
       listFromFiles();
@@ -251,11 +408,25 @@ describe('lib/store', () => {
     });
 
     it('đổi slug đội thì cập nhật tham chiếu trong tuyển thủ', async () => {
-      seedFile(TEAMS, [makeTeam({ id: 't1', slug: 'a', name: 'A' })]);
+      seedFile(TEAMS, [
+        makeTeam({ id: 't1', slug: 'a', name: 'A' }),
+        makeTeam({ id: 't2', slug: 'b', name: 'B' }),
+      ]);
       seedFile(PLAYERS, [
         makePlayer({
+          id: 'p1',
           teamSlug: 'a',
-          teamHistory: [{ period: '2024', team: 'A', teamSlug: 'a' }],
+          teamHistory: [
+            { period: '2024', team: 'A', teamSlug: 'a' },
+            { period: '2023', team: 'B', teamSlug: 'b' },
+          ],
+        }),
+        makePlayer({
+          id: 'p2',
+          slug: 'khac',
+          ign: 'Khác',
+          teamSlug: 'b',
+          teamHistory: [{ period: '2023', team: 'B', teamSlug: 'b' }],
         }),
       ]);
       listFromFiles();
@@ -265,6 +436,9 @@ describe('lib/store', () => {
       const players = readFile<Player[]>(PLAYERS);
       expect(players[0].teamSlug).toBe('a-moi');
       expect(players[0].teamHistory?.[0].teamSlug).toBe('a-moi');
+      // Dòng lịch sử của đội khác và tuyển thủ không liên quan giữ nguyên.
+      expect(players[0].teamHistory?.[1].teamSlug).toBe('b');
+      expect(players[1].teamSlug).toBe('b');
     });
 
     it('xoá đội thì gỡ tham chiếu, giữ tên đội dạng chữ', async () => {
@@ -285,25 +459,40 @@ describe('lib/store', () => {
     });
 
     it('đổi slug giải thì cập nhật tournamentSlug trong thành tích của tuyển thủ và đội', async () => {
-      seedFile(TOURNAMENTS, [makeTournament({ id: 'g1', slug: 'aic', name: 'AIC' })]);
+      seedFile(TOURNAMENTS, [
+        makeTournament({ id: 'g1', slug: 'aic', name: 'AIC' }),
+        makeTournament({ id: 'g2', slug: 'apl', name: 'APL' }),
+      ]);
       seedFile(PLAYERS, [
-        makePlayer({ achievements: [{ year: '2025', placement: 'Vô địch', tournament: 'AIC', tournamentSlug: 'aic' }] }),
+        makePlayer({
+          achievements: [
+            { year: '2025', placement: 'Vô địch', tournament: 'AIC', tournamentSlug: 'aic' },
+            { year: '2024', placement: 'Á quân', tournament: 'APL', tournamentSlug: 'apl' },
+          ],
+        }),
       ]);
       seedFile(TEAMS, [
         makeTeam({
           id: 't9',
           slug: 'sgp',
-          achievements: [{ year: '2025', placement: 'Vô địch', tournament: 'AIC', tournamentSlug: 'aic' }],
+          achievements: [
+            { year: '2025', placement: 'Vô địch', tournament: 'AIC', tournamentSlug: 'aic' },
+            { year: '2023', placement: 'Top 4', tournament: 'Giải ngoài wiki' },
+          ],
         }),
       ]);
       listFromFiles();
 
       await saveTournament({ id: 'g1', name: 'AIC 2026' });
 
-      expect(readFile<Player[]>(PLAYERS)[0].achievements[0].tournamentSlug).toBe('aic-2026');
-      expect(readFile<Team[]>(TEAMS).find((t) => t.id === 't9')?.achievements[0].tournamentSlug).toBe(
-        'aic-2026'
-      );
+      const playerAchievements = readFile<Player[]>(PLAYERS)[0].achievements;
+      expect(playerAchievements[0].tournamentSlug).toBe('aic-2026');
+      // Thành tích của giải khác không bị đụng tới.
+      expect(playerAchievements[1].tournamentSlug).toBe('apl');
+
+      const teamAchievements = readFile<Team[]>(TEAMS).find((t) => t.id === 't9')?.achievements ?? [];
+      expect(teamAchievements[0].tournamentSlug).toBe('aic-2026');
+      expect('tournamentSlug' in teamAchievements[1]).toBe(false);
     });
 
     it('xoá giải thì bỏ tournamentSlug khỏi thành tích', async () => {
@@ -404,6 +593,36 @@ describe('lib/store', () => {
         '2024 — Vô địch: A',
         '2025 — Vô địch: B',
       ]);
+    });
+
+    it('achievement rỗng hoặc sai kiểu bị bỏ qua', async () => {
+      seedFile(PLAYERS, [
+        {
+          ...makePlayer(),
+          achievements: [{}, 42, null, { year: '2025' }],
+        },
+      ]);
+      seedFile(TEAMS, []);
+      seedFile(TOURNAMENTS, []);
+      listFromFiles();
+
+      expect((await getPlayerBySlug('lai-bang'))?.achievements).toEqual([
+        { year: '2025', placement: '', tournament: '' },
+      ]);
+    });
+
+    it('results dạng mảng được trim và bỏ phần rỗng', async () => {
+      seedFile(TOURNAMENTS, [
+        {
+          ...makeTournament(),
+          results: [' 2024 — Vô địch: A ', '', 2024],
+        },
+      ]);
+      seedFile(PLAYERS, []);
+      seedFile(TEAMS, []);
+      listFromFiles();
+
+      expect((await getTournamentBySlug('aic'))?.results).toEqual(['2024 — Vô địch: A', '2024']);
     });
   });
 });

@@ -64,6 +64,27 @@ describe('auth', () => {
     });
   });
 
+  describe('cấu hình bí mật', () => {
+    it('cảnh báo khi ADMIN_SECRET quá ngắn', async () => {
+      const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+      vi.stubEnv('ADMIN_SECRET', 'ngan');
+
+      await setAdminCookie();
+
+      expect(warn).toHaveBeenCalledWith(
+        expect.stringContaining('ADMIN_SECRET chỉ dài 4 ký tự')
+      );
+      warn.mockRestore();
+    });
+
+    it('ném lỗi khi chưa cấu hình ADMIN_SECRET', async () => {
+      vi.stubEnv('ADMIN_SECRET', '');
+      await expect(Promise.resolve().then(() => setAdminCookie())).rejects.toThrow(
+        'ADMIN_SECRET chưa được cấu hình'
+      );
+    });
+  });
+
   describe('phiên đăng nhập', () => {
     it('cookie vừa cấp được chấp nhận', async () => {
       await validCookie();
@@ -82,6 +103,13 @@ describe('auth', () => {
       jar.state.value = 'abc';
       expect(await isAdmin()).toBe(false);
       jar.state.value = 'abc.def.ghi';
+      expect(await isAdmin()).toBe(false);
+    });
+
+    it('lỗi đọc cookie (ngoài request) coi như chưa đăng nhập', async () => {
+      jar.get.mockImplementationOnce(() => {
+        throw new Error('cookies() chỉ dùng trong request');
+      });
       expect(await isAdmin()).toBe(false);
     });
 

@@ -77,4 +77,40 @@ describe('SiteChrome', () => {
     expect(screen.getByRole('main')).toHaveAttribute('id', 'noi-dung');
     expect(screen.getByText('Nội dung chính')).toBeInTheDocument();
   });
+
+  it('bấm scrim hoặc nút đóng đều đóng sidebar', async () => {
+    const user = userEvent.setup();
+    const { container } = renderChrome();
+
+    const nav = screen.getByRole('navigation', { name: 'Điều hướng' });
+    const toggle = screen.getByRole('button', { name: 'Mở menu' });
+
+    await user.click(toggle);
+    const scrim = container.querySelector('.sidebar-scrim');
+    expect(scrim).not.toBeNull();
+    await user.click(scrim as Element);
+    expect(nav).not.toHaveClass('is-open');
+
+    await user.click(toggle);
+    await user.click(within(nav).getByRole('button', { name: 'Đóng menu' }));
+    expect(nav).not.toHaveClass('is-open');
+  });
+
+  it('cuộn xuống thì hiện nút lên đầu trang và bấm thì cuộn mượt về đỉnh', async () => {
+    const user = userEvent.setup();
+    const scrollTo = vi.spyOn(window, 'scrollTo').mockImplementation(() => {});
+    Object.defineProperty(window, 'scrollY', { value: 700, configurable: true });
+
+    try {
+      renderChrome();
+
+      const button = screen.getByRole('button', { name: 'Lên đầu trang' });
+      await user.click(button);
+
+      expect(scrollTo).toHaveBeenCalledWith({ top: 0, behavior: 'smooth' });
+    } finally {
+      Object.defineProperty(window, 'scrollY', { value: 0, configurable: true });
+      scrollTo.mockRestore();
+    }
+  });
 });

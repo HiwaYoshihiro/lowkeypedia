@@ -197,4 +197,84 @@ describe('SearchBox', () => {
 
     expect(navigation.push).toHaveBeenCalledWith('/tim-kiem?q=lai');
   });
+
+  it('bấm vào gợi ý mở trang chi tiết', async () => {
+    fetchMock.mockResolvedValue(ok(results));
+    render(<SearchBox />);
+
+    type(screen.getByRole('combobox'), 'lai');
+    await settle();
+
+    fireEvent.click(screen.getByRole('option', { name: /^Saigon Phantom/ }));
+
+    expect(navigation.push).toHaveBeenCalledWith('/doi-tuyen/saigon-phantom');
+  });
+
+  it('Ctrl+K focus ô tìm kiếm và mở lại panel', async () => {
+    fetchMock.mockResolvedValue(ok(results));
+    render(<SearchBox />);
+
+    const input = screen.getByRole('combobox');
+    type(input, 'lai');
+    await settle();
+    fireEvent.keyDown(input, { key: 'Escape' });
+    expect(screen.queryByRole('listbox')).toBeNull();
+
+    fireEvent.keyDown(document, { key: 'k', ctrlKey: true });
+
+    expect(input).toHaveFocus();
+    expect(screen.getByRole('listbox')).toBeInTheDocument();
+  });
+
+  it('ArrowUp từ vị trí đầu nhảy về item cuối', async () => {
+    fetchMock.mockResolvedValue(ok(results));
+    render(<SearchBox />);
+
+    const input = screen.getByRole('combobox');
+    type(input, 'lai');
+    await settle();
+
+    fireEvent.keyDown(input, { key: 'ArrowUp' });
+    fireEvent.keyDown(input, { key: 'Enter' });
+
+    expect(navigation.push).toHaveBeenCalledWith('/doi-tuyen/saigon-phantom');
+  });
+
+  it('rê chuột lên item thì Enter mở đúng item đó', async () => {
+    fetchMock.mockResolvedValue(ok(results));
+    render(<SearchBox />);
+
+    const input = screen.getByRole('combobox');
+    type(input, 'lai');
+    await settle();
+
+    fireEvent.mouseEnter(screen.getByRole('option', { name: /^Saigon Phantom/ }));
+    fireEvent.keyDown(input, { key: 'Enter' });
+
+    expect(navigation.push).toHaveBeenCalledWith('/doi-tuyen/saigon-phantom');
+  });
+
+  it('Enter khi chưa có kết quả chuyển sang trang tìm kiếm', async () => {
+    fetchMock.mockResolvedValue(ok([]));
+    render(<SearchBox />);
+
+    const input = screen.getByRole('combobox');
+    type(input, 'lai');
+    await settle();
+    expect(screen.getByText(/Không tìm thấy kết quả cho/)).toBeInTheDocument();
+
+    fireEvent.keyDown(input, { key: 'Enter' });
+
+    expect(navigation.push).toHaveBeenCalledWith('/tim-kiem?q=lai');
+  });
+
+  it('Enter khi ô trống không điều hướng', () => {
+    fetchMock.mockResolvedValue(ok([]));
+    render(<SearchBox />);
+
+    fireEvent.keyDown(screen.getByRole('combobox'), { key: 'Enter' });
+
+    expect(navigation.push).not.toHaveBeenCalled();
+    expect(screen.queryByRole('listbox')).toBeNull();
+  });
 });
