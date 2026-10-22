@@ -7,7 +7,11 @@
  * (Redis/Upstash) — khi đó chỉ cần thay hai hàm bên dưới.
  */
 const WINDOW_MS = 10 * 60 * 1000; // 10 phút
-const MAX_ATTEMPTS = 8;
+/**
+ * Số lần thử tối đa trong một cửa sổ. Mặc định 8 — giữ nguyên hành vi cũ.
+ * Đặt `LOGIN_RATE_LIMIT_MAX` để hạ/nâng ngưỡng (dùng cho e2e test).
+ */
+const MAX_ATTEMPTS = Number(process.env.LOGIN_RATE_LIMIT_MAX ?? 8) || 8;
 
 type Bucket = { count: number; first: number };
 
