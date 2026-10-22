@@ -18,3 +18,7 @@ out/
 
 # DSH tooling artifacts
 .dsh-vision-router/
+
+# Playwright
+playwright-report/
+test-results/
