@@ -28,6 +28,8 @@ test.describe('Danh sách tuyển thủ', () => {
 
     await expect(page).toHaveURL(/role=/);
     const filtered = page.locator('.card-grid a.card');
+    // URL đổi trước khi HTML stream xong — chờ thẻ đầu tiên hiện ra rồi mới đếm.
+    await expect(filtered.first()).toBeVisible();
     const filteredCount = await filtered.count();
     expect(filteredCount).toBeGreaterThan(0);
     expect(filteredCount).toBeLessThan(total);
@@ -45,6 +47,7 @@ test.describe('Danh sách tuyển thủ', () => {
 
     await expect(page).toHaveURL(/team=saigon-phantom/);
     const cards = page.locator('.card-grid a.card');
+    await expect(cards.first()).toBeVisible();
     expect(await cards.count()).toBeGreaterThan(0);
 
     const teamNames = await page.locator('.card-grid .badge-active').allTextContents();

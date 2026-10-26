@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from 'next';
+import { headers } from 'next/headers';
 import SiteChrome from '@/components/SiteChrome';
 import { SITE_NAME, SITE_TAGLINE, SITE_URL } from '@/lib/site';
 import './globals.css';
@@ -61,13 +62,18 @@ export const viewport: Viewport = {
  */
 
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  // Proxy sinh nonce cho từng request (xem proxy.ts). Đọc `headers()` ở đây khiến mọi
+  // route render động, nhờ đó Next gắn nonce cho toàn bộ script nó phát ra — điều kiện
+  // bắt buộc để CSP `'strict-dynamic'` không chặn nhầm JS của chính mình.
+  const nonce = (await headers()).get('x-nonce') ?? undefined;
+
   return (
     <html lang="vi">
       <body>
         {/* Script đồng bộ 1KB, chạy trước lần vẽ đầu để không nháy sai theme. */}
         {/* eslint-disable-next-line @next/next/no-sync-scripts */}
-        <script src="/theme-init.js" />
+        <script src="/theme-init.js" nonce={nonce} />
         <SiteChrome>{children}</SiteChrome>
       </body>
     </html>

@@ -255,8 +255,13 @@ Chi tiết định dạng và cách khôi phục thủ công: [docs/backup.md](d
   `Content-Security-Policy` cho cả request (để Next gắn nonce vào script của framework) và
   response. Ở production `script-src` chỉ cho `'self'` + nonce + `'strict-dynamic'`;
   `img-src`/`connect-src` vẫn mở `https:` cho ảnh CDN và dữ liệu bên ngoài.
+  `app/layout.tsx` đọc `headers().get('x-nonce')` nên **mọi route render động** (`ƒ` trong
+  `next build`): với `'strict-dynamic'`, trình duyệt bỏ qua `'self'` và chỉ chạy script có
+  nonce, mà trang prerender thì không thể gắn nonce — đánh đổi này để CSP không phải mở
+  `'unsafe-inline'`. Dữ liệu vẫn được cache 30 giây nên chi phí render lại thấp.
 - **Theme** — ghi `data-theme` lên `<html>` bằng `public/theme-init.js` chạy đồng bộ trước lần
-  vẽ đầu, tránh nháy sáng; tách thành tệp riêng để CSP không phải mở cho script nội tuyến.
+  vẽ đầu, tránh nháy sáng; tách thành tệp riêng để CSP không phải mở cho script nội tuyến
+  (thẻ `<script>` này nhận nonce từ layout như mọi script khác).
   Ép giao diện qua URL: `?theme=dark` hoặc `?theme=light`.
 - **CSS** — hai tầng: `app/globals.css` giữ Tailwind cho trang admin; `styles/*` là design
   system riêng cho giao diện công khai, nạp sau nên thắng khi trùng độ ưu tiên.
