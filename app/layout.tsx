@@ -59,19 +59,15 @@ export const viewport: Viewport = {
  *
  * `?theme=dark|light` cho phép ép giao diện qua URL, hữu ích khi chia sẻ liên kết.
  */
-const themeInitScript = `(function(){try{
-var p=new URLSearchParams(location.search).get('theme');
-var s=localStorage.getItem('theme');
-var t=(p==='dark'||p==='light')?p:((s==='dark'||s==='light')?s:(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'));
-var r=document.documentElement;
-r.dataset.theme=t;r.style.colorScheme=t;
-}catch(e){}})();`;
+
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="vi">
       <body>
-        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+        {/* Script đồng bộ 1KB, chạy trước lần vẽ đầu để không nháy sai theme. */}
+        {/* eslint-disable-next-line @next/next/no-sync-scripts */}
+        <script src="/theme-init.js" />
         <SiteChrome>{children}</SiteChrome>
       </body>
     </html>

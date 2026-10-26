@@ -310,6 +310,91 @@ export const getTournamentBySlug = cache(async (slug: string): Promise<Tournamen
   return (await getTournamentsRaw()).find((t) => t.slug === slug) ?? null;
 });
 
+/** Số kết quả tối đa của một lượt tìm kiếm (gợi ý ở header không cần hơn). */
+export const SEARCH_LIMIT = 20;
+
+/**
+ * Thứ hạng khớp của một trường, cao hơn = khớp đậm hơn:
+ * 3 = trùng khít, 2 = khớp ở đầu một từ, 1 = khớp giữa chuỗi, 0 = không khớp.
+ */
+const MATCH_EXACT = 3;
+const MATCH_WORD_START = 2;
+const MATCH_CONTAINS = 1;
+
+/**
+ * Vị trí đầu tiên `needle` xuất hiện ngay đầu một từ, hoặc -1 nếu không có.
+ *
+ * "Đầu từ" tính cả đầu chuỗi lẫn sau một ký tự không phải chữ/số (khoảng trắng,
+ * dấu chấm, gạch ngang...). `hay` đã qua `normalizeSearch` nên không còn chữ hoa
+ * hay dấu tiếng Việt, chỉ có [a-z0-9] và dấu câu.
+ */
+function indexAtWordStart(hay: string, needle: string): number {
+  let from = 0;
+  for (;;) {
+    const i = hay.indexOf(needle, from);
+    if (i < 0) return -1;
+    if (i === 0 || !/[a-z0-9]/.test(hay[i - 1])) return i;
+    from = i + 1;
+  }
+}
+
+/** Xếp hạng một chuỗi khi so với từ khoá đã chuẩn hoá. */
+function matchRank(value: string, nq: string): number {
+  const hay = normalizeSearch(value);
+  if (!hay) return 0;
+  if (hay === nq) return MATCH_EXACT;
+  if (indexAtWordStart(hay, nq) >= 0) return MATCH_WORD_START;
+  if (hay.includes(nq)) return MATCH_CONTAINS;
+  return 0;
+}
+
+/**
+ * Mọi từ của truy vấn có xuất hiện ở đâu đó trong `values` hay không.
+ *
+ * Dùng cho truy vấn nhiều từ nằm rải ở các trường khác nhau ("sgp hcm" = tag của
+ * đội + khu vực), thứ mà cách so từng trường riêng lẻ không bắt được.
+ */
+function matchesEveryToken(values: (string | undefined)[], tokens: string[]): boolean {
+  const hay = values
+    .filter((value): value is string => Boolean(value))
+    .map((value) => normalizeSearch(value))
+    .join(' ');
+  return tokens.every((token) => hay.includes(token));
+}
+
+/** Kết quả kèm điểm để sắp xếp; `result` là thứ trả ra ngoài. */
+interface ScoredSearchResult {
+  result: SearchResult;
+  /** Hạng khớp ở tên hiển thị — trọng số cao nhất. */
+  nameRank: number;
+  /** Hạng khớp cao nhất ở các trường phụ (tên thật, vai trò, tag, khu vực...). */
+  extraRank: number;
+}
+
+/** Chấm điểm một thực thể: tên là chính, các trường còn lại chỉ để phá hoà. */
+function scoreSearchResult(
+  result: SearchResult,
+  extras: (string | undefined)[],
+  nq: string
+): ScoredSearchResult | null {
+  const nameRank = matchRank(result.title, nq);
+  let extraRank = 0;
+  for (const extra of extras) {
+    if (!extra) continue;
+    extraRank = Math.max(extraRank, matchRank(extra, nq));
+  }
+  if (nameRank === 0 && extraRank === 0) {
+    // Truy vấn nhiều từ nằm rải ở nhiều trường: vẫn nhận, nhưng xếp hạng thấp nhất
+    // để mọi khớp trọn một trường luôn đứng trên.
+    const tokens = nq.split(/\s+/).filter(Boolean);
+    if (tokens.length > 1 && matchesEveryToken([result.title, ...extras], tokens)) {
+      return { result, nameRank: 0, extraRank: MATCH_CONTAINS };
+    }
+    return null;
+  }
+  return { result, nameRank, extraRank };
+}
+
 export const searchAll = cache(async (q: string): Promise<SearchResult[]> => {
   const nq = normalizeSearch(q.trim());
   if (!nq) return [];
@@ -318,41 +403,52 @@ export const searchAll = cache(async (q: string): Promise<SearchResult[]> => {
     getTeamsRaw(),
     getTournamentsRaw(),
   ]);
-  const results: SearchResult[] = [];
+  const scored: ScoredSearchResult[] = [];
+
   for (const p of players) {
-    const hay = normalizeSearch([p.ign, p.realName ?? '', p.role].join(' '));
-    if (hay.includes(nq)) {
-      results.push({
+    const hit = scoreSearchResult(
+      {
         type: 'player',
         slug: p.slug,
         title: p.ign,
         subtitle: `${p.role}${p.realName ? ` • ${p.realName}` : ''}`,
-      });
-    }
+      },
+      [p.realName, p.role],
+      nq
+    );
+    if (hit) scored.push(hit);
   }
   for (const t of teams) {
-    const hay = normalizeSearch([t.name, t.tag, t.region].join(' '));
-    if (hay.includes(nq)) {
-      results.push({
-        type: 'team',
-        slug: t.slug,
-        title: t.name,
-        subtitle: `${t.tag} • ${t.region}`,
-      });
-    }
+    const hit = scoreSearchResult(
+      { type: 'team', slug: t.slug, title: t.name, subtitle: `${t.tag} • ${t.region}` },
+      [t.tag, t.region],
+      nq
+    );
+    if (hit) scored.push(hit);
   }
   for (const t of tournaments) {
-    const hay = normalizeSearch([t.name, t.organizer, t.location].join(' '));
-    if (hay.includes(nq)) {
-      results.push({
+    const hit = scoreSearchResult(
+      {
         type: 'tournament',
         slug: t.slug,
         title: t.name,
         subtitle: `Giải đấu • ${t.organizer}`,
-      });
-    }
+      },
+      [t.organizer, t.location],
+      nq
+    );
+    if (hit) scored.push(hit);
   }
-  return results;
+
+  // Khớp tên sát hơn đứng trước (trùng khít > đầu từ > giữa chuỗi), rồi mới đến
+  // khớp ở trường phụ, cuối cùng là thứ tự chữ cái tiếng Việt cho ổn định.
+  scored.sort(
+    (a, b) =>
+      b.nameRank - a.nameRank ||
+      b.extraRank - a.extraRank ||
+      a.result.title.localeCompare(b.result.title, 'vi')
+  );
+  return scored.slice(0, SEARCH_LIMIT).map((s) => s.result);
 });
 
 // ---------- Chuẩn hoá dữ liệu đọc từ Blob ----------

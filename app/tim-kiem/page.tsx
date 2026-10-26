@@ -2,7 +2,7 @@ import Link from 'next/link';
 import type { Metadata } from 'next';
 import { KindBadge } from '@/components/Badges';
 import { ArticleShell } from '@/components/ArticleShell';
-import { searchAll } from '@/lib/store';
+import { SEARCH_LIMIT, searchAll } from '@/lib/store';
 import { firstParam } from '@/lib/params';
 import { KIND_HREF } from '@/lib/entities';
 
@@ -59,7 +59,13 @@ export default async function SearchPage({
             Xoá
           </Link>
         ) : null}
-        {q ? <span className="result-count">{results.length} kết quả</span> : null}
+        {q ? (
+          <span className="result-count">
+            {results.length >= SEARCH_LIMIT
+              ? `tối đa ${SEARCH_LIMIT} kết quả — thu hẹp từ khoá để thấy phần còn lại`
+              : `${results.length} kết quả`}
+          </span>
+        ) : null}
       </form>
 
       {!q ? (

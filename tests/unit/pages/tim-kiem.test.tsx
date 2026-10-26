@@ -4,6 +4,8 @@ import type { SearchResult } from '@/lib/types';
 
 const store = vi.hoisted(() => ({
   searchAll: vi.fn(),
+  // Trang dùng chung hằng này để biết danh sách đã bị cắt bớt hay chưa.
+  SEARCH_LIMIT: 20,
 }));
 
 vi.mock('@/lib/store', () => store);
@@ -68,5 +70,19 @@ describe('SearchPage', () => {
     render(await SearchPage({ searchParams: Promise.resolve({ q: ['lai', 'khac'] }) }));
 
     expect(store.searchAll).toHaveBeenCalledWith('lai');
+  });
+
+  it('chạm trần kết quả thì nói rõ là danh sách đã bị cắt', async () => {
+    const many: SearchResult[] = Array.from({ length: store.SEARCH_LIMIT }, (_, i) => ({
+      type: 'player',
+      slug: `p${i}`,
+      title: `Tuyển thủ ${i}`,
+      subtitle: 'Đi Rừng',
+    }));
+    store.searchAll.mockResolvedValue(many);
+
+    render(await SearchPage({ searchParams: Promise.resolve({ q: 'tuyen' }) }));
+
+    expect(screen.getByText(/tối đa 20 kết quả/)).toBeInTheDocument();
   });
 });

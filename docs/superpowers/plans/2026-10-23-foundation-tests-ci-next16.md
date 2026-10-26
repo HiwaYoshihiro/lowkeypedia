@@ -10,6 +10,20 @@
 
 **Spec:** `docs/superpowers/specs/2026-10-23-foundation-tests-ci-next16-design.md`
 
+## Trạng thái thực thi
+
+Kế hoạch đã chạy xong toàn bộ; các checkbox bên dưới giữ nguyên như lúc lập kế hoạch, trạng thái thật ghi ở đây.
+
+- **Task 1–7:** hoàn tất — bộ unit test Vitest + e2e Playwright, hiện **39 file / 219 test xanh**.
+- **Task 8:** hoàn tất — `next@16.4.3`, `react@19.3.1`, `eslint@9.39.5` + `eslint.config.mjs` flat config, `next.config.ts`, `lib/auth.ts` dùng `await cookies()`, route/page nhận `params`/`searchParams` dạng Promise. Bản cài thực tế mới hơn con số trong plan (16.4.x/19.3.x thay vì 16.2/19.2).
+- **Task 9:** hoàn tất — `.github/workflows/ci.yml` 5 job (lint, typecheck, unit, build, e2e) trên Node 22.
+- **Bổ sung ngoài plan (đợt rà soát sau đó):**
+  - CSP theo nonce cho mọi route trong `proxy.ts` (Next 16 đổi tên `middleware` → `proxy`); script khởi tạo theme tách sang `public/theme-init.js` để CSP không phải mở cho inline script.
+  - `GET /api/admin/export` (sao lưu JSON) + `docs/backup.md`.
+  - `searchAll` xếp hạng theo độ khớp (trùng khít > đầu từ > giữa chuỗi; khớp ở tên > trường phụ), tối đa 20 kết quả; truy vấn nhiều từ rải ở nhiều trường vẫn khớp nhưng xếp sau; `/api/search` giới hạn 60 request/phút mỗi IP.
+  - `app/admin/dashboard/page.tsx` tách từ ~950 dòng còn ~390 dòng, phần còn lại nằm trong `app/admin/dashboard/_components/`.
+- **Kiểm chứng cuối:** `npx eslint .` 0 error/0 warning · `npx tsc --noEmit` sạch · `npx vitest run` 39 file / 219 test · `npx next build` 23 route · chạy `next start` kiểm CSP nonce, `/theme-init.js`, `/api/search`, `/api/admin/export` (401 khi chưa đăng nhập) và các trang chính trả 200.
+
 ## Global Constraints
 
 - Node ≥ 20.9 để dev (CI chạy Node 22 LTS); package.json có `"engines": { "node": ">=20.9.0" }`.

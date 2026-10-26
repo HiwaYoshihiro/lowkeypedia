@@ -8,7 +8,8 @@
 
 Tiểu sử tuyển thủ · Đội tuyển · Giải đấu · Sự nghiệp · Thành tích — theo phong cách wiki.
 
-[![Next.js](https://img.shields.io/badge/Next.js-14-000?logo=next.js&logoColor=white)](https://nextjs.org)
+[![Next.js](https://img.shields.io/badge/Next.js-16-000?logo=next.js&logoColor=white)](https://nextjs.org)
+[![CI](https://github.com/HiwaYoshihiro/lowkeypedia/actions/workflows/ci.yml/badge.svg)](https://github.com/HiwaYoshihiro/lowkeypedia/actions/workflows/ci.yml)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-3178c6?logo=typescript&logoColor=white)](https://www.typescriptlang.org)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-3-38bdf8?logo=tailwindcss&logoColor=white)](https://tailwindcss.com)
 [![Deploy](https://img.shields.io/badge/Vercel-Blob%20%2B%20Edge-000?logo=vercel&logoColor=white)](https://vercel.com)
@@ -84,6 +85,10 @@ có cache.
 
 ```
 lowkeypedia/
+├── proxy.ts                  # CSP nonce theo từng request (middleware Next 16)
+├── next.config.ts            # header an toàn cho mọi route
+├── eslint.config.mjs         # ESLint 9 flat config
+├── .github/workflows/ci.yml  # lint · typecheck · unit · build · e2e
 ├── app/                      # Next.js App Router
 │   ├── layout.tsx            # metadata, theme script, chrome
 │   ├── page.tsx              # trang chủ
@@ -143,7 +148,7 @@ không cần biến môi trường và không gọi Blob lúc build.
 
 ## Bắt đầu
 
-**Yêu cầu:** Node.js 18.17+ (khuyến nghị 20+).
+**Yêu cầu:** Node.js 20.9+ (khớp `engines` trong `package.json`; CI chạy Node 22).
 
 ```bash
 npm install
@@ -174,8 +179,11 @@ Mở http://localhost:3000
 | `npm run dev` | Chạy dev server (hot reload). |
 | `npm run build` | Build production. |
 | `npm start` | Chạy bản production đã build. |
-| `npm run lint` | ESLint (`next/core-web-vitals`). |
+| `npm run lint` | ESLint 9, flat config trong `eslint.config.mjs`. |
 | `npm run typecheck` | `tsc --noEmit`. |
+| `npm test` | Unit + component test (Vitest, jsdom). |
+| `npm run test:coverage` | Vitest kèm báo cáo coverage. |
+| `npm run test:e2e` | Build rồi chạy Playwright. |
 
 ## Deploy lên Vercel
 
@@ -185,6 +193,17 @@ Mở http://localhost:3000
 3. Thêm biến môi trường `ADMIN_PASSWORD`, `ADMIN_SECRET` và `NEXT_PUBLIC_SITE_URL`
    (**Project Settings → Environment Variables**).
 4. **Deploy.** Lần truy cập đầu tiên, web tự seed dữ liệu mẫu lên Blob nếu file chưa tồn tại.
+
+## Kiểm thử & CI
+
+- **Unit / component** — Vitest + jsdom: `lib/` (store, slug, params, auth, rate limit, http),
+  route handlers và component/trang.
+- **E2E** — Playwright: giao diện công khai, SEO, theme, CRUD quản trị, cascade khi đổi slug
+  và chặn đăng nhập sai quá nhiều lần.
+- **CI** — `.github/workflows/ci.yml` chạy 5 job độc lập (lint, typecheck, unit + coverage,
+  build, e2e) trên mọi push vào `main` và mọi pull request; e2e cần ba secret
+  `BLOB_READ_WRITE_TOKEN_TEST` · `ADMIN_PASSWORD_TEST` · `ADMIN_SECRET_TEST` trỏ tới một
+  Blob store riêng cho test, và tự bỏ qua với PR đến từ fork.
 
 ## Quản trị dữ liệu
 
@@ -210,6 +229,13 @@ Vào `/admin`, đăng nhập bằng `ADMIN_PASSWORD`. Dashboard có ba tab **Tuy
 - **Lỗi mạng tạm thời** khi đọc Blob không còn ghi đè dữ liệu thật bằng seed — luồng ghi từ chối
   chạy nếu chỉ đọc được seed tạm.
 
+### Sao lưu dữ liệu
+
+Toàn bộ nội dung nằm trong ba file JSON trên Blob. Sau khi đăng nhập quản trị, mở
+`/api/admin/export` (hoặc bấm **Xuất dữ liệu** trong dashboard) để tải về một file
+`lwkypedia-backup-YYYY-MM-DD.json` dạng `{ exportedAt, players, teams, tournaments }`.
+Chi tiết định dạng và cách khôi phục thủ công: [docs/backup.md](docs/backup.md).
+
 ## Ghi chú kỹ thuật
 
 - **Dữ liệu** — ba file JSON trên Vercel Blob (`lowkeypedia/data/*.json`). Đọc qua
@@ -224,9 +250,14 @@ Vào `/admin`, đăng nhập bằng `ADMIN_PASSWORD`. Dashboard có ba tab **Tuy
 - **Trạng thái chờ & lỗi** — `app/loading.tsx` là skeleton hiện ngay khi điều hướng;
   `app/error.tsx` là lưới an toàn có nút "Thử lại" (kèm mã lỗi để đối chiếu log).
 - **Header an toàn** — `nosniff`, `X-Frame-Options: DENY`, `Referrer-Policy` và
-  `Permissions-Policy` áp cho mọi route trong `next.config.js`; `X-Powered-By` đã tắt.
-- **Theme** — ghi `data-theme` lên `<html>` bằng script đồng bộ trong `<head>`, tránh nháy
-  sáng. Ép giao diện qua URL: `?theme=dark` hoặc `?theme=light`.
+  `Permissions-Policy` áp cho mọi route trong `next.config.ts`; `X-Powered-By` đã tắt.
+- **CSP** — `proxy.ts` (tên file middleware của Next 16) sinh **nonce** mỗi request rồi đặt
+  `Content-Security-Policy` cho cả request (để Next gắn nonce vào script của framework) và
+  response. Ở production `script-src` chỉ cho `'self'` + nonce + `'strict-dynamic'`;
+  `img-src`/`connect-src` vẫn mở `https:` cho ảnh CDN và dữ liệu bên ngoài.
+- **Theme** — ghi `data-theme` lên `<html>` bằng `public/theme-init.js` chạy đồng bộ trước lần
+  vẽ đầu, tránh nháy sáng; tách thành tệp riêng để CSP không phải mở cho script nội tuyến.
+  Ép giao diện qua URL: `?theme=dark` hoặc `?theme=light`.
 - **CSS** — hai tầng: `app/globals.css` giữ Tailwind cho trang admin; `styles/*` là design
   system riêng cho giao diện công khai, nạp sau nên thắng khi trùng độ ưu tiên.
 - **SEO** — `metadataBase`, canonical, Open Graph/Twitter, JSON-LD (`Person` / `SportsTeam` /

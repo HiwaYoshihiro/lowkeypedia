@@ -102,3 +102,82 @@ describe('rate limit đăng nhập', () => {
     expect(rl.isRateLimited('ip-b')).toBe(false);
   });
 });
+
+describe('checkRateLimit (giới hạn chung cho route đọc)', () => {
+  afterEach(() => {
+    vi.useRealTimers();
+    vi.unstubAllEnvs();
+  });
+
+  it('cho qua đúng max request rồi chặn request kế tiếp', async () => {
+    const rl = await loadRatelimit();
+    const key = 'search:1.2.3.4';
+
+    for (let i = 0; i < 3; i += 1) {
+      expect(rl.checkRateLimit(key, 3, 60_000)).toEqual({ limited: false, retryAfter: 0 });
+    }
+    expect(rl.checkRateLimit(key, 3, 60_000)).toEqual({ limited: true, retryAfter: 60 });
+  });
+
+  it('Retry-After tính theo phần cửa sổ còn lại', async () => {
+    const rl = await loadRatelimit();
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date('2026-01-01T00:00:00Z'));
+    const key = 'search:retry';
+
+    expect(rl.checkRateLimit(key, 1, 60_000).limited).toBe(false);
+    vi.setSystemTime(new Date('2026-01-01T00:00:20Z'));
+
+    const blocked = rl.checkRateLimit(key, 1, 60_000);
+    expect(blocked.limited).toBe(true);
+    expect(blocked.retryAfter).toBe(40);
+  });
+
+  it('hết cửa sổ thì đếm lại từ đầu', async () => {
+    const rl = await loadRatelimit();
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date('2026-01-01T00:00:00Z'));
+    const key = 'search:window';
+
+    rl.checkRateLimit(key, 1, 60_000);
+    expect(rl.checkRateLimit(key, 1, 60_000).limited).toBe(true);
+
+    vi.setSystemTime(new Date('2026-01-01T00:01:01Z'));
+    expect(rl.checkRateLimit(key, 1, 60_000).limited).toBe(false);
+  });
+
+  it('khoá search và bộ đếm đăng nhập không ảnh hưởng lẫn nhau', async () => {
+    const rl = await loadRatelimit('2');
+    const ip = '1.2.3.4';
+
+    rl.checkRateLimit(`search:${ip}`, 1, 60_000);
+    // Bộ đếm login của cùng IP vẫn trống dù đã dùng hết lượt tìm kiếm.
+    expect(rl.isRateLimited(ip)).toBe(false);
+
+    rl.noteFailure(ip);
+    rl.noteFailure(ip);
+    expect(rl.isRateLimited(ip)).toBe(true);
+    // Ghi nhận thất bại đăng nhập không cộng vào bộ đếm search.
+    expect(rl.checkRateLimit(`search:${ip}`, 1, 60_000).limited).toBe(true);
+  });
+
+  it('dọn bucket hết hạn theo đúng cửa sổ của từng khoá', async () => {
+    const rl = await loadRatelimit();
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date('2026-01-01T00:00:00Z'));
+
+    // Khoá `x` đã dùng 2 lượt với ngưỡng 1 → đang bị chặn.
+    rl.checkRateLimit('search:x', 1, 60_000);
+    expect(rl.checkRateLimit('search:x', 1, 60_000).limited).toBe(true);
+
+    // Nhồi thêm 1000 bucket để lần tạo bucket kế tiếp kích hoạt dọn dẹp.
+    for (let i = 0; i < 1000; i += 1) rl.checkRateLimit(`search:ip-${i}`, 60, 60_000);
+
+    // Sang cửa sổ mới của khoá search (60 giây), tạo bucket mới → dọn bucket cũ.
+    vi.setSystemTime(new Date('2026-01-01T00:02:00Z'));
+    rl.checkRateLimit('search:moi', 60, 60_000);
+
+    // Bucket `x` đã bị xoá nên lượt này được tính lại từ đầu → được phép.
+    expect(rl.checkRateLimit('search:x', 1, 60_000).limited).toBe(false);
+  });
+});
