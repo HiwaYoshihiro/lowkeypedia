@@ -1,0 +1,105 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+# Push liên tiếp lên cùng một nhánh thì huỷ lượt chạy cũ — tiết kiệm runner và
+# tránh hai job cùng ghi vào Blob store test.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  NEXT_TELEMETRY_DISABLED: '1'
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+
+  typecheck:
+    name: Typecheck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run typecheck
+
+  unit:
+    name: Unit test + coverage
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run test:coverage
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: coverage
+          path: coverage/
+          retention-days: 7
+
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      # Cache .next/cache giữa các lần chạy: Next/Turbopack dùng nó cho build tăng dần,
+      # không cache thư mục .next hoàn chỉnh (dễ hỏng giữa các version).
+      - uses: actions/cache@v4
+        with:
+          path: .next/cache
+          key: next-cache-${{ hashFiles('package-lock.json') }}
+          restore-keys: next-cache-
+      - run: npm run build
+
+  e2e:
+    name: E2E (Playwright)
+    runs-on: ubuntu-latest
+    # PR từ fork không có secrets của repo → bỏ qua thay vì chạy rồi hỏng.
+    if: github.event_name == 'push' || github.event.pull_request.head.repo.fork == false
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:e2e
+        env:
+          # Store Blob riêng cho test — tuyệt đối không dùng token production.
+          BLOB_READ_WRITE_TOKEN_TEST: ${{ secrets.BLOB_READ_WRITE_TOKEN_TEST }}
+          ADMIN_PASSWORD_TEST: ${{ secrets.ADMIN_PASSWORD_TEST }}
+          ADMIN_SECRET_TEST: ${{ secrets.ADMIN_SECRET_TEST }}
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: playwright-report
+          path: |
+            playwright-report/
+            test-results/
+          retention-days: 7

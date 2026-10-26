@@ -18,7 +18,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'Mật khẩu không đúng' }, { status: 401 });
     }
     noteSuccess(ip);
-    setAdminCookie();
+    await setAdminCookie();
     return NextResponse.json({ ok: true });
   } catch (e) {
     // Không lộ chi tiết cấu hình ra ngoài; log phía server để chẩn đoán.

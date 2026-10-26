@@ -5,13 +5,13 @@ import { revalidateSite } from '@/lib/revalidate';
 import { failure } from '@/lib/http';
 
 export async function GET() {
-  const denied = requireAdmin();
+  const denied = await requireAdmin();
   if (denied) return denied;
   return NextResponse.json(await getPlayers());
 }
 
 export async function POST(req: Request) {
-  const denied = requireAdmin();
+  const denied = await requireAdmin();
   if (denied) return denied;
   try {
     const body = await req.json();

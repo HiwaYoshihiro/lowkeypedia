@@ -19,9 +19,9 @@ export const dynamic = 'force-dynamic';
 export async function generateMetadata({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
-  const team = await getTeamBySlug(params.slug);
+  const team = await getTeamBySlug((await params).slug);
   if (!team) return { title: 'Không tìm thấy' };
   return {
     title: team.name,
@@ -36,8 +36,8 @@ export async function generateMetadata({
   };
 }
 
-export default async function TeamDetailPage({ params }: { params: { slug: string } }) {
-  const team = await getTeamBySlug(params.slug);
+export default async function TeamDetailPage({ params }: { params: Promise<{ slug: string }> }) {
+  const team = await getTeamBySlug((await params).slug);
   if (!team) notFound();
   const roster = await getPlayersByTeam(team.slug);
 

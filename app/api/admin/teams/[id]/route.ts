@@ -4,17 +4,18 @@ import { deleteTeam, getTeams, saveTeam } from '@/lib/store';
 import { revalidateSite } from '@/lib/revalidate';
 import { failure } from '@/lib/http';
 
-export async function PUT(req: Request, { params }: { params: { id: string } }) {
-  const denied = requireAdmin();
+export async function PUT(req: Request, { params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  const denied = await requireAdmin();
   if (denied) return denied;
   try {
-    const exists = (await getTeams()).some((t) => t.id === params.id);
+    const exists = (await getTeams()).some((t) => t.id === id);
     if (!exists) return NextResponse.json({ error: 'Không tìm thấy đội tuyển' }, { status: 404 });
     const body = await req.json();
     if (!body || typeof body.name !== 'string' || !body.name.trim()) {
       return NextResponse.json({ error: 'Thiếu tên đội (name)' }, { status: 400 });
     }
-    const team = await saveTeam({ ...body, id: params.id });
+    const team = await saveTeam({ ...body, id: id });
     revalidateSite();
     return NextResponse.json(team);
   } catch (e) {
@@ -22,11 +23,12 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
   }
 }
 
-export async function DELETE(_req: Request, { params }: { params: { id: string } }) {
-  const denied = requireAdmin();
+export async function DELETE(_req: Request, { params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  const denied = await requireAdmin();
   if (denied) return denied;
   try {
-    const ok = await deleteTeam(params.id);
+    const ok = await deleteTeam(id);
     if (!ok) return NextResponse.json({ error: 'Không tìm thấy đội tuyển' }, { status: 404 });
     revalidateSite();
     return NextResponse.json({ ok: true });

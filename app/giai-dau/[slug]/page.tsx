@@ -17,9 +17,9 @@ export const dynamic = 'force-dynamic';
 export async function generateMetadata({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
-  const tournament = await getTournamentBySlug(params.slug);
+  const tournament = await getTournamentBySlug((await params).slug);
   if (!tournament) return { title: 'Không tìm thấy' };
   return {
     title: tournament.name,
@@ -34,8 +34,8 @@ export async function generateMetadata({
   };
 }
 
-export default async function TournamentDetailPage({ params }: { params: { slug: string } }) {
-  const tournament = await getTournamentBySlug(params.slug);
+export default async function TournamentDetailPage({ params }: { params: Promise<{ slug: string }> }) {
+  const tournament = await getTournamentBySlug((await params).slug);
   if (!tournament) notFound();
   const teams = await getTeams();
   const players = await getPlayers();

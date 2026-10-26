@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import type { Metadata } from 'next';
 import PlayerCard, { PLAYER_ACCENT } from '@/components/PlayerCard';
 import { ArticleShell } from '@/components/ArticleShell';
@@ -18,14 +19,15 @@ export const metadata: Metadata = {
 export default async function PlayersPage({
   searchParams,
 }: {
-  searchParams: { q?: string | string[]; team?: string | string[]; role?: string | string[] };
+  searchParams: Promise<{ q?: string | string[]; team?: string | string[]; role?: string | string[] }>;
 }) {
+  const sp = await searchParams;
   const [players, teams] = await Promise.all([getPlayers(), getTeams()]);
   const teamBySlug = new Map(teams.map((t) => [t.slug, t.name]));
 
-  const q = firstParam(searchParams.q).trim();
-  const teamFilter = firstParam(searchParams.team);
-  const roleFilter = firstParam(searchParams.role);
+  const q = firstParam(sp.q).trim();
+  const teamFilter = firstParam(sp.team);
+  const roleFilter = firstParam(sp.role);
 
   let filtered = players;
   if (q) {
@@ -83,9 +85,9 @@ export default async function PlayersPage({
           Lọc
         </button>
         {hasFilter ? (
-          <a href="/tuyen-thu" className="btn btn-ghost">
+          <Link href="/tuyen-thu" className="btn btn-ghost">
             Xoá lọc
-          </a>
+          </Link>
         ) : null}
         <span className="result-count">
           {filtered.length}/{players.length}

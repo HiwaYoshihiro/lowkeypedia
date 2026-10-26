@@ -28,16 +28,17 @@ export default function SearchBox({ placeholder }: { placeholder?: string }) {
 
   useEffect(() => {
     const q = query.trim();
-    if (!q) {
-      setResults([]);
-      setLoading(false);
-      return undefined;
-    }
+    // Xoá từ khoá thì ô nhập tự gọi `resetResults` ngay trong sự kiện, nên ở đây
+    // chỉ cần không gọi mạng. Tránh setState đồng bộ ngay trong thân effect.
+    if (!q) return undefined;
 
     const myId = ++reqId.current;
-    setLoading(true);
     const controller = new AbortController();
     const timer = setTimeout(async () => {
+      // Bật cờ tải bên trong callback của setTimeout: setState ngay trong thân
+      // effect là cập nhật đồng bộ, còn ở đây là bất đồng bộ nên không gây
+      // thêm vòng render ngay sau khi effect chạy.
+      if (myId === reqId.current) setLoading(true);
       try {
         const res = await fetch(`/api/search?q=${encodeURIComponent(q)}`, {
           signal: controller.signal,
@@ -72,9 +73,13 @@ export default function SearchBox({ placeholder }: { placeholder?: string }) {
     return { groups, flat, indexOf };
   }, [results]);
 
-  useEffect(() => {
+  // Đổi từ khoá thì đưa lựa chọn về mục đầu tiên. Chỉnh state ngay trong lượt
+  // render (React sẽ render lại tức thì) thay vì hẹn một effect riêng.
+  const [lastQuery, setLastQuery] = useState(query);
+  if (lastQuery !== query) {
+    setLastQuery(query);
     setHighlight(0);
-  }, [query]);
+  }
 
   useEffect(() => {
     const onPointerDown = (event: PointerEvent) => {
@@ -96,13 +101,21 @@ export default function SearchBox({ placeholder }: { placeholder?: string }) {
     return () => document.removeEventListener('keydown', onKeyDown);
   }, []);
 
+  // Dọn kết quả ngay trong sự kiện (gõ xoá, bấm ×, chọn kết quả) thay vì để
+  // effect tự setState khi từ khoá rỗng.
+  const resetResults = useCallback(() => {
+    setResults([]);
+    setLoading(false);
+  }, []);
+
   const openResult = useCallback(
     (result: SearchResult) => {
       setOpen(false);
       setQuery('');
+      resetResults();
       router.push(KIND_HREF[result.type](result.slug));
     },
-    [router],
+    [router, resetResults],
   );
 
   const goToSearchPage = useCallback(() => {
@@ -158,8 +171,10 @@ export default function SearchBox({ placeholder }: { placeholder?: string }) {
           aria-activedescendant={showPanel && flat[highlight] ? optionId(highlight) : undefined}
           value={query}
           onChange={(event) => {
-            setQuery(event.target.value);
+            const next = event.target.value;
+            setQuery(next);
             setOpen(true);
+            if (!next.trim()) resetResults();
           }}
           onFocus={() => setOpen(true)}
           onKeyDown={onKeyDown}
@@ -171,6 +186,7 @@ export default function SearchBox({ placeholder }: { placeholder?: string }) {
             aria-label="Xoá nội dung tìm kiếm"
             onClick={() => {
               setQuery('');
+              resetResults();
               inputRef.current?.focus();
             }}
           >

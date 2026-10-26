@@ -1,3 +1,5 @@
+import type { NextConfig } from 'next';
+
 /**
  * Header an toàn áp cho mọi route.
  *
@@ -7,8 +9,7 @@
  * - `Referrer-Policy` — chỉ gửi origin làm referrer khi đi sang tên miền khác.
  * - `Permissions-Policy` — tắt các quyền thiết bị mà wiki không dùng.
  *
- * Chưa đặt CSP vì Next.js chèn script inline (theme, hydration); muốn bật cần
- * nonce/hash — xem ghi chú trong README.
+ * CSP được đặt trong `proxy.ts` (Next 16) để sinh nonce riêng cho từng request.
  */
 const securityHeaders = [
   { key: 'X-Content-Type-Options', value: 'nosniff' },
@@ -17,8 +18,7 @@ const securityHeaders = [
   { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()' },
 ];
 
-/** @type {import('next').NextConfig} */
-const nextConfig = {
+const nextConfig: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
   async headers() {
@@ -26,4 +26,4 @@ const nextConfig = {
   },
 };
 
-module.exports = nextConfig;
+export default nextConfig;

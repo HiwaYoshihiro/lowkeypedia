@@ -27,10 +27,14 @@ export default function SiteChrome({ children }: { children: ReactNode }) {
   const [navOpen, setNavOpen] = useState(false);
   const [showToTop, setShowToTop] = useState(false);
 
-  // Đổi trang thì đóng sidebar (quan trọng trên mobile).
-  useEffect(() => {
+  // Đổi trang thì đóng sidebar (quan trọng trên mobile). Chỉnh state ngay trong
+  // lượt render — cùng mẫu "điều chỉnh state khi prop đổi" của React — thay vì
+  // hẹn một effect riêng, nhờ vậy không có thêm vòng render nào.
+  const [lastPath, setLastPath] = useState(pathname);
+  if (lastPath !== pathname) {
+    setLastPath(pathname);
     setNavOpen(false);
-  }, [pathname]);
+  }
 
   useEffect(() => {
     const onScroll = () => setShowToTop(window.scrollY > 600);

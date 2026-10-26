@@ -40,7 +40,6 @@ import {
   searchAll,
 } from '@/lib/store';
 import playersSeed from '@/data/seed/players.json';
-import teamsSeed from '@/data/seed/teams.json';
 
 function makePlayer(overrides: Partial<Player> = {}): Player {
   return {

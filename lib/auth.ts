@@ -68,19 +68,21 @@ function parseCookie(raw: string | undefined): boolean {
   }
 }
 
-export function isAdmin(): boolean {
+export async function isAdmin(): Promise<boolean> {
   try {
-    return parseCookie(cookies().get(COOKIE_NAME)?.value);
+    const store = await cookies();
+    return parseCookie(store.get(COOKIE_NAME)?.value);
   } catch {
     return false;
   }
 }
 
-export function setAdminCookie(): void {
+export async function setAdminCookie(): Promise<void> {
   const sid = randomBytes(16).toString('hex');
   const exp = Date.now() + SESSION_TTL_MS;
   const payload = `${sid}.${exp}`;
-  cookies().set(COOKIE_NAME, `${payload}.${sign(payload)}`, {
+  const store = await cookies();
+  store.set(COOKIE_NAME, `${payload}.${sign(payload)}`, {
     httpOnly: true,
     sameSite: 'lax',
     maxAge: Math.floor(SESSION_TTL_MS / 1000),
@@ -89,8 +91,9 @@ export function setAdminCookie(): void {
   });
 }
 
-export function clearAdminCookie(): void {
-  cookies().set(COOKIE_NAME, '', {
+export async function clearAdminCookie(): Promise<void> {
+  const store = await cookies();
+  store.set(COOKIE_NAME, '', {
     httpOnly: true,
     sameSite: 'lax',
     maxAge: 0,
@@ -100,10 +103,10 @@ export function clearAdminCookie(): void {
 
 /**
  * Dùng trong API route handlers:
- *   const denied = requireAdmin();
+ *   const denied = await requireAdmin();
  *   if (denied) return denied;
  */
-export function requireAdmin(): Response | null {
-  if (isAdmin()) return null;
+export async function requireAdmin(): Promise<Response | null> {
+  if (await isAdmin()) return null;
   return Response.json({ error: 'Chưa đăng nhập quản trị' }, { status: 401 });
 }

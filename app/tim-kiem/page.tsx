@@ -25,9 +25,10 @@ const GROUPS: [string, 'player' | 'team' | 'tournament'][] = [
 export default async function SearchPage({
   searchParams,
 }: {
-  searchParams: { q?: string | string[] };
+  searchParams: Promise<{ q?: string | string[] }>;
 }) {
-  const q = firstParam(searchParams.q).trim();
+  const sp = await searchParams;
+  const q = firstParam(sp.q).trim();
   const results = q ? await searchAll(q) : [];
 
   return (

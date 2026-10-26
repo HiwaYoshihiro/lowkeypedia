@@ -32,7 +32,7 @@ describe('SearchPage', () => {
   });
 
   it('render kết quả nhóm theo loại', async () => {
-    render(await SearchPage({ searchParams: { q: 'lai' } }));
+    render(await SearchPage({ searchParams: Promise.resolve({ q: 'lai' }) }));
 
     expect(store.searchAll).toHaveBeenCalledWith('lai');
     expect(screen.getByText(/Tìm thấy 2 kết quả/)).toBeInTheDocument();
@@ -49,7 +49,7 @@ describe('SearchPage', () => {
   });
 
   it('chưa nhập từ khoá thì không gọi store và hiện hướng dẫn', async () => {
-    render(await SearchPage({ searchParams: {} }));
+    render(await SearchPage({ searchParams: Promise.resolve({}) }));
 
     expect(store.searchAll).not.toHaveBeenCalled();
     expect(screen.getByText('Nhập từ khoá để tra cứu')).toBeInTheDocument();
@@ -58,14 +58,14 @@ describe('SearchPage', () => {
   it('không có kết quả thì hiện empty state', async () => {
     store.searchAll.mockResolvedValue([]);
 
-    render(await SearchPage({ searchParams: { q: 'khong-co' } }));
+    render(await SearchPage({ searchParams: Promise.resolve({ q: 'khong-co' }) }));
 
     expect(screen.getByText('Không tìm thấy kết quả nào')).toBeInTheDocument();
     expect(screen.getByText('0 kết quả')).toBeInTheDocument();
   });
 
   it('nhận q dạng mảng và lấy phần tử đầu', async () => {
-    render(await SearchPage({ searchParams: { q: ['lai', 'khac'] } }));
+    render(await SearchPage({ searchParams: Promise.resolve({ q: ['lai', 'khac'] }) }));
 
     expect(store.searchAll).toHaveBeenCalledWith('lai');
   });

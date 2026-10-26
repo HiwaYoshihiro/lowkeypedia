@@ -6,6 +6,28 @@ import { ROLES, type Achievement, type Player, type Team, type TeamHistoryItem, 
 
 type Tab = 'players' | 'teams' | 'tournaments';
 
+interface DashboardData {
+  players: Player[];
+  teams: Team[];
+  tournaments: Tournament[];
+}
+
+/** Tải toàn bộ dữ liệu quản trị; trả `'unauthorized'` khi phiên admin đã hết hạn. */
+async function loadDashboardData(): Promise<DashboardData | 'unauthorized'> {
+  const [pr, tr, tor] = await Promise.all([
+    fetch('/api/admin/players'),
+    fetch('/api/admin/teams'),
+    fetch('/api/admin/tournaments'),
+  ]);
+  if (pr.status === 401 || tr.status === 401 || tor.status === 401) return 'unauthorized';
+  if (!pr.ok || !tr.ok || !tor.ok) throw new Error('Không tải được dữ liệu');
+  return {
+    players: (await pr.json()) as Player[],
+    teams: (await tr.json()) as Team[],
+    tournaments: (await tor.json()) as Tournament[],
+  };
+}
+
 const inputCls =
   'w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-wiki-blue';
 const labelCls = 'block text-xs font-semibold text-gray-600 mb-1';
@@ -391,33 +413,50 @@ export default function AdminDashboard() {
   const [editingTournament, setEditingTournament] = useState<TournamentFormState | null>(null);
   const [saving, setSaving] = useState(false);
 
-  const load = useCallback(async () => {
+  // Nạp dữ liệu ban đầu trong effect: chỉ gắn callback của promise, không gọi
+  // một hàm có setState ngay trong thân effect.
+  useEffect(() => {
+    let alive = true;
+    loadDashboardData()
+      .then((data) => {
+        if (!alive) return;
+        if (data === 'unauthorized') {
+          router.push('/admin');
+          return;
+        }
+        setPlayers(data.players);
+        setTeams(data.teams);
+        setTournaments(data.tournaments);
+      })
+      .catch((e: unknown) => {
+        if (alive) setError(e instanceof Error ? e.message : 'Lỗi không xác định');
+      })
+      .finally(() => {
+        if (alive) setLoading(false);
+      });
+    return () => {
+      alive = false;
+    };
+  }, [router]);
+
+  const reload = useCallback(async () => {
     setLoading(true);
     setError('');
     try {
-      const [pr, tr, tor] = await Promise.all([
-        fetch('/api/admin/players'),
-        fetch('/api/admin/teams'),
-        fetch('/api/admin/tournaments'),
-      ]);
-      if (pr.status === 401 || tr.status === 401 || tor.status === 401) {
+      const data = await loadDashboardData();
+      if (data === 'unauthorized') {
         router.push('/admin');
         return;
       }
-      if (!pr.ok || !tr.ok || !tor.ok) throw new Error('Không tải được dữ liệu');
-      setPlayers(await pr.json());
-      setTeams(await tr.json());
-      setTournaments(await tor.json());
+      setPlayers(data.players);
+      setTeams(data.teams);
+      setTournaments(data.tournaments);
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Lỗi không xác định');
     } finally {
       setLoading(false);
     }
   }, [router]);
-
-  useEffect(() => {
-    load();
-  }, [load]);
 
   async function logout() {
     await fetch('/api/admin/logout', { method: 'POST' });
@@ -450,7 +489,7 @@ export default function AdminDashboard() {
         throw new Error(d.error || 'Lưu thất bại');
       }
       setEditingPlayer(null);
-      await load();
+      await reload();
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Lưu thất bại');
     } finally {
@@ -470,7 +509,7 @@ export default function AdminDashboard() {
       setError(d.error || 'Xoá thất bại');
       return;
     }
-    await load();
+    await reload();
   }
 
   async function saveTeamForm() {
@@ -498,7 +537,7 @@ export default function AdminDashboard() {
         throw new Error(d.error || 'Lưu thất bại');
       }
       setEditingTeam(null);
-      await load();
+      await reload();
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Lưu thất bại');
     } finally {
@@ -518,7 +557,7 @@ export default function AdminDashboard() {
       setError(d.error || 'Xoá thất bại');
       return;
     }
-    await load();
+    await reload();
   }
 
   async function saveTournamentForm() {
@@ -549,7 +588,7 @@ export default function AdminDashboard() {
         throw new Error(d.error || 'Lưu thất bại');
       }
       setEditingTournament(null);
-      await load();
+      await reload();
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Lưu thất bại');
     } finally {
@@ -569,7 +608,7 @@ export default function AdminDashboard() {
       setError(d.error || 'Xoá thất bại');
       return;
     }
-    await load();
+    await reload();
   }
 
   const teamNameOf = (slug: string | null) => teams.find((t) => t.slug === slug)?.name ?? '—';

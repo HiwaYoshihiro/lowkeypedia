@@ -36,7 +36,7 @@ describe('TournamentDetailPage', () => {
   });
 
   it('render tiêu đề, infobox và lịch sử vô địch', async () => {
-    render(await TournamentDetailPage({ params: { slug: 'aic-2025' } }));
+    render(await TournamentDetailPage({ params: Promise.resolve({ slug: 'aic-2025' }) }));
 
     expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('AIC 2025');
     expect(screen.getByText('Giới thiệu')).toBeInTheDocument();
@@ -48,7 +48,7 @@ describe('TournamentDetailPage', () => {
   });
 
   it('tự liên kết tên đội trong kết quả', async () => {
-    render(await TournamentDetailPage({ params: { slug: 'aic-2025' } }));
+    render(await TournamentDetailPage({ params: Promise.resolve({ slug: 'aic-2025' }) }));
 
     expect(screen.getByRole('link', { name: 'Saigon Phantom' })).toHaveAttribute(
       'href',
@@ -57,7 +57,7 @@ describe('TournamentDetailPage', () => {
   });
 
   it('render JSON-LD SportsEvent', async () => {
-    render(await TournamentDetailPage({ params: { slug: 'aic-2025' } }));
+    render(await TournamentDetailPage({ params: Promise.resolve({ slug: 'aic-2025' }) }));
 
     const data = Array.from(
       document.querySelectorAll('script[type="application/ld+json"]')
@@ -73,13 +73,13 @@ describe('TournamentDetailPage', () => {
 
   it('slug không tồn tại gọi notFound', async () => {
     await expect(
-      TournamentDetailPage({ params: { slug: 'khong-co' } })
+      TournamentDetailPage({ params: Promise.resolve({ slug: 'khong-co' }) })
     ).rejects.toThrow('NEXT_NOT_FOUND');
     expect(notFoundMock).toHaveBeenCalled();
   });
 
   it('generateMetadata trả tiêu đề và canonical đúng', async () => {
-    const metadata = await generateMetadata({ params: { slug: 'aic-2025' } });
+    const metadata = await generateMetadata({ params: Promise.resolve({ slug: 'aic-2025' }) });
 
     expect(metadata.title).toBe('AIC 2025');
     expect(metadata.alternates?.canonical).toBe('/giai-dau/aic-2025');
@@ -87,7 +87,7 @@ describe('TournamentDetailPage', () => {
   });
 
   it('generateMetadata trả Không tìm thấy với slug lạ', async () => {
-    expect(await generateMetadata({ params: { slug: 'khong-co' } })).toEqual({
+    expect(await generateMetadata({ params: Promise.resolve({ slug: 'khong-co' }) })).toEqual({
       title: 'Không tìm thấy',
     });
   });

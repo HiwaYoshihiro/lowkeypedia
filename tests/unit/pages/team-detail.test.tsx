@@ -28,7 +28,7 @@ describe('TeamDetailPage', () => {
   });
 
   it('render tiêu đề, infobox, đội hình và thành tích', async () => {
-    render(await TeamDetailPage({ params: { slug: 'saigon-phantom' } }));
+    render(await TeamDetailPage({ params: Promise.resolve({ slug: 'saigon-phantom' }) }));
 
     expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('Saigon Phantom');
     expect(screen.getByText('Giới thiệu')).toBeInTheDocument();
@@ -46,7 +46,7 @@ describe('TeamDetailPage', () => {
   });
 
   it('render JSON-LD SportsTeam', async () => {
-    render(await TeamDetailPage({ params: { slug: 'saigon-phantom' } }));
+    render(await TeamDetailPage({ params: Promise.resolve({ slug: 'saigon-phantom' }) }));
 
     const data = Array.from(
       document.querySelectorAll('script[type="application/ld+json"]')
@@ -57,14 +57,14 @@ describe('TeamDetailPage', () => {
   });
 
   it('slug không tồn tại gọi notFound', async () => {
-    await expect(TeamDetailPage({ params: { slug: 'khong-co' } })).rejects.toThrow(
+    await expect(TeamDetailPage({ params: Promise.resolve({ slug: 'khong-co' }) })).rejects.toThrow(
       'NEXT_NOT_FOUND'
     );
     expect(notFoundMock).toHaveBeenCalled();
   });
 
   it('generateMetadata trả tiêu đề và canonical đúng', async () => {
-    const metadata = await generateMetadata({ params: { slug: 'saigon-phantom' } });
+    const metadata = await generateMetadata({ params: Promise.resolve({ slug: 'saigon-phantom' }) });
 
     expect(metadata.title).toBe('Saigon Phantom');
     expect(metadata.alternates?.canonical).toBe('/doi-tuyen/saigon-phantom');
@@ -74,7 +74,7 @@ describe('TeamDetailPage', () => {
   });
 
   it('generateMetadata trả Không tìm thấy với slug lạ', async () => {
-    expect(await generateMetadata({ params: { slug: 'khong-co' } })).toEqual({
+    expect(await generateMetadata({ params: Promise.resolve({ slug: 'khong-co' }) })).toEqual({
       title: 'Không tìm thấy',
     });
   });

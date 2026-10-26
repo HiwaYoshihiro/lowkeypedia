@@ -21,7 +21,7 @@ describe('PlayersPage', () => {
   it('lọc theo từ khoá, đội và vị trí', async () => {
     render(
       await PlayersPage({
-        searchParams: { q: 'lai', team: 'saigon-phantom', role: 'Đi Rừng' },
+        searchParams: Promise.resolve({ q: 'lai', team: 'saigon-phantom', role: 'Đi Rừng' }),
       })
     );
 
@@ -34,7 +34,7 @@ describe('PlayersPage', () => {
   });
 
   it('hiện empty state khi bộ lọc không khớp', async () => {
-    render(await PlayersPage({ searchParams: { team: 'team-flash' } }));
+    render(await PlayersPage({ searchParams: Promise.resolve({ team: 'team-flash' }) }));
 
     expect(screen.getByText('0/1')).toBeInTheDocument();
     expect(screen.getByText('Không tìm thấy tuyển thủ nào')).toBeInTheDocument();
@@ -42,13 +42,13 @@ describe('PlayersPage', () => {
   });
 
   it('lọc tuyển thủ tự do bằng __none', async () => {
-    render(await PlayersPage({ searchParams: { team: '__none' } }));
+    render(await PlayersPage({ searchParams: Promise.resolve({ team: '__none' }) }));
 
     expect(screen.getByText('Không tìm thấy tuyển thủ nào')).toBeInTheDocument();
   });
 
   it('từ khoá không dấu vẫn khớp tên có dấu', async () => {
-    render(await PlayersPage({ searchParams: { q: 'lai bang' } }));
+    render(await PlayersPage({ searchParams: Promise.resolve({ q: 'lai bang' }) }));
 
     expect(screen.getByText('1/1')).toBeInTheDocument();
     expect(screen.getByText('Lai Bâng')).toBeInTheDocument();
