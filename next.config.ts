@@ -1,3 +1,4 @@
+import path from 'node:path';
 import type { NextConfig } from 'next';
 
 /**
@@ -21,6 +22,10 @@ const securityHeaders = [
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
+  // Máy có package-lock.json lạc ở thư mục người dùng nên Next đoán sai gốc dự án khi
+  // trace file (cảnh báo "outside the current Git repository"). Ghim gốc về repo này.
+  outputFileTracingRoot: __dirname,
+  turbopack: { root: __dirname },
   async headers() {
     return [{ source: '/:path*', headers: securityHeaders }];
   },
