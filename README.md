@@ -9,9 +9,6 @@
 Tiểu sử tuyển thủ · Đội tuyển · Giải đấu · Sự nghiệp · Thành tích — theo phong cách wiki.
 
 [![Next.js](https://img.shields.io/badge/Next.js-16-000?logo=next.js&logoColor=white)](https://nextjs.org)
-[![CI](https://github.com/HiwaYoshihiro/lowkeypedia/actions/workflows/ci.yml/badge.svg)](https://github.com/HiwaYoshihiro/lowkeypedia/actions/workflows/ci.yml)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5-3178c6?logo=typescript&logoColor=white)](https://www.typescriptlang.org)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind-3-38bdf8?logo=tailwindcss&logoColor=white)](https://tailwindcss.com)
 [![Deploy](https://img.shields.io/badge/Vercel-Blob%20%2B%20Edge-000?logo=vercel&logoColor=white)](https://vercel.com)
 
 **🔗 https://lwkypedia.vercel.app**
@@ -22,13 +19,29 @@ Tiểu sử tuyển thủ · Đội tuyển · Giải đấu · Sự nghiệp ·
 
 ## Giới thiệu
 
-Lwkypedia là một wiki tĩnh–động cho cộng đồng Liên Quân Mobile Việt Nam: tra cứu hồ sơ
-tuyển thủ, đội tuyển và giải đấu với giao diện lấy cảm hứng từ **Wikipedia (Vector 2022)**
-và **Liquipedia** — khung bài viết, infobox, bảng thành tích, chế độ tối/sáng.
+Lwkypedia là nơi tra cứu hồ sơ tuyển thủ, đội tuyển và giải đấu của Liên Quân Mobile Việt
+Nam — gọn như một cuốn từ điển, dễ đọc như một bài wiki. Giao diện lấy cảm hứng từ
+**Wikipedia (Vector 2022)** và **Liquipedia**: khung bài viết rõ ràng, infobox bên cạnh,
+bảng thành tích có liên kết, và chế độ sáng/tối theo ý bạn.
 
-Dữ liệu lưu trong **Vercel Blob** dưới dạng JSON và chỉnh sửa trực tiếp qua trang quản trị
-có đăng nhập. Không có cơ sở dữ liệu, không có ORM — chỉ ba file JSON và một lớp đọc/ghi
-có cache.
+Mỗi tuyển thủ có một trang riêng: tiểu sử, hành trình sự nghiệp, những đội đã khoác áo và
+bảng thành tích theo từng giải. Đội tuyển có đội hình hiện tại và bộ sưu tập danh hiệu; giải
+đấu có ban tổ chức, khu vực và danh sách nhà vô địch qua các mùa. Tên đội và tên giải ở bất
+kỳ đâu cũng dẫn thẳng tới trang tương ứng, nên bạn có thể đi từ một người chơi tới cả lịch
+sử của giải đấu chỉ bằng vài cú nhấp.
+
+Nội dung được tổng hợp từ dữ liệu công khai (Liquipedia, thông báo của ban tổ chức) và đóng
+góp của cộng đồng.
+
+## Bạn sẽ tìm thấy gì
+
+- 🎮 **Tuyển thủ** — danh sách lọc theo đội và vị trí; hồ sơ gồm tiểu sử, sự nghiệp, lịch sử
+  đội tuyển và **bảng thành tích kiểu Liquipedia** (Năm · Thứ hạng · Giải đấu có liên kết).
+- 🛡️ **Đội tuyển** — đội hình hiện tại (link tới từng tuyển thủ) và thành tích của đội.
+- 🏆 **Giải đấu** — ban tổ chức, tần suất, khu vực và lịch sử vô địch theo mùa.
+- 🔍 **Tìm kiếm** — không phân biệt dấu (`lai bang` khớp `Lai Bâng`), gợi ý ngay khi gõ.
+- 🌗 **Sáng/tối** — nhớ lựa chọn của bạn và không nháy khi tải trang.
+- 📱 **Responsive** — đọc thoải mái trên điện thoại.
 
 <table>
 <tr>
@@ -39,30 +52,6 @@ có cache.
 <td align="center"><sub>Trang chủ — chế độ sáng</sub></td>
 <td align="center"><sub>Hồ sơ tuyển thủ — infobox + bảng thành tích</sub></td>
 </tr>
-</table>
-
-## Tính năng
-
-**Giao diện công khai**
-
-- 🏠 **Trang chủ** — hero, số liệu tổng quan, tuyển thủ nổi bật, đội tuyển, giải đấu, cập nhật gần đây.
-- 🎮 **Tuyển thủ** — danh sách có lọc theo đội và vị trí; hồ sơ gồm tiểu sử, sự nghiệp,
-  lịch sử đội tuyển và **bảng thành tích kiểu Liquipedia** (Năm · Thứ hạng · Giải đấu có liên kết).
-- 🛡️ **Đội tuyển** — đội hình hiện tại (link tới từng tuyển thủ) và thành tích đội.
-- 🏆 **Giải đấu** — ban tổ chức, tần suất, khu vực và lịch sử vô địch theo mùa;
-  tên đội trùng với đội tuyển trong wiki tự động thành liên kết.
-- 🔍 **Tìm kiếm** — không phân biệt dấu (`lai bang` khớp `Lai Bâng`), có gợi ý trực tiếp ở header.
-- 🌗 **Chế độ tối/sáng** — lưu ở `localStorage`, chống nháy (FOUC) bằng script chạy trước khi vẽ.
-- 📱 **Responsive** — sidebar điều hướng thu thành ngăn kéo trên mobile.
-
-**Quản trị**
-
-- 🔐 Đăng nhập bằng mật khẩu tại `/admin`; phiên ký HMAC có hạn, có giới hạn số lần thử.
-- ✏️ CRUD đầy đủ cho cả ba loại thực thể, kèm editor bảng cho thành tích và lịch sử đội tuyển.
-- 🔗 Liên kết chéo: chọn giải đấu/đội từ danh sách để tên tự động thành link.
-- ♻️ Lưu xong là revalidate toàn site; đổi/xoá slug sẽ tự cập nhật mọi tham chiếu trong dữ liệu.
-
-<table>
 <tr>
 <td width="50%"><img src="docs/screenshots/team.png" alt="Trang đội tuyển"></td>
 <td width="50%"><img src="docs/screenshots/tournament.png" alt="Trang giải đấu"></td>
@@ -81,194 +70,11 @@ có cache.
 </tr>
 </table>
 
-## Kiến trúc
+## Góp ý
 
-```
-lowkeypedia/
-├── proxy.ts                  # CSP nonce theo từng request (middleware Next 16)
-├── next.config.ts            # header an toàn cho mọi route
-├── eslint.config.mjs         # ESLint 9 flat config
-├── .github/workflows/ci.yml  # lint · typecheck · unit · build · e2e
-├── app/                      # Next.js App Router
-│   ├── layout.tsx            # metadata, theme script, chrome
-│   ├── page.tsx              # trang chủ
-│   ├── loading.tsx           # skeleton hiện khi chờ server render
-│   ├── error.tsx             # lưới an toàn khi trang ném lỗi
-│   ├── sitemap.ts            # sitemap động (trang tĩnh + mọi chi tiết)
-│   ├── robots.ts             # robots.txt (chặn /admin, /api)
-│   ├── tuyen-thu/            # danh sách + [slug] hồ sơ tuyển thủ
-│   ├── doi-tuyen/            # danh sách + [slug] trang đội tuyển
-│   ├── giai-dau/             # danh sách + [slug] trang giải đấu
-│   ├── tim-kiem/             # trang kết quả tìm kiếm
-│   ├── admin/                # đăng nhập + dashboard (Client Components)
-│   └── api/                  # route handlers
-│       ├── search/           #   gợi ý tìm kiếm
-│       └── admin/            #   login · logout · CRUD 3 loại
-├── components/               # 17 component trình bày
-├── lib/
-│   ├── store.ts              # đọc/ghi Blob, cache, chuẩn hoá, cascade
-│   ├── auth.ts               # phiên quản trị (HMAC), verifyPassword
-│   ├── ratelimit.ts          # giới hạn đăng nhập theo IP
-│   ├── revalidate.ts         # revalidate toàn site sau khi ghi
-│   ├── http.ts               # chuẩn hoá lỗi → HTTP response
-│   ├── types.ts              # Player · Team · Tournament · Achievement
-│   ├── entities.ts           # bảng ánh xạ loại thực thể → URL/nhãn
-│   ├── params.ts             # ép searchParams về vô hướng, strip markdown
-│   ├── slug.ts               # slugify + chuẩn hoá tìm kiếm không dấu
-│   └── site.ts               # tên thương hiệu, URL gốc
-├── data/seed/                # dữ liệu mẫu (tự seed lên Blob lần đầu)
-├── styles/                   # design system: tokens · base · wiki · ui
-└── docs/screenshots/         # ảnh dùng trong README
-```
-
-### Luồng dữ liệu
-
-```
-                     ┌──────────────────────────────────────┐
-   Trình duyệt ──────▶  Next.js (RSC)                       │
-                     │   getPlayers / getTeams / …          │
-                     │        │  cache() của React (1 req)  │
-                     │        ▼                             │
-                     │   cache in-memory 30s (SWR)          │
-                     │        │  hết TTL → trả bản cũ ngay, │
-                     │        │  làm mới ở nền              │
-                     │        ▼  cache nguội                │
-                     │   list() 1 lần + fetch() từng file ──┐
-                     └──────────────────────────────┼───────┘
-                                                    ▼
-                                          ┌──────────────────┐
-   /admin (CRUD) ──▶ route handler ──────▶ │  Vercel Blob     │
-                     requireAdmin()        │  lowkeypedia/    │
-                     put() + clearCache()  │    data/*.json   │
-                     revalidateSite()      └──────────────────┘
-```
-
-Mọi trang đọc dữ liệu đều `export const dynamic = 'force-dynamic'`, nên `npm run build`
-không cần biến môi trường và không gọi Blob lúc build.
-
-## Bắt đầu
-
-**Yêu cầu:** Node.js 20.9+ (khớp `engines` trong `package.json`; CI chạy Node 22).
-
-```bash
-npm install
-cp .env.example .env.local   # rồi điền các biến bên dưới
-npm run dev
-```
-
-Mở http://localhost:3000
-
-> Chưa cấu hình `BLOB_READ_WRITE_TOKEN` thì web vẫn chạy đầy đủ bằng dữ liệu seed kèm sẵn —
-> chỉ ở chế độ **chỉ đọc** (trang quản trị không lưu được).
-
-### Biến môi trường
-
-| Biến | Bắt buộc | Mô tả |
-| ---- | :------: | ----- |
-| `BLOB_READ_WRITE_TOKEN` | để ghi | Read/write token của Blob store. Vercel Dashboard → Storage → Connect → `.env.local`. Thiếu token → dùng seed, không lưu được. |
-| `ADMIN_PASSWORD` | để quản trị | Mật khẩu đăng nhập `/admin`. |
-| `ADMIN_SECRET` | để quản trị | Chuỗi ngẫu nhiên ký cookie. Nên ≥ 32 ký tự (`openssl rand -hex 32`). Đổi giá trị này vô hiệu hoá mọi phiên cũ. |
-| `NEXT_PUBLIC_SITE_URL` | nên đặt | URL công khai — dùng cho canonical, Open Graph, sitemap. |
-| `NEXT_PUBLIC_SITE_NAME` | không | Ghi đè tên hiển thị (mặc định `LWKYPEDIA`). |
-| `NEXT_PUBLIC_SITE_TAGLINE` | không | Ghi đè dòng mô tả dưới logo. |
-
-### Script
-
-| Lệnh | Tác dụng |
-| ---- | -------- |
-| `npm run dev` | Chạy dev server (hot reload). |
-| `npm run build` | Build production. |
-| `npm start` | Chạy bản production đã build. |
-| `npm run lint` | ESLint 9, flat config trong `eslint.config.mjs`. |
-| `npm run typecheck` | `tsc --noEmit`. |
-| `npm test` | Unit + component test (Vitest, jsdom). |
-| `npm run test:coverage` | Vitest kèm báo cáo coverage. |
-| `npm run test:e2e` | Build rồi chạy Playwright. |
-
-## Deploy lên Vercel
-
-1. Push repo lên GitHub rồi **Import Project** vào Vercel (Framework Preset: *Next.js*).
-2. Tạo Blob store tên `lowkeypedia-data` (**Storage → Create → Blob**) rồi **Connect** vào
-   project — Vercel tự thêm `BLOB_READ_WRITE_TOKEN`.
-3. Thêm biến môi trường `ADMIN_PASSWORD`, `ADMIN_SECRET` và `NEXT_PUBLIC_SITE_URL`
-   (**Project Settings → Environment Variables**).
-4. **Deploy.** Lần truy cập đầu tiên, web tự seed dữ liệu mẫu lên Blob nếu file chưa tồn tại.
-
-## Kiểm thử & CI
-
-- **Unit / component** — Vitest + jsdom: `lib/` (store, slug, params, auth, rate limit, http),
-  route handlers và component/trang.
-- **E2E** — Playwright: giao diện công khai, SEO, theme, CRUD quản trị, cascade khi đổi slug
-  và chặn đăng nhập sai quá nhiều lần.
-- **CI** — `.github/workflows/ci.yml` chạy 5 job độc lập (lint, typecheck, unit + coverage,
-  build, e2e) trên mọi push vào `main` và mọi pull request; e2e cần ba secret
-  `BLOB_READ_WRITE_TOKEN_TEST` · `ADMIN_PASSWORD_TEST` · `ADMIN_SECRET_TEST` trỏ tới một
-  Blob store riêng cho test, và tự bỏ qua với PR đến từ fork.
-
-## Quản trị dữ liệu
-
-Vào `/admin`, đăng nhập bằng `ADMIN_PASSWORD`. Dashboard có ba tab **Tuyển thủ** / **Đội tuyển** /
-**Giải đấu** với thêm, sửa, xoá trực tiếp.
-
-- **Thành tích** (tuyển thủ & đội tuyển) — bảng kiểu Liquipedia: **Năm** · **Thứ hạng** ·
-  **Giải đấu** · **Liên kết giải đấu** (chọn từ danh sách để tên giải thành link).
-- **Lịch sử đội tuyển** (form tuyển thủ) — **Giai đoạn** · **Đội tuyển** · **Liên kết đội**.
-- **Lịch sử vô địch** (giải đấu) — mỗi dòng một mục; tên đội trùng với đội tuyển
-  trong wiki tự động thành liên kết, không cần cú pháp đặc biệt.
-- Ô văn bản dài (Tiểu sử / Sự nghiệp / Mô tả / Giới thiệu) hỗ trợ cú pháp `**in đậm**`.
-
-### Quy tắc an toàn dữ liệu
-
-- **Slug** luôn được `slugify` (bỏ dấu, thường hoá) dù bạn gõ tay — URL không bao giờ chứa
-  khoảng trắng hay ký tự có dấu.
-- **Đổi hoặc xoá slug** của một đội/giải sẽ tự cập nhật mọi tham chiếu trong tuyển thủ
-  (đội hiện tại, lịch sử đội tuyển, liên kết giải đấu) — không để lại liên kết chết.
-- **Ghi an toàn** — mỗi thao tác lưu luôn **đọc tươi** từ Blob (bỏ qua cache SWR) rồi mới sửa và ghi;
-  nhờ vậy chỉnh sửa liên tiếp không bị bản cache cũ của instance khác ghi đè, và các lần ghi
-  trong cùng instance vẫn xếp hàng tuần tự.
-- **Lỗi mạng tạm thời** khi đọc Blob không còn ghi đè dữ liệu thật bằng seed — luồng ghi từ chối
-  chạy nếu chỉ đọc được seed tạm.
-
-### Sao lưu dữ liệu
-
-Toàn bộ nội dung nằm trong ba file JSON trên Blob. Sau khi đăng nhập quản trị, mở
-`/api/admin/export` (hoặc bấm **Xuất dữ liệu** trong dashboard) để tải về một file
-`lwkypedia-backup-YYYY-MM-DD.json` dạng `{ exportedAt, players, teams, tournaments }`.
-Chi tiết định dạng và cách khôi phục thủ công: [docs/backup.md](docs/backup.md).
-
-## Ghi chú kỹ thuật
-
-- **Dữ liệu** — ba file JSON trên Vercel Blob (`lowkeypedia/data/*.json`). Đọc qua
-  `@vercel/blob` với cache in-memory kiểu **stale-while-revalidate**: hết TTL 30 giây thì
-  bản cũ vẫn được trả ngay, bản mới tải ở nền; các request đồng thời dùng chung một lượt
-  tải và danh sách blob chỉ gọi **một lần** cho cả ba file. Ghi thì `clearCache()` +
-  `revalidatePath`, kèm bộ đếm "thế hệ" để lượt đọc cũ không ghi đè cache sau khi lưu.
-  Riêng **luồng ghi** (đọc–sửa–ghi) luôn đọc tươi, không bao giờ dùng cache SWR.
-- **Chống cache cũ** — URL Blob không đổi khi ghi đè, nên khi đọc có thêm tham số
-  cache-bust để CDN không trả bản cũ. Seed tạm (khi Blob lỗi) chỉ được giữ 5 giây và
-  không bao giờ đè lên dữ liệu thật đang có trong cache.
-- **Trạng thái chờ & lỗi** — `app/loading.tsx` là skeleton hiện ngay khi điều hướng;
-  `app/error.tsx` là lưới an toàn có nút "Thử lại" (kèm mã lỗi để đối chiếu log).
-- **Header an toàn** — `nosniff`, `X-Frame-Options: DENY`, `Referrer-Policy` và
-  `Permissions-Policy` áp cho mọi route trong `next.config.ts`; `X-Powered-By` đã tắt.
-- **CSP** — `proxy.ts` (tên file middleware của Next 16) sinh **nonce** mỗi request rồi đặt
-  `Content-Security-Policy` cho cả request (để Next gắn nonce vào script của framework) và
-  response. Ở production `script-src` chỉ cho `'self'` + nonce + `'strict-dynamic'`;
-  `img-src`/`connect-src` vẫn mở `https:` cho ảnh CDN và dữ liệu bên ngoài.
-  `app/layout.tsx` đọc `headers().get('x-nonce')` nên **mọi route render động** (`ƒ` trong
-  `next build`): với `'strict-dynamic'`, trình duyệt bỏ qua `'self'` và chỉ chạy script có
-  nonce, mà trang prerender thì không thể gắn nonce — đánh đổi này để CSP không phải mở
-  `'unsafe-inline'`. Dữ liệu vẫn được cache 30 giây nên chi phí render lại thấp.
-- **Theme** — ghi `data-theme` lên `<html>` bằng `public/theme-init.js` chạy đồng bộ trước lần
-  vẽ đầu, tránh nháy sáng; tách thành tệp riêng để CSP không phải mở cho script nội tuyến
-  (thẻ `<script>` này nhận nonce từ layout như mọi script khác).
-  Ép giao diện qua URL: `?theme=dark` hoặc `?theme=light`.
-- **CSS** — hai tầng: `app/globals.css` giữ Tailwind cho trang admin; `styles/*` là design
-  system riêng cho giao diện công khai, nạp sau nên thắng khi trùng độ ưu tiên.
-- **SEO** — `metadataBase`, canonical, Open Graph/Twitter, JSON-LD (`Person` / `SportsTeam` /
-  `SportsEvent` + `BreadcrumbList`), sitemap động và robots.txt.
-- **Truy cập** — skip link, `aria-current` cho điều hướng, combobox ARIA cho ô tìm kiếm,
-  sidebar đóng được gỡ khỏi tab order.
+Thấy thông tin chưa đúng, thiếu một tuyển thủ hay một mùa giải? Cứ mở
+[issue](https://github.com/HiwaYoshihiro/lowkeypedia/issues) kèm nguồn tham khảo — mình sẽ
+cập nhật. Wiki chỉ tốt lên nhờ người đọc phát hiện chỗ sai.
 
 ## Giấy phép
 
